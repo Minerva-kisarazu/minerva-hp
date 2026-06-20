@@ -1,0 +1,17 @@
+/* Minerva - Global Styles (Next.js App Router 用） */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ベーススタイル */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #1a202c;
+  line-height: 1.6;
+}
