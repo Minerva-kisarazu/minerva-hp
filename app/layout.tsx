@@ -6,9 +6,6 @@ export const metadata: Metadata = {
   description: "木更津市金田東の個別指導塾、学習塾ミネルバ。勉強を教えるだけではない。成績が決まるプロセスそのものを分析します。",
 };
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-
 export default function RootLayout({
   children,
 }: {
@@ -16,14 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body>
-        <div className="flex flex-col min-h-screen font-sans">
-          <Header />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </div>
+      <body className="font-sans bg-white text-slate-900 antialiased">
+        {children}
       </body>
     </html>
   );
