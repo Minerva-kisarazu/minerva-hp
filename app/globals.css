@@ -1,25 +1,29 @@
-/* Minerva - Global Styles (Next.js App Router 用） */
+/* Minerva - Global Styles (Next.js App Router 用) - Premium Refinement */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* ベーススタイルの再定義 */
+/* ベーススタイルの再定義（高級感重視） */
 :root {
-  --primary: #1a2e44;
-  --accent: #c5a059;
-  --base: #fdfdfd;
-  --text: #2c3e50;
+  --primary: #1A2C42;
+  --secondary: #C5A059;
+  --accent: #E6E9EE;
+  --base: #FCFDFF;
+  --textMain: #2D3436;
 }
 
+/* スムーススクロールとベース設定 */
 html {
   scroll-behavior: smooth;
   background-color: var(--base);
   color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* テキスト選択時の色をアクセントカラーに変更 */
+/* テキスト選択時の色を secondary (ゴールド) に設定 */
 ::selection {
-  background-color: var(--accent);
+  background-color: var(--secondary);
   color: #fff;
 }
 
@@ -27,36 +31,84 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans), 'Helvetica Neue', Arial, sans-serif;
-  color: var(--text);
+  color: var(--textMain);
   background-color: var(--base);
-  line-height: leading-relaxed;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  line-height: leading-relaxed; /* 行間を広く（約 1.8）*/
+  letter-spacing: 0.003em;
 }
 
-/* ヘッダーの透過処理 */
+/* アニメーション用のクラス */
+@keyframes subtle-mesh {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+/* 微細なメッシュグラデーションアニメーション */
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ヘッダーの透過処理（backdrop-blur） */
 .header-wrapper {
-  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  transition: background-color 0.7s ease, box-shadow 0.7s ease;
   z-index: 50;
 }
 
-/* ナビゲーションリンクのホバー状態 */
+/* ナビゲーションリンクのホバー状態：繊細な変化 */
 a:hover {
-  color: var(--accent);
+  color: var(--secondary);
 }
 
-/* ボタンのベーススタイル */
+/* ボタンのベーススタイル（ゆっくりとした挙動） */
 button, .btn {
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
 }
 
-/* カードの微細なシャドウ */
+/* ボタンホバー時の優雅な遷移 */
+button:hover, .btn:hover {
+  filter: brightness(1.05);
+}
+
+/* カードの微細なシャドウ（浮遊感） */
 .card-shadow-sm {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.7s ease;
 }
 
-/* 画像の洗練されたスタイル */
+/* カードホバー時の繊細な挙動 */
+.card-shadow-sm:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* 画像の洗練されたスタイル（必要に応じて） */
 .img-elegant {
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.7s ease;
+}
+
+/* ヒーローセクション用メッシュグラデーション（画像なしでの高級感） */
+.hero-mesh-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 44, 66, 0.95) 0%,
+    rgba(20, 35, 50, 0.98) 50%,
+    rgba(26, 44, 66, 0.95) 100%
+  );
+  background-size: 200% 200%;
+  animation: subtle-mesh 20s ease-in-out infinite;
+}
+
+/* アクセントライン（ゴールド）用のユーティリティ */
+.accent-line {
+  border-top: 1px solid var(--secondary);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+/* セクション境界の微細なグレーライン */
+.section-divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }

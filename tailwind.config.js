@@ -8,22 +8,27 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // モダンプレミアムカラーパレット
-        primary: '#1a2e44',     // 深いネイビー - 信頼
-        accent: '#c5a059',      // 落ち着いたゴールド - 卓越
-        base: '#fdfdfd',        // オフホワイト - 清潔
-        text: '#2c3e50',        // 柔らかい黒 - 可読性
+        // モダンプレミアムカラーパレット（高級感重視の調整）
+        primary: '#1A2C42',     // 深いネイビー - 知性と信頼
+        secondary: '#C5A059',   // 落ち着いたゴールド - 卓越と伝統
+        accent: '#E6E9EE',      // ソフトスレート - 清潔感
+        background: '#FCFDFF',  // オフホワイト - 可読性
+        textMain: '#2D3436',    // チャコールグレー - 柔らかい視認性
+        base: '#fdfdfd',        // オフホワイトベース
+        text: '#2c3e50',        // 文字色
         navy: {
-          DEFAULT: '#1a2e44',
+          DEFAULT: '#1A2C42',
           700: '#1e3a5f',
           800: '#162c49',
           900: '#0d2136',
+          50: '#F0F2F5',
+          100: '#DFE4EF',
         },
         gold: {
-          DEFAULT: '#c5a059',
-          400: '#ffbf00',
-          500: '#ffc726',
-          600: '#e6ad0f',
+          DEFAULT: '#C5A059',
+          400: '#FFBF00',
+          500: '#FFC726',
+          600: '#E6AD0F',
         },
       },
       fontFamily: {
@@ -43,6 +48,15 @@ module.exports = {
         wide: '.01em',
         wider: '.02em',
         widest: '.03em',
+      },
+      // リファインドタイポグラフィ用カスタムクラス
+      lineHeight: {
+        relaxed: '1.8',
+        spacious: '2.2',
+      },
+      boxShadow: {
+        'elegant': '0 25px 50px -12px rgba(0, 0, 0, 0.1)', // blury shadow
+        'elegant-sm': '0 4px 20px rgba(0, 0, 0, 0.08)',
       },
     },
   },

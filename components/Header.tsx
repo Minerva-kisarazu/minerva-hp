@@ -22,35 +22,37 @@ export default function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-primary/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+        isScrolled 
+          ? 'bg-primary/85 backdrop-blur-lg shadow-elegant-sm' 
+          : 'bg-gradient-to-b from-transparent to-white/10 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* ロゴ */}
-          <Link href="/" className="text-primary font-serif font-bold text-xl sm:text-2xl hover:text-accent transition-all duration-500 tracking-wide">
-            学習塾ミネルバ<span className="text-accent">個別指導×自立学習</span>
-            <span className="block text-xs text-slate-600 mt-1 font-light opacity-80">木更津市の個別指導塾</span>
+          <Link href="/" className="text-primary font-serif font-bold text-xl sm:text-2xl hover:text-secondary transition-all duration-700 tracking-widest">
+            学習塾ミネルバ<span className="text-secondary">個別指導×自立学習</span>
+            <span className="block text-xs text-accent/70 mt-1 font-light opacity-80 tracking-wide">木更津市の個別指導塾</span>
           </Link>
 
           {/* デスクトップナビゲーション */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-slate-700 hover:text-accent font-medium transition-all duration-500 tracking-wide">
+            <Link href="/" className="text-textMain hover:text-secondary font-medium transition-all duration-700 tracking-wide hover:slate-50">
               ホーム
             </Link>
-            <Link href="/policy" className="text-slate-700 hover:text-accent font-medium transition-all duration-500 tracking-wide">
+            <Link href="/policy" className="text-textMain hover:text-secondary font-medium transition-all duration-700 tracking-wide hover:slate-50">
               指導方針
             </Link>
-            <Link href="/grades" className="text-slate-700 hover:text-accent font-medium transition-all duration-500 tracking-wide">
+            <Link href="/grades" className="text-textMain hover:text-secondary font-medium transition-all duration-700 tracking-wide hover:slate-50">
               学年別のご案内
             </Link>
-            <Link href="/price" className="text-slate-700 hover:text-accent font-medium transition-all duration-500 tracking-wide">
+            <Link href="/price" className="text-textMain hover:text-secondary font-medium transition-all duration-700 tracking-wide hover:slate-50">
               受講料・よくあるご質問
             </Link>
             <Link 
               href="/contact" 
-              className="bg-primary hover:bg-navy-800 text-white font-semibold px-6 py-3 rounded-full transition-all duration-500 border border-slate-200 shadow-sm tracking-wide text-sm"
+              className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-sm transition-all duration-700 border border-slate-200 shadow-sm tracking-wide text-sm"
             >
               無料体験を申し込む
             </Link>
@@ -59,7 +61,7 @@ export default function Header() {
           {/* モバイルハンバーガーボタン */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-slate-700 p-2 focus:outline-none transition-all duration-500"
+            className="md:hidden text-textMain p-2 focus:outline-none transition-all duration-700"
             aria-label="メニューを開く"
           >
             <svg
@@ -88,39 +90,39 @@ export default function Header() {
 
         {/* モバイルナビゲーションドロップダウン */}
         {isOpen && (
-          <nav className="md:hidden py-6 border-t border-slate-200 bg-white/95 backdrop-blur-sm">
+          <nav className="md:hidden py-6 border-t border-slate-100 bg-white/95 backdrop-blur-sm">
             <div className="flex flex-col space-y-3 px-4">
               <Link
                 href="/"
-                className="text-primary hover:text-accent font-medium py-3 transition-all duration-500 tracking-wide"
+                className="text-primary hover:text-secondary font-medium py-3 transition-all duration-700 tracking-wide hover:slate-50"
                 onClick={() => setIsOpen(false)}
               >
                 ホーム
               </Link>
               <Link
                 href="/policy"
-                className="text-primary hover:text-accent font-medium py-3 transition-all duration-500 tracking-wide"
+                className="text-primary hover:text-secondary font-medium py-3 transition-all duration-700 tracking-wide hover:slate-50"
                 onClick={() => setIsOpen(false)}
               >
                 指導方針
               </Link>
               <Link
                 href="/grades"
-                className="text-primary hover:text-accent font-medium py-3 transition-all duration-500 tracking-wide"
+                className="text-primary hover:text-secondary font-medium py-3 transition-all duration-700 tracking-wide hover:slate-50"
                 onClick={() => setIsOpen(false)}
               >
                 学年別のご案内
               </Link>
               <Link
                 href="/price"
-                className="text-primary hover:text-accent font-medium py-3 transition-all duration-500 tracking-wide"
+                className="text-primary hover:text-secondary font-medium py-3 transition-all duration-700 tracking-wide hover:slate-50"
                 onClick={() => setIsOpen(false)}
               >
                 受講料・よくあるご質問
               </Link>
               <Link
                 href="/contact"
-                className="bg-primary text-white font-semibold px-6 py-4 rounded-full transition-all duration-500 tracking-wide text-center text-sm mt-2 shadow-md border border-slate-200"
+                className="bg-primary text-white font-semibold px-6 py-4 rounded-sm transition-all duration-700 tracking-wide text-center text-sm mt-2 shadow-md border border-slate-200"
                 onClick={() => setIsOpen(false)}
               >
                 無料体験を申し込む
