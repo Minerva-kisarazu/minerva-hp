@@ -36,39 +36,39 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* ロゴ */}
-          <Link href="/" className="flex items-baseline">
-            <span className="text-slate-900 font-serif font-bold text-xl sm:text-2xl hover:text-slate-700 transition-colors">
+          <Link href="/" className="flex items-baseline flex-shrink-0 mr-4">
+            <span className="text-slate-900 font-serif font-bold text-lg lg:text-xl xl:text-2xl hover:text-slate-700 transition-colors">
               学習塾ミネルバ<span className="text-orange-600">個別指導×自立学習</span>
             </span>
-            <span className="block text-xs text-slate-500 mt-1 font-medium tracking-wide hidden sm:block">
+            <span className="block text-xs text-slate-500 mt-1 font-medium tracking-wide hidden xl:block">
               木更津市の個別指導塾
             </span>
           </Link>
 
           {/* デスクトップナビゲーション */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-4">
             {navItems.slice(0, 4).map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="text-slate-700 hover:text-slate-900 font-medium transition-colors py-2"
+                className="text-slate-700 hover:text-slate-900 font-medium transition-colors py-2 text-xs xl:text-sm whitespace-nowrap"
               >
                 {label}
               </Link>
             ))}
-            {/* 問い合わせボタン：高コントラストで目立つ */}
+            {/* CTAボタン：仕様書準拠テキスト */}
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center bg-orange-600 hover:bg-orange-700 text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-300 shadow-sm tracking-wide text-sm whitespace-nowrap"
+              className="inline-flex items-center justify-center bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-2 xl:px-4 xl:py-2.5 rounded-lg transition-all duration-300 shadow-sm tracking-wide text-[11px] xl:text-xs whitespace-nowrap"
             >
-              お問い合わせ
+              無料学習診断レポート付き体験授業を申し込む
             </Link>
           </nav>
 
           {/* モバイルハンバーガーボタン */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-slate-700 p-2 focus:outline-none hover:bg-slate-100 rounded-lg transition-colors"
+            className="lg:hidden text-slate-700 p-2 focus:outline-none hover:bg-slate-100 rounded-lg transition-colors"
             aria-label="メニューを開く"
             aria-expanded={isOpen}
           >
@@ -98,7 +98,7 @@ export default function Header() {
 
         {/* モバイルナビゲーションドロップダウン */}
         {isOpen && (
-          <nav className="md:hidden py-6 border-t border-slate-200 bg-white/95 backdrop-blur-md">
+          <nav className="lg:hidden py-6 border-t border-slate-200 bg-white/95 backdrop-blur-md">
             <div className="flex flex-col space-y-3 px-4">
               {navItems.map(({ href, label }) => (
                 <Link
@@ -110,13 +110,13 @@ export default function Header() {
                   {label}
                 </Link>
               ))}
-              {/* 問い合わせボタン：高コントラストで目立つ */}
+              {/* CTAボタン：仕様書準拠テキスト */}
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center bg-orange-600 text-white font-semibold px-5 py-4 rounded-lg transition-all duration-300 shadow-md tracking-wide text-center text-sm mt-2"
                 onClick={() => setIsOpen(false)}
               >
-                お問い合わせ
+                無料学習診断レポート付き体験授業を申し込む
               </Link>
             </div>
           </nav>

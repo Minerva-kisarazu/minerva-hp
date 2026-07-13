@@ -99,8 +99,17 @@ export default function Footer() {
                 (土曜日は授業・自習室は休講ですが、お問い合わせの受付・入塾面談の実施は承っております)
               </p>
             </div>
-            <div className="bg-slate-100/50 rounded-lg h-48 flex items-center justify-center text-slate-500 text-sm font-medium border border-slate-200/50 backdrop-blur-sm">
-              Google マップ埋め込みエリア
+            <div className="rounded-lg h-48 overflow-hidden border border-slate-200 shadow-sm">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3247.8!2d139.9467!3d35.3967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDIzJzQ4LjEiTiAxMznCsDU2JzQ4LjEiRQ!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp&q=%E5%8D%83%E8%91%89%E7%9C%8C%E6%9C%A8%E6%9B%B4%E6%B4%A5%E5%B8%82%E9%87%91%E7%94%B0%E6%9D%B15-4-6"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="学習塾ミネルバ 所在地"
+              />
             </div>
           </div>
         </div>

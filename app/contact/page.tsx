@@ -112,24 +112,13 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <h1 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-slate-900 tracking-wide">お申し込みありがとうございます</h1>
-                <p className="max-w-2xl mx-auto text-lg text-slate-700 mb-10 leading-relaxed">
-                  以下のステップ通りに進んでまいります。ご確認のうえ、よろしくお願いいたします。
+                <p className="max-w-2xl mx-auto text-lg text-slate-700 mb-6 leading-relaxed">
+                  お申し込みを受け付けました。2営業日以内にお電話または公式LINEにて、体験授業の日程についてご連絡いたします。
                 </p>
-                <div className="bg-white p-10 rounded-xl shadow-sm max-w-3xl mx-auto border border-slate-200">
-                  <h2 className="text-xl font-serif font-bold mb-8 text-orange-600 tracking-wide">無料学習診断レポート付き体験授業・お申し込み後のステップ</h2>
-                  <div className="space-y-6">
-                    {[1, 2, 3, 4, 5].map(n => (
-                      <div key={n} className="flex gap-4 p-4 rounded-lg hover:bg-slate-50 transition-all duration-300">
-                        <div className="flex-shrink-0 w-12 h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-xl shadow-sm">{n}</div>
-                        <div>
-                          <h3 className="font-semibold text-slate-900 mb-1 tracking-wide">ステップ {n}</h3>
-                          <p className="text-slate-600 leading-relaxed">詳しい手順をご案内いたします。</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-12">
+                <p className="max-w-2xl mx-auto text-base text-slate-500 mb-12 leading-relaxed">
+                  ご不明な点がございましたら、お気軽にお電話（03-6820-6929）でもお問い合わせください。
+                </p>
+                <div className="mt-4">
                   <a href="/" className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 shadow-md tracking-wide whitespace-nowrap">
                     ホームページに戻る
                   </a>
@@ -150,6 +139,51 @@ export default function ContactPage() {
         <section className="bg-slate-50 text-slate-900 py-36">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-serif font-bold mb-16 text-center tracking-wide border-b border-slate-300 pb-5">お申し込みフォーム</h2>
+
+            {/* お申し込み後のステップ（仕様書準拠：フォーム直上に配置） */}
+            <div className="max-w-3xl mx-auto mb-16">
+              <div className="bg-white p-8 sm:p-10 rounded-xl shadow-sm border border-slate-200">
+                <h3 className="text-xl font-serif font-bold mb-8 text-orange-600 tracking-wide text-center">無料学習診断レポート付き体験授業・お申し込み後のステップ</h3>
+                <div className="space-y-5">
+                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">1</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">フォーム送信</h4>
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">下記フォームより、必要事項を入力して送信してください。</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">2</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">日程調整のご連絡</h4>
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">2営業日以内にお電話または公式LINEにて、体験授業（80分）の実施日時をご相談させていただきます。</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">3</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">個別面談＆体験授業（80分）</h4>
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">塾長がお悩みを伺い、実際の個別指導を通じてお子様の学習プロセス（動作・判断の癖・境界線）を精密に分析します。</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">4</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">学習診断レポートのお渡し</h4>
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">分析結果から判明した「思考停止のポイント」や「今最優先で克服すべき点」をまとめたレポートをお渡しします。</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">5</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">ご検討</h4>
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">指導方針や環境がお子様に合うかどうか、ご家庭でじっくりご検討ください。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit}>
               <div className="max-w-2xl mx-auto space-y-8">
                 <div>
