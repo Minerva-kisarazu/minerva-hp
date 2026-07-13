@@ -1,18 +1,31 @@
 'use client';
 
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
 export default function Home() {
   return (
     <>
-      <main className="flex-grow">
+      <Header />
+      <main className="flex-grow pt-16">
         {/* ヒーローセクション */}
-        <section className="relative bg-slate-900 text-white py-24 sm:py-32">
-          <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        <section className="relative bg-slate-950 text-white py-28 sm:py-36 overflow-hidden">
+          {/* 背景画像 */}
+          <img
+            src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1920&q=80"
+            alt="集中できる学習環境"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-30 mix-blend-multiply"
+          />
+          {/* 暗色オーバーレイグラデーション */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/85 to-slate-900/90" />
+          
+          <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-relaxed tracking-tight">
               「なぜできないのか」を見抜く。<br />
               「どうすればもっと伸びるのか」を設計する。
             </h1>
             <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
-              木更津市金田東の個別指導塾、学習塾ミネルバ。<br />
+              木更津市金田東 of 個別指導塾、学習塾ミネルバ。<br />
               勉強を教えるだけではない。成績が決まるプロセスそのものを分析します。
             </p>
             <a
@@ -245,8 +258,17 @@ export default function Home() {
         </section>
 
         {/* フッター前 CTA セクション */}
-        <section className="bg-slate-900 text-white py-24 sm:py-32">
-          <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        <section className="relative bg-slate-950 text-white py-24 sm:py-32 overflow-hidden">
+          {/* 背景画像 */}
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            alt="学習風景"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
+          />
+          {/* オーバーレイ */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/90 to-slate-950/95" />
+
+          <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 leading-relaxed tracking-wide border-b border-slate-700 pb-5">
               勉強しているのに伸びない理由。<br />
               あれは、もっと伸びるための改善点。
@@ -256,7 +278,7 @@ export default function Home() {
             </p>
 
             {/* レポート特典 */}
-            <div className="max-w-4xl mx-auto bg-slate-800 p-10 rounded-xl mb-16 shadow-sm border border-slate-700">
+            <div className="max-w-4xl mx-auto bg-slate-900/80 backdrop-blur-sm p-10 rounded-xl mb-16 shadow-sm border border-slate-700">
               <p className="text-xl font-semibold mb-8 text-orange-400 leading-relaxed tracking-wide">
                 体験授業後には、お預かりしたお子様の学習プロセスを精査し、以下の内容を明確にした「学習診断レポート」をお渡しします。
               </p>
@@ -288,6 +310,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

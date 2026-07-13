@@ -14,18 +14,34 @@ export default function PolicyPage() {
             <h2 className="text-2xl md:text-3xl font-serif font-bold mb-10 tracking-wide border-b border-slate-300 pb-5">
               日々の学習を通じて、一生モノの「自ら学ぶ力」を
             </h2>
-            <p className="max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed">
-              塾講師として現場に立ち、多くの生徒たちを見てきて確信していることがあります。それは、同じ教室で同じ授業を受け、同じ教材を使っても、結果の出方には大きな差があるという現実です。
-            </p>
-            <p className="max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed mt-8">
-              今の時代、映像授業や良質な参考書は世の中に溢れています。しかし、どれほど優れた材料があっても、それを「自ら掴み取り、使いこなす力」がなければ、成果には結びつきません。
-            </p>
-            <p className="max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed mt-8">
-              私は、勉強や受験こそが自分を鍛える最高の機会だと考えています。定期テストや志望校合格という明確な目標に向かって本気で努力し、壁を乗り越える。その過程で培われる「自分で目標を立て、考え、実行する力」こそが、これからの時代を生き抜くための何よりの武器になると信じています。
-            </p>
-            <p className="max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed mt-8">
-              当塾は、単に答えを教えるだけの場所ではありません。受験という挑戦を、自分自身を成長させる最高のトレーニングに変える。そのために、私たちは「学習プロセスそのものを分析する」という思想を掲げ、生徒一人ひとりの「自律して学ぶ力」を構造的に鍛えていきます。
-            </p>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* テキストカラム */}
+              <div className="lg:col-span-7 space-y-6">
+                <p className="text-lg text-slate-700 leading-relaxed">
+                  塾講師として現場に立ち、多くの生徒たちを見てきて確信していることがあります。それは、同じ教室で同じ授業を受け、同じ教材を使っても、結果の出方には大きな差があるという現実です。
+                </p>
+                <p className="text-lg text-slate-700 leading-relaxed">
+                  今の時代、映像授業や良質な参考書は世の中に溢れています。しかし、どれほど優れた材料があっても、それを「自ら掴み取り、使いこなす力」がなければ、成果には結びつきません。
+                </p>
+                <p className="text-lg text-slate-700 leading-relaxed">
+                  私は、勉強や受験こそが自分を鍛える最高の機会だと考えています。定期テストや志望校合格という明確な目標に向かって本気で努力し、壁を乗り越える。その過程で培われる「自分で目標を立て、考え、実行する力」こそが、これからの時代を生き抜くための何よりの武器になると信じています。
+                </p>
+                <p className="text-lg text-slate-700 leading-relaxed">
+                  当塾は、単に答えを教えるだけの場所ではありません。受験という挑戦を、自分自身を成長させる最高のトレーニングに変える。そのために、私たちは「学習プロセスそのものを分析する」という思想を掲げ、生徒一人ひとりの「自律して学ぶ力」を構造的に鍛えていきます。
+                </p>
+              </div>
+              
+              {/* 画像カラム */}
+              <div className="lg:col-span-5">
+                <div className="relative group overflow-hidden rounded-2xl shadow-xl border border-slate-200/60 bg-white p-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80"
+                    alt="設立への想い指導イメージ"
+                    className="w-full h-auto object-cover rounded-xl transform hover:scale-[1.02] transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -88,8 +104,17 @@ export default function PolicyPage() {
         </section>
 
         {/* フッター前の CTA */}
-        <section className="bg-primary text-white py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="relative bg-slate-950 text-white py-24 overflow-hidden">
+          {/* 背景画像 */}
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            alt="学習風景"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
+          />
+          {/* オーバーレイ */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/90 to-slate-950/95" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-xl md:text-2xl font-serif font-medium mb-8 tracking-wide opacity-90 leading-relaxed border-b border-slate-700 pb-5">
               まずは 80 分の体験授業で学習プロセスの改善点を見つけましょう
             </h2>

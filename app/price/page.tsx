@@ -163,8 +163,17 @@ export default function PricePage() {
         </section>
 
         {/* フッター前の CTA */}
-        <section className="bg-primary text-white py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="relative bg-slate-950 text-white py-24 overflow-hidden">
+          {/* 背景画像 */}
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            alt="学習風景"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
+          />
+          {/* オーバーレイ */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/90 to-slate-950/95" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-xl md:text-2xl font-serif font-medium mb-10 tracking-wide opacity-90 leading-relaxed border-b border-slate-700 pb-5">
               学習プロセスの改善点が見つかる無料体験授業
             </h2>

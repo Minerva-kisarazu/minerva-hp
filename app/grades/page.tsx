@@ -111,19 +111,49 @@ export default function GradesPage() {
             <h2 className="text-2xl md:text-3xl font-serif font-bold mb-10 text-center tracking-wide border-b border-slate-300 pb-5">
               授業を実力に変える「自習スペース」
             </h2>
-            <p className="max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed font-light">
+            <p className="max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed font-light mb-12">
               授業だけで成績が上がることは絶対にありません。自学に集中して取り組めるように、私語厳禁の静寂な自習スペースを準備しています。1 講座でも受講していただければ、授業日に関わらず、開校時間（平日 16:00〜21:40）内は毎日いつでも無料でご利用いただけます。質問は授業を受けている教科以外でも大歓迎ですので、積極的に活用してください。他の生徒の勉強の妨げとなる行為があった場合は、利用を制限することがあります。
             </p>
 
-            {/* フッター前の CTA */}
-            <div className="max-w-4xl mx-auto mt-14 text-center">
-              <a
-                href="/contact"
-                className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-10 py-5 rounded-lg transition-all duration-300 shadow-md tracking-wide text-lg whitespace-nowrap"
-              >
-                無料学習診断レポート付き体験授業を申し込む
-              </a>
+            {/* 横長画像エリア */}
+            <div className="max-w-4xl mx-auto">
+              <div className="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200">
+                <img
+                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
+                  alt="静かで集中できる自習室スペース"
+                  className="w-full h-[350px] md:h-[450px] object-cover"
+                />
+                {/* キャプション */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-6 left-6 text-white text-sm font-semibold tracking-wide bg-slate-900/70 backdrop-blur-sm px-4 py-2 rounded-lg">
+                  集中環境が完備された自習室
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
+
+        {/* フッター前の CTA */}
+        <section className="relative bg-slate-950 text-white py-24 overflow-hidden">
+          {/* 背景画像 */}
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            alt="学習風景"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
+          />
+          {/* オーバーレイ */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/90 to-slate-950/95" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-xl md:text-2xl font-serif font-medium mb-8 tracking-wide opacity-90 leading-relaxed border-b border-slate-700 pb-5">
+              まずは 80 分の体験授業で学習プロセスの改善点を見つけましょう
+            </h2>
+            <a
+              href="/contact"
+              className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-10 py-5 rounded-lg transition-all duration-300 shadow-md tracking-wide text-lg whitespace-nowrap"
+            >
+              無料学習診断レポート付き体験授業を申し込む
+            </a>
           </div>
         </section>
       </main>
