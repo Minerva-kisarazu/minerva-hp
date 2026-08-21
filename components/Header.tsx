@@ -6,20 +6,21 @@ import { useState, useEffect } from 'react';
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // スタチク固定時の背景色（半透明）
-  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    if (!isOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [isOpen]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setIsOpen(false);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
   const navItems = [
@@ -30,23 +31,20 @@ export default function Header() {
     { href: '/contact', label: 'お問い合わせ' }
   ];
 
-  // 固定ヘッダー（sticky top-0 + backdrop-blur-md）
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* ロゴ */}
-          <Link href="/" className="flex items-baseline flex-shrink-0 mr-4">
-            <span className="text-slate-900 font-serif font-bold text-lg lg:text-xl xl:text-2xl hover:text-slate-700 transition-colors">
-              学習塾ミネルバ<span className="text-orange-600">個別指導×自立学習</span>
+        <div className="flex items-center justify-between gap-3 h-16">
+          <Link href="/" className="min-w-0 flex-1 lg:flex-none" onClick={() => setIsOpen(false)}>
+            <span className="block font-serif font-bold text-slate-900 text-base sm:text-lg lg:text-xl truncate">
+              学習塾ミネルバ
             </span>
-            <span className="block text-xs text-slate-500 mt-1 font-medium tracking-wide hidden xl:block">
-              木更津市の個別指導塾
+            <span className="hidden sm:block text-xs text-orange-600 font-medium truncate">
+              個別指導×自立学習｜木更津市の個別指導塾
             </span>
           </Link>
 
-          {/* デスクトップナビゲーション */}
-          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-4">
+          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-4 flex-shrink-0">
             {navItems.slice(0, 4).map(({ href, label }) => (
               <Link
                 key={href}
@@ -56,72 +54,63 @@ export default function Header() {
                 {label}
               </Link>
             ))}
-            {/* CTAボタン：仕様書準拠テキスト */}
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-2 xl:px-4 xl:py-2.5 rounded-lg transition-all duration-300 shadow-sm tracking-wide text-[11px] xl:text-xs whitespace-nowrap"
+              className="inline-flex items-center justify-center bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-2 xl:px-4 xl:py-2.5 rounded-lg transition-colors duration-300 shadow-sm tracking-wide text-[11px] xl:text-xs whitespace-nowrap"
             >
               無料学習診断レポート付き体験授業を申し込む
             </Link>
           </nav>
 
-          {/* モバイルハンバーガーボタン */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-slate-700 p-2 focus:outline-none hover:bg-slate-100 rounded-lg transition-colors"
-            aria-label="メニューを開く"
+            type="button"
+            onClick={() => setIsOpen((open) => !open)}
+            className="lg:hidden flex-shrink-0 inline-flex items-center justify-center w-11 h-11 text-slate-800 hover:bg-slate-100 rounded-lg"
+            aria-label={isOpen ? 'メニューを閉じる' : 'メニューを開く'}
             aria-expanded={isOpen}
           >
             <svg
-              className="w-6 h-6"
+              className="w-7 h-7"
               fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
               strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               {isOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </>
+                <path d="M6 6l12 12M18 6L6 18" />
               ) : (
-                <>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </>
+                <path d="M4 7h16M4 12h16M4 17h16" />
               )}
             </svg>
           </button>
         </div>
+      </div>
 
-        {/* モバイルナビゲーションドロップダウン */}
-        {isOpen && (
-          <nav className="lg:hidden py-6 border-t border-slate-200 bg-white/95 backdrop-blur-md">
-            <div className="flex flex-col space-y-3 px-4">
-              {navItems.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-slate-700 hover:text-slate-900 font-medium py-3 transition-colors tracking-wide"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {label}
-                </Link>
-              ))}
-              {/* CTAボタン：仕様書準拠テキスト */}
+      {isOpen && (
+        <nav className="lg:hidden absolute left-0 right-0 top-16 bg-white border-b border-slate-200 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto">
+          <div className="flex flex-col px-4 py-4">
+            {navItems.map(({ href, label }) => (
               <Link
-                href="/contact"
-                className="inline-flex items-center justify-center bg-orange-600 text-white font-semibold px-5 py-4 rounded-lg transition-all duration-300 shadow-md tracking-wide text-center text-sm mt-2"
+                key={href}
+                href={href}
+                className="text-slate-900 font-medium py-4 border-b border-slate-100"
                 onClick={() => setIsOpen(false)}
               >
-                無料学習診断レポート付き体験授業を申し込む
+                {label}
               </Link>
-            </div>
-          </nav>
-        )}
-      </div>
+            ))}
+            <Link
+              href="/contact"
+              className="mt-4 mb-2 inline-flex items-center justify-center bg-orange-600 text-white font-semibold px-5 py-4 rounded-lg text-center text-sm"
+              onClick={() => setIsOpen(false)}
+            >
+              無料学習診断レポート付き体験授業を申し込む
+            </Link>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

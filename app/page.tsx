@@ -9,8 +9,8 @@ export default function Home() {
       <Header />
       <main className="flex-grow pt-16">
         {/* ヒーロー：写真を隠さず、左右分割で見せる */}
-        <section className="bg-slate-950 text-white">
-          <div className="grid lg:grid-cols-2 min-h-[calc(100vh-4rem)]">
+        <section className="bg-slate-950 text-white overflow-hidden">
+          <div className="grid lg:grid-cols-2 lg:min-h-[calc(100vh-4rem)]">
             <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-20 lg:py-24">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 leading-relaxed tracking-tight">
                 「なぜできないのか」を見抜く。<br />
@@ -37,37 +37,38 @@ export default function Home() {
           </div>
         </section>
 
-        {/* お悩み共感：チェックリスト＋テスト答案の写真 */}
+        {/* お悩み共感：見出しの直後に項目を積む（横並びで潰れないようにする） */}
         <section className="bg-white text-slate-900 py-20 sm:py-28">
-          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-12 text-center leading-relaxed tracking-wide border-b border-slate-200 pb-5">
+          <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-center leading-relaxed tracking-wide border-b border-slate-200 pb-5">
               お子様に、こんなお悩みはありませんか？
             </h2>
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-              <ul className="space-y-5">
-                {[
-                  '家で全く勉強しない、テスト前しか机に向かわない',
-                  '勉強時間はそれなりに長いのに、いまいち成績が伸びない',
-                  'テストでいつも同じようなケアレスミスを繰り返している',
-                  'テスト対策として、具体的に何から手を付ければいいか分かっていない'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-4 pl-5 border-l-4 border-orange-500 py-3">
-                    <span className="text-orange-500 mt-1 text-lg font-medium flex-shrink-0">[ ]</span>
-                    <span className="text-base sm:text-lg leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-md">
-                <img
-                  src="/images/home-test.jpg"
-                  alt="定期テストの答案と赤ペン"
-                  className="w-full h-[320px] sm:h-[420px] object-cover object-center"
-                />
-              </div>
-            </div>
-            <p className="mt-12 max-w-4xl mx-auto text-lg text-slate-700 leading-relaxed font-light">
+            <ul className="space-y-4">
+              {[
+                '家で全く勉強しない、テスト前しか机に向かわない',
+                '勉強時間はそれなりに長いのに、いまいち成績が伸びない',
+                'テストでいつも同じようなケアレスミスを繰り返している',
+                'テスト対策として、具体的に何から手を付ければいいか分かっていない'
+              ].map((item, index) => (
+                <li
+                  key={index}
+                  className="flex items-start gap-4 bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-slate-900"
+                >
+                  <span className="text-orange-600 mt-0.5 text-lg font-bold flex-shrink-0">□</span>
+                  <span className="text-base sm:text-lg leading-relaxed text-slate-900">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 text-lg text-slate-700 leading-relaxed">
               これらの原因は、お子様の「やる気」や「能力」のせいではありません。点数が伸び悩む本当の理由は、本人も気づいていない「学習プロセスの癖」にあります。
             </p>
+            <div className="mt-10 rounded-2xl border border-slate-200 shadow-md overflow-hidden">
+              <img
+                src="/images/home-test.jpg"
+                alt="定期テストの答案と赤ペン"
+                className="block w-full h-auto"
+              />
+            </div>
           </div>
         </section>
 
