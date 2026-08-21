@@ -1,304 +1,72 @@
-'use client';
+import type { Metadata } from 'next';
+import PageHeader from '@/components/PageHeader';
+import ContactForm from '@/components/ContactForm';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+export const metadata: Metadata = {
+  title: '無料体験授業・お問い合わせ',
+  description:
+    '木更津市の個別指導塾 学習塾ミネルバの無料学習診断レポート付き体験授業（80分）のお申し込み・お問い合わせフォーム。お申し込み後の流れもご確認いただけます。',
+};
 
-import { useState, ChangeEvent } from 'react';
+const steps = [
+  {
+    title: 'フォーム送信',
+    body: '下記フォームより、必要事項を入力して送信してください。',
+  },
+  {
+    title: '日程調整のご連絡',
+    body: '2営業日以内にお電話または公式LINEにて、体験授業（80分）の実施日時をご相談させていただきます。',
+  },
+  {
+    title: '個別面談＆体験授業（80分）',
+    body: '塾長がお悩みを伺い、実際の個別指導を通じてお子様の学習プロセス（動作・判断の癖・境界線）を精密に分析します。',
+  },
+  {
+    title: '学習診断レポートのお渡し',
+    body: '分析結果から判明した「思考停止のポイント」や「今最優先で克服すべき点」をまとめたレポートをお渡しします。',
+  },
+  {
+    title: 'ご検討',
+    body: '指導方針や環境がお子様に合うかどうか、ご家庭でじっくりご検討ください。',
+  },
+];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    grade: '',
-    schoolName: '',
-    phone: '',
-    consultation: [] as string[],
-    message: ''
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-
-  const consultationOptions = [
-    '無料学習診断レポート付き体験授業（80 分）の申し込み',
-    '現在の学習状況についての個別相談希望',
-    '資料請求・その他お問い合わせ'
-  ];
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleCheckboxChange = (option: string, checked: boolean) => {
-    if (checked) {
-      const current = formData['consultation'] as string[];
-      setFormData(prev => ({ ...prev, consultation: [...current, option] }));
-    } else {
-      const current = formData['consultation'] as string[];
-      setFormData(prev => ({ ...prev, consultation: current.filter(item => item !== option) }));
-    }
-  };
-
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.name || formData.name.trim() === '') {
-      newErrors['name'] = 'お名前を入力してください';
-    }
-
-    if (!formData.grade || formData.grade.trim() === '') {
-      newErrors['grade'] = 'お子様の学年を選択してください';
-    }
-
-    if (!formData.phone || formData.phone.trim() === '') {
-      newErrors['phone'] = '電話番号を入力してください';
-    } else if (!/^[\d-]+$/.test(formData.phone)) {
-      newErrors['phone'] = '電話番号は数字とハイフンのみで入力してください';
-    }
-
-    const currentConsultation = formData['consultation'] as string[];
-    if (currentConsultation.length === 0) {
-      newErrors['consultation'] = '少なくとも 1 つの相談内容を選択してください';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSubmitSuccess(true);
-      setFormData({
-        name: '',
-        grade: '',
-        schoolName: '',
-        phone: '',
-        consultation: [] as string[],
-        message: ''
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  if (submitSuccess) {
-    return (
-      <>
-        <Header />
-        <main className="flex-grow">
-          <section className="bg-white text-slate-900 py-36">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <div className="mb-10">
-                  <svg className="mx-auto h-16 w-16 text-green-500" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h1 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-slate-900 tracking-wide">お申し込みありがとうございます</h1>
-                <p className="max-w-2xl mx-auto text-lg text-slate-700 mb-6 leading-relaxed">
-                  お申し込みを受け付けました。2営業日以内にお電話または公式LINEにて、体験授業の日程についてご連絡いたします。
-                </p>
-                <p className="max-w-2xl mx-auto text-base text-slate-500 mb-12 leading-relaxed">
-                  ご不明な点がございましたら、お気軽にお電話（03-6820-6929）でもお問い合わせください。
-                </p>
-                <div className="mt-4">
-                  <a href="/" className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 shadow-md tracking-wide whitespace-nowrap">
-                    ホームページに戻る
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-        <Footer />
-      </>
-    );
-  }
-
   return (
-    <>
-      <Header />
-      <main className="flex-grow">
-        <section className="bg-slate-50 text-slate-900 py-36">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold mb-16 text-center tracking-wide border-b border-slate-300 pb-5">お申し込みフォーム</h2>
+    <main id="main">
+      <PageHeader title="無料体験授業・お問い合わせ" />
 
-            {/* お申し込み後のステップ（仕様書準拠：フォーム直上に配置） */}
-            <div className="max-w-3xl mx-auto mb-16">
-              <div className="bg-white p-8 sm:p-10 rounded-xl shadow-sm border border-slate-200">
-                <h3 className="text-xl font-serif font-bold mb-8 text-orange-600 tracking-wide text-center">無料学習診断レポート付き体験授業・お申し込み後のステップ</h3>
-                <div className="space-y-5">
-                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">1</div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">フォーム送信</h4>
-                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">下記フォームより、必要事項を入力して送信してください。</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">2</div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">日程調整のご連絡</h4>
-                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">2営業日以内にお電話または公式LINEにて、体験授業（80分）の実施日時をご相談させていただきます。</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">3</div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">個別面談＆体験授業（80分）</h4>
-                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">塾長がお悩みを伺い、実際の個別指導を通じてお子様の学習プロセス（動作・判断の癖・境界線）を精密に分析します。</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">4</div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">学習診断レポートのお渡し</h4>
-                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">分析結果から判明した「思考停止のポイント」や「今最優先で克服すべき点」をまとめたレポートをお渡しします。</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4 p-4 rounded-lg bg-slate-50/80">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl shadow-sm">5</div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 mb-1 tracking-wide">ご検討</h4>
-                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">指導方針や環境がお子様に合うかどうか、ご家庭でじっくりご検討ください。</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <form onSubmit={handleSubmit}>
-              <div className="max-w-2xl mx-auto space-y-8">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold mb-2.5 tracking-wide">
-                    お名前<span className="text-red-500">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleInputChange} 
-                    placeholder="例：山田 太郎"
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-600 focus:ring-2 focus:ring-orange-600/20 outline-none transition-all duration-300 font-medium text-slate-900 bg-white"
-                  />
-                  {errors['name'] && <p className="mt-1.5 text-sm text-red-500">{errors['name']}</p>}
-                </div>
-                <div>
-                  <label htmlFor="grade" className="block text-sm font-semibold mb-2.5 tracking-wide">
-                    お子様の学年<span className="text-red-500">*</span>
-                  </label>
-                  <select 
-                    id="grade" 
-                    name="grade" 
-                    value={formData.grade} 
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-600 focus:ring-2 focus:ring-orange-600/20 outline-none transition-all duration-300 font-medium bg-white text-slate-900"
+      <section className="bg-slate-50 py-20 sm:py-28">
+        <div className="max-w-3xl mx-auto px-6 sm:px-8">
+          {/* お申し込み後の流れ（離脱を防ぐためフォームの直上に配置） */}
+          <div className="mb-16">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-10 text-center leading-relaxed border-b border-slate-300 pb-5">
+              無料学習診断レポート付き体験授業・お申し込み後のステップ
+            </h2>
+            <ol className="space-y-4">
+              {steps.map(({ title, body }, index) => (
+                <li
+                  key={title}
+                  className="flex gap-4 bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-sm"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl"
                   >
-                    <option value="">選択してください</option>
-                    {['小学 1 年','小学 2 年','小学 3 年','小学 4 年','小学 5 年','小学 6 年', '中学 1 年','中学 2 年','中学 3 年', '高校 1 年','高校 2 年','高校 3 年'].map((year) => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
-                  {errors['grade'] && <p className="mt-1.5 text-sm text-red-500">{errors['grade']}</p>}
-                </div>
-                <div>
-                  <label htmlFor="schoolName" className="block text-sm font-semibold mb-2.5 tracking-wide">学校名</label>
-                  <input 
-                    type="text" 
-                    id="schoolName" 
-                    name="schoolName" 
-                    value={formData.schoolName} 
-                    onChange={handleInputChange} 
-                    placeholder="例：木更津市立金田中学校"
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-600 focus:ring-2 focus:ring-orange-600/20 outline-none transition-all duration-300 font-medium text-slate-900 bg-white"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold mb-2.5 tracking-wide">
-                    電話番号<span className="text-red-500">*</span>
-                  </label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    value={formData.phone} 
-                    onChange={handleInputChange} 
-                    placeholder="例：090-1234-5678"
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-600 focus:ring-2 focus:ring-orange-600/20 outline-none transition-all duration-300 font-medium text-slate-900 bg-white"
-                  />
-                  {errors['phone'] && <p className="mt-1.5 text-sm text-red-500">{errors['phone']}</p>}
-                </div>
-                <div>
-                  <label htmlFor="consultation" className="block text-sm font-semibold mb-2.5 tracking-wide">
-                    ご相談内容<span className="text-red-500">*</span><span className="text-slate-400 text-xs">(複数選択可)</span>
-                  </label>
-                  <div className="space-y-2">
-                    {consultationOptions.map((option) => (
-                      <label 
-                        key={option} 
-                        className="flex items-start gap-3 p-3 rounded-lg cursor-pointer hover:bg-slate-50 transition-all duration-300 border border-transparent focus-within:border-orange-600"
-                      >
-                        <input 
-                          type="checkbox" 
-                          onChange={(e) => handleCheckboxChange(option, e.target.checked)} 
-                          className="mt-1 w-4 h-4 text-orange-600 rounded focus:ring-orange-600 focus:ring-2"
-                        />
-                        <span className="text-slate-700 leading-relaxed">{option}</span>
-                      </label>
-                    ))}
+                    {index + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-bold mb-1">{title}</h3>
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{body}</p>
                   </div>
-                  {errors['consultation'] && <p className="mt-1.5 text-sm text-red-500">{errors['consultation']}</p>}
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold mb-2.5 tracking-wide">
-                    メッセージ・具体的なお悩み（任意）
-                  </label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    value={formData.message} 
-                    onChange={handleInputChange} 
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-600 focus:ring-2 focus:ring-orange-600/20 outline-none transition-all duration-300 font-medium leading-relaxed resize-none text-slate-900 bg-white"
-                  />
-                </div>
-                <div className="pt-6">
-                  <button 
-                    type="submit" 
-                    disabled={isSubmitting} 
-                    className={`w-full bg-orange-600 hover:bg-orange-700 text-white font-serif font-semibold py-4 rounded-lg transition-all duration-500 shadow-md tracking-wide whitespace-nowrap ${isSubmitting ? 'opacity-75' : ''}`}
-                  >
-                    {isSubmitting ? '送信中...' : 'この内容で送信する（無料）'}
-                  </button>
-                </div>
-              </div>
-              <div className="max-w-2xl mx-auto mt-12 bg-navy-900/80 backdrop-blur-sm p-6 rounded-lg border border-slate-700">
-                <h3 className="font-semibold mb-3 text-orange-400 tracking-wide">プライバシーポリシー</h3>
-                <p className="text-sm text-slate-300 leading-relaxed font-light">お申し込み情報を、体験授業の実施に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。</p>
-              </div>
-            </form>
+                </li>
+              ))}
+            </ol>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+
+          <ContactForm />
+        </div>
+      </section>
+    </main>
   );
 }
