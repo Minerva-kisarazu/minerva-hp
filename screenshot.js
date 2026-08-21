@@ -170,6 +170,11 @@ async function captureSlices(page, filename, viewportName, sliceHeight) {
       `${viewportName}-${filename}-s${index}.png`
     );
 
+    // 該当位置まで実際にスクロールする。ビューポート外の iframe（地図など）は
+    // 描画されないため、これがないと白抜けで写る。
+    await page.evaluate((top) => window.scrollTo(0, top), y);
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
     await page.screenshot({
       path: outPath,
       clip: { x: 0, y, width: pageWidth, height },

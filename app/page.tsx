@@ -423,9 +423,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2">
           <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 lg:py-24">
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
-              勉強しているのに伸びない理由。
-              <br />
-              あるいは、もっと伸びるための改善点。
+              勉強しているのに伸びない理由。あるいは、もっと伸びるための改善点。
             </h2>
             <p className="text-lg sm:text-xl text-slate-300 mb-8 sm:mb-10 leading-relaxed">
               まずは80分の体験授業で見つけてみませんか。
@@ -444,7 +442,7 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-sm text-slate-400 leading-relaxed">
+              <p className="mt-5 text-base text-slate-300 leading-relaxed">
                 現在の塾での勉強やテスト対策に手応えを感じていない方も、現状を打破する指針としてお役立てください。
               </p>
             </div>

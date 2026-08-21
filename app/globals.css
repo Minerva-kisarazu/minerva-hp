@@ -15,6 +15,43 @@
     font-size: 16px;
     line-height: 1.9;
   }
+
+  /*
+   * 日本語の見出しが単語の途中で折り返され、最終行に数文字だけ残るのを防ぐ。
+   * auto-phrase は文節単位で改行位置を決める（html[lang="ja"] が前提）。
+   * balance は各行の長さを揃える。未対応ブラウザでは従来の折り返しになる。
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li,
+  dt,
+  dd,
+  th,
+  td,
+  figcaption,
+  label,
+  legend,
+  address {
+    word-break: auto-phrase;
+  }
+
+  /* 見出しは行長も揃える。本文は行末の孤立文字だけを避ける */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -212,7 +212,7 @@ export default function GradesPage() {
                 中学生の1週間の通塾モデル（英数2講座受講の場合）
               </caption>
               <thead>
-                <tr className="bg-navy-900 text-sm">
+                <tr className="bg-navy-900 text-base">
                   <th scope="col" className="px-5 py-4 font-bold w-28">
                     曜日
                   </th>
@@ -237,10 +237,10 @@ export default function GradesPage() {
                           {day}
                         </th>
                       )}
-                      <td className="px-5 py-4 text-sm font-bold text-slate-100 whitespace-nowrap">
+                      <td className="px-5 py-4 text-base font-bold text-slate-100 whitespace-nowrap">
                         {row.time}
                       </td>
-                      <td className="px-5 py-4 text-sm text-slate-200 leading-relaxed">
+                      <td className="px-5 py-4 text-base text-slate-200 leading-relaxed">
                         <span
                           className={`inline-block text-xs font-bold px-2 py-0.5 rounded mr-2 align-middle ${
                             row.isLesson ? 'bg-orange-600 text-white' : 'bg-navy-700 text-slate-200'

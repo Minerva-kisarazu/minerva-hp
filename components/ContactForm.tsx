@@ -171,7 +171,7 @@ export default function ContactForm() {
         <p className="text-slate-700 leading-relaxed mb-4">
           お申し込みを受け付けました。2営業日以内にお電話または公式LINEにて、体験授業の日程についてご連絡いたします。
         </p>
-        <p className="text-sm text-slate-600 leading-relaxed mb-10">
+        <p className="text-base text-slate-600 leading-relaxed mb-10">
           ご不明な点がございましたら、お気軽にお電話（
           <a href="tel:0368206929" className="underline underline-offset-2 hover:text-orange-700">
             03-6820-6929
@@ -194,7 +194,7 @@ export default function ContactForm() {
 
       <div className="space-y-8">
         <div>
-          <label htmlFor="name" className="block text-sm font-bold mb-2">
+          <label htmlFor="name" className="block text-base font-bold mb-2">
             お名前
             <span className="text-red-600 ml-1">必須</span>
           </label>
@@ -218,7 +218,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="grade" className="block text-sm font-bold mb-2">
+          <label htmlFor="grade" className="block text-base font-bold mb-2">
             お子様の学年
             <span className="text-red-600 ml-1">必須</span>
           </label>
@@ -246,7 +246,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="schoolName" className="block text-sm font-bold mb-2">
+          <label htmlFor="schoolName" className="block text-base font-bold mb-2">
             学校名
             <span className="text-slate-500 font-medium ml-1">任意</span>
           </label>
@@ -262,7 +262,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-bold mb-2">
+          <label htmlFor="phone" className="block text-base font-bold mb-2">
             電話番号
             <span className="text-red-600 ml-1">必須</span>
           </label>
@@ -290,7 +290,7 @@ export default function ContactForm() {
           aria-invalid={Boolean(errors.consultation)}
           aria-describedby={errors.consultation ? 'consultation-error' : undefined}
         >
-          <legend className="block text-sm font-bold mb-2">
+          <legend className="block text-base font-bold mb-2">
             ご相談内容
             <span className="text-red-600 ml-1">必須</span>
             <span className="text-slate-500 font-medium ml-1">複数選択可</span>
@@ -323,7 +323,7 @@ export default function ContactForm() {
         </fieldset>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-bold mb-2">
+          <label htmlFor="message" className="block text-base font-bold mb-2">
             メッセージ・具体的なお悩み
             <span className="text-slate-500 font-medium ml-1">任意</span>
           </label>
@@ -339,8 +339,8 @@ export default function ContactForm() {
         </div>
 
         <div className="bg-slate-100 border border-slate-200 rounded-lg p-5">
-          <h3 className="font-bold text-sm mb-2">個人情報の取り扱いについて</h3>
-          <p className="text-sm text-slate-700 leading-relaxed">
+          <h3 className="font-bold text-base mb-2">個人情報の取り扱いについて</h3>
+          <p className="text-base text-slate-700 leading-relaxed">
             お申し込み情報は、体験授業の実施に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。
           </p>
         </div>
@@ -352,7 +352,7 @@ export default function ContactForm() {
         >
           {isSubmitting ? '送信中...' : '無料体験・学習相談を申し込む'}
         </button>
-        <p className="mt-3 text-center text-sm text-slate-600 leading-relaxed">
+        <p className="mt-3 text-center text-base text-slate-600 leading-relaxed">
           送信後、日程調整についてご連絡します。
         </p>
       </div>

@@ -24,28 +24,32 @@ export default function Footer() {
             <address className="not-italic space-y-2 leading-relaxed">
               <p>
                 <span className="font-bold text-slate-900">所在地：</span>
-                〒292-0009 千葉県木更津市金田東5-4-6
+                <span className="whitespace-nowrap">〒292-0009</span>{' '}
+                <span className="whitespace-nowrap">千葉県木更津市金田東5-4-6</span>
               </p>
-              <p>
+              <p className="flex items-center gap-1">
                 <span className="font-bold text-slate-900">電話番号：</span>
-                <a href="tel:0368206929" className="hover:text-orange-700 transition-colors underline underline-offset-2">
+                <a
+                  href="tel:0368206929"
+                  className="inline-flex items-center min-h-[44px] hover:text-orange-700 transition-colors underline underline-offset-2"
+                >
                   03-6820-6929
                 </a>
               </p>
             </address>
 
-            <dl className="mt-6 pt-6 border-t border-slate-300 space-y-5 text-sm leading-relaxed">
+            <dl className="mt-6 pt-6 border-t border-slate-300 space-y-5 text-base leading-relaxed">
               <div>
                 <dt className="font-bold text-slate-900">開校時間（通塾・自習室利用）</dt>
                 <dd className="mt-1">平日 16:00〜21:40</dd>
-                <dd className="mt-1 text-xs text-slate-600">
+                <dd className="mt-1 text-sm text-slate-600">
                   当面の間、土曜日・日曜日は休講となります。テスト前や講習時を除く。
                 </dd>
               </div>
               <div>
                 <dt className="font-bold text-slate-900">お問い合わせ受付時間（お電話・窓口）</dt>
                 <dd className="mt-1">平日 16:00〜21:40 ／ 土曜日 14:00〜20:00</dd>
-                <dd className="mt-1 text-xs text-slate-600">
+                <dd className="mt-1 text-sm text-slate-600">
                   土曜日は授業・自習室は休講ですが、お問い合わせの受付・入塾面談の実施は承っております。
                 </dd>
               </div>
@@ -58,12 +62,12 @@ export default function Footer() {
               サイトマップ
             </h2>
             <nav aria-label="フッターナビゲーション">
-              <ul className="space-y-4">
+              <ul className="space-y-1">
                 {sitemapItems.map(({ href, label }) => (
                   <li key={href}>
                     <Link
                       href={href}
-                      className="font-medium hover:text-orange-700 transition-colors"
+                      className="inline-flex items-center min-h-[44px] font-medium hover:text-orange-700 transition-colors"
                     >
                       {label}
                     </Link>
@@ -93,7 +97,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-300 pt-10 text-center text-sm leading-relaxed max-w-4xl mx-auto">
+        <div className="border-t border-slate-300 pt-10 text-center text-base leading-relaxed max-w-4xl mx-auto">
           <p>
             千葉県木更津市金田東の学習塾ミネルバ。木更津市の中学生向け塾・高校受験対策・個別指導塾として、生徒一人ひとりの学習プロセスを最適化します。
           </p>

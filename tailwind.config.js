@@ -34,6 +34,21 @@ module.exports = {
       lineHeight: {
         relaxed: '1.8',
       },
+      // Tailwind 既定の text-* は行間 1.5 前後で日本語には詰まりすぎるため、
+      // サイズごとに日本語向けの行間を既定値として持たせる。
+      // 個別に leading-* を指定した箇所はそちらが優先される。
+      fontSize: {
+        xs: ['0.75rem', { lineHeight: '1.7' }],
+        sm: ['0.875rem', { lineHeight: '1.8' }],
+        base: ['1rem', { lineHeight: '1.9' }],
+        lg: ['1.125rem', { lineHeight: '1.85' }],
+        xl: ['1.25rem', { lineHeight: '1.75' }],
+        '2xl': ['1.5rem', { lineHeight: '1.6' }],
+        '3xl': ['1.875rem', { lineHeight: '1.5' }],
+        '4xl': ['2.25rem', { lineHeight: '1.45' }],
+        '5xl': ['3rem', { lineHeight: '1.35' }],
+        '6xl': ['3.75rem', { lineHeight: '1.25' }],
+      },
     },
   },
   plugins: [],

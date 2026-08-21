@@ -170,7 +170,7 @@ export default function PricePage() {
                   ))}
                   <div className="flex justify-between gap-4 pt-2 border-t border-slate-100 text-slate-600">
                     <dt>5講座目以降（1講座につき）</dt>
-                    <dd className="tabular-nums">{extra}</dd>
+                    <dd className="tabular-nums whitespace-nowrap">{extra}</dd>
                   </div>
                 </dl>
               </article>
