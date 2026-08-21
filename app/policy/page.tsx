@@ -35,7 +35,7 @@ export default function PolicyPage() {
               <div className="lg:col-span-5">
                 <div className="relative group overflow-hidden rounded-2xl shadow-xl border border-slate-200/60 bg-white p-2">
                   <img
-                    src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80"
+                    src="/images/policy-tutoring.jpg"
                     alt="設立への想い指導イメージ"
                     className="w-full h-auto object-cover rounded-xl transform hover:scale-[1.02] transition-transform duration-300"
                   />
@@ -107,7 +107,7 @@ export default function PolicyPage() {
         <section className="relative bg-slate-950 text-white py-24 overflow-hidden">
           {/* 背景画像 */}
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            src="/images/cta-atmosphere.jpg"
             alt="学習風景"
             className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
           />

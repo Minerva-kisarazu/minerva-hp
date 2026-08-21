@@ -166,7 +166,7 @@ export default function PricePage() {
         <section className="relative bg-slate-950 text-white py-24 overflow-hidden">
           {/* 背景画像 */}
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            src="/images/cta-atmosphere.jpg"
             alt="学習風景"
             className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
           />

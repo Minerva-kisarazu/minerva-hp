@@ -119,7 +119,7 @@ export default function GradesPage() {
             <div className="max-w-4xl mx-auto">
               <div className="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200">
                 <img
-                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
+                  src="/images/study-room.jpg"
                   alt="静かで集中できる自習室スペース"
                   className="w-full h-[350px] md:h-[450px] object-cover"
                 />
@@ -137,7 +137,7 @@ export default function GradesPage() {
         <section className="relative bg-slate-950 text-white py-24 overflow-hidden">
           {/* 背景画像 */}
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+            src="/images/cta-atmosphere.jpg"
             alt="学習風景"
             className="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-overlay"
           />
