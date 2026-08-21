@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import CtaButton from './CtaButton';
 
-export default function PreFooterCta({ heading }: { heading: string }) {
+type Props = {
+  heading: string;
+};
+
+/** 通常ページ下部のメインCTA（文言はサイト全体で統一） */
+export default function PreFooterCta({ heading }: Props) {
   return (
     <section className="relative bg-navy-900 text-white py-20 sm:py-28 overflow-hidden">
       <Image

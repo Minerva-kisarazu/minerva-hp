@@ -10,9 +10,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* 日本語は欧文より行間を広く取らないと読みづらいため既定値を上書き */
+  /* 保護者向け本文：15〜16px基準、行間は詰まりすぎないように */
   body {
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 1.9;
   }
 }
 

@@ -5,7 +5,7 @@ import ContactForm from '@/components/ContactForm';
 export const metadata: Metadata = {
   title: '無料体験授業・お問い合わせ',
   description:
-    '木更津市の個別指導塾 学習塾ミネルバの無料学習診断レポート付き体験授業（80分）のお申し込み・お問い合わせフォーム。お申し込み後の流れもご確認いただけます。',
+    '木更津市の個別指導塾 学習塾ミネルバの無料学習診断レポート付き体験授業（80分）のお申し込み・お問い合わせフォーム。',
 };
 
 const steps = [
@@ -15,19 +15,19 @@ const steps = [
   },
   {
     title: '日程調整のご連絡',
-    body: '2営業日以内にお電話または公式LINEにて、体験授業（80分）の実施日時をご相談させていただきます。',
+    body: '2営業日以内にお電話または公式LINEにて、体験授業（80分）の日時をご相談します。',
   },
   {
     title: '個別面談＆体験授業（80分）',
-    body: '塾長がお悩みを伺い、実際の個別指導を通じてお子様の学習プロセス（動作・判断の癖・境界線）を精密に分析します。',
+    body: '教室での個別指導を体験していただきながら、お子さまの学習の様子を確認します。',
   },
   {
     title: '学習診断レポートのお渡し',
-    body: '分析結果から判明した「思考停止のポイント」や「今最優先で克服すべき点」をまとめたレポートをお渡しします。',
+    body: '体験授業で確認した内容をもとに、「思考が止まっているポイント」や「今後優先して克服すべき点」をレポートにまとめてお渡しします。',
   },
   {
     title: 'ご検討',
-    body: '指導方針や環境がお子様に合うかどうか、ご家庭でじっくりご検討ください。',
+    body: '指導方針や環境がお子さまに合うかどうか、ご家庭でじっくりご検討ください。',
   },
 ];
 
@@ -36,11 +36,26 @@ export default function ContactPage() {
     <main id="main">
       <PageHeader title="無料体験授業・お問い合わせ" />
 
-      <section className="bg-slate-50 py-20 sm:py-28">
-        <div className="max-w-3xl mx-auto px-6 sm:px-8">
-          {/* お申し込み後の流れ（離脱を防ぐためフォームの直上に配置） */}
-          <div className="mb-16">
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-10 text-center leading-relaxed border-b border-slate-300 pb-5">
+      <section className="bg-slate-50 py-16 sm:py-24">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8">
+          <div className="mb-12 sm:mb-14 space-y-4">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed border-b border-slate-300 pb-5">
+              まずは、お子さまの「今の学習状況」を一緒に確認します。
+            </h2>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+              無料体験授業では、ただ授業を受けていただくだけではありません。
+              お子さまの学習の様子を確認し、「何ができていて、どこに改善点があるのか」を一緒に整理します。
+            </p>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+              体験授業を受けたうえで、ご家庭でじっくりご検討ください。
+            </p>
+            <p className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
+              無理な勧誘は行っておりません。
+            </p>
+          </div>
+
+          <div className="mb-14 sm:mb-16">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-8 sm:mb-10 text-center leading-relaxed border-b border-slate-300 pb-5">
               無料学習診断レポート付き体験授業・お申し込み後のステップ
             </h2>
             <ol className="space-y-4">
@@ -56,8 +71,8 @@ export default function ContactPage() {
                     {index + 1}
                   </span>
                   <div>
-                    <h3 className="font-bold mb-1">{title}</h3>
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed">{body}</p>
+                    <h3 className="font-bold mb-1 text-base sm:text-lg">{title}</h3>
+                    <p className="text-base text-slate-700 leading-relaxed">{body}</p>
                   </div>
                 </li>
               ))}

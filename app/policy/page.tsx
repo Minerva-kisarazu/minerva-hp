@@ -6,7 +6,7 @@ import PreFooterCta from '@/components/PreFooterCta';
 export const metadata: Metadata = {
   title: '指導方針',
   description:
-    '木更津市の個別指導塾 学習塾ミネルバの指導方針。対話による思考の言語化と「正しい学習の作法」の定着、そして解き方と手の動き・思考停止が起きるポイント・知識の境界線という3つの客観的分析について解説します。',
+    '木更津市の個別指導塾 学習塾ミネルバの指導方針。「教えてもらう」から「自分で学べる」へ。必要なことは教えつつ、最初から答えを与えず、自分で考える力を育てます。',
 };
 
 const founderMessage = [
@@ -29,16 +29,16 @@ const lessonFeatures = [
 
 const analysisDetails = [
   {
-    title: '【解き方と手の動きの分析】',
-    body: 'ノートの余白の使い方、問題用紙への書き込み、筆算の配置など、問題を解いている最中の「物理的な動作」をすべてチェックします。本人が無意識に行っている「ミスを誘発する書き方の癖」や「暗記効率を下げる視線の動き」を見つけ出し、得点に直結するクリーンな動作へと修正し、定着するまで繰り返し確認します。',
+    title: '解き方・問題の解き進め方を分析',
+    body: 'ノートの余白の使い方、問題用紙への書き込み、筆算の配置など、問題を解いている最中の動作をすべてチェックします。本人が無意識に行っている「ミスを誘発する書き方の癖」を見つけ出し、得点に直結するきれいな動作へと修正し、定着するまで繰り返し確認します。',
   },
   {
-    title: '【思考停止が起きるポイントの分析】',
-    body: '問題のどのフェーズで手が止まるのか、どの記述を見たときに読み飛ばしが始まるのか、その「判断の癖」を捉えます。単なる集中力不足やケアレスミスという言葉で片付けず、思考がシャットアウトされる明確なポイントを特定して対策を講じます。',
+    title: 'どこで考えることを止めているかを分析',
+    body: '問題のどの段階で手が止まるのか、どの記述を見たときに読み飛ばしが始まるのか。単なる集中力不足やケアレスミスという言葉で片付けず、考えることを止めているポイントを特定して対策を講じます。',
   },
   {
-    title: '【知識の境界線の分析】',
-    body: '対話を通じて、生徒自身が「100%自信を持って説明できる範囲」と「なんとなくの感覚で解いている範囲」の境界線を切り分けます。この境界線を明確にすることで、やるべき課題がピンポイントで決まり、無駄な反復や背伸びをした難問演習による時間の浪費を防ぎます。',
+    title: '「分かる」と「できる」の境目を分析',
+    body: '対話を通じて、「100%自信を持って説明できる範囲」と「なんとなくの感覚で解いている範囲」を切り分けます。この境目を明確にすることで、やるべき課題がピンポイントで決まり、無駄な反復や背伸びをした難問演習による時間の浪費を防ぎます。',
   },
 ];
 
@@ -47,12 +47,19 @@ export default function PolicyPage() {
     <main id="main">
       <PageHeader title="指導方針" />
 
-      {/* 設立への想い */}
-      <section className="bg-slate-50 py-20 sm:py-28">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-12 leading-relaxed border-b border-slate-300 pb-5">
+      <section className="bg-slate-50 py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 leading-relaxed border-b border-slate-300 pb-5">
             日々の学習を通じて、一生モノの「自ら学ぶ力」を
           </h2>
+          <div className="mb-10 space-y-3 max-w-3xl">
+            <p className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-slate-900 leading-relaxed">
+              「教えてもらう」から、「自分で学べる」へ。
+            </p>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+              私たちは、目先の点数だけでなく、将来につながる学習習慣を育てます。
+            </p>
+          </div>
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div className="lg:col-span-7 space-y-6">
               {founderMessage.map((paragraph) => (
@@ -76,42 +83,46 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      {/* 授業の特徴 */}
-      <section className="bg-navy-900 text-white py-20 sm:py-28">
-        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <section className="bg-navy-900 text-white py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
           <p className="text-sm font-bold text-orange-400 mb-3 text-center">【授業】理解する力を鍛える</p>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-14 text-center leading-relaxed border-b border-navy-700 pb-5">
-            「教えすぎない」から、一生モノの知性が育つ
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed">
+            「教えすぎない」から、自分で考える力が育つ
           </h2>
-          <div className="space-y-8">
+          <div className="text-center text-base sm:text-lg text-slate-200 mb-12 leading-relaxed border-b border-navy-700 pb-8 space-y-2">
+            <p className="font-bold text-white text-lg sm:text-xl">必要なことは教えます。</p>
+            <p>ただし、最初から答えを与えることはしません。</p>
+          </div>
+          <div className="space-y-6 sm:space-y-8">
             {lessonFeatures.map(({ title, body }) => (
-              <div key={title} className="bg-navy-800 p-7 sm:p-10 rounded-xl border border-navy-700">
-                <h3 className="font-serif text-lg sm:text-xl font-bold mb-5 text-orange-400">{title}</h3>
-                <p className="text-slate-200 leading-relaxed">{body}</p>
+              <div key={title} className="bg-navy-800 p-6 sm:p-10 rounded-xl border border-navy-700">
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-orange-400">{title}</h3>
+                <p className="text-base text-slate-200 leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 精密分析の深掘り */}
-      <section className="bg-slate-50 py-20 sm:py-28">
-        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-14 text-center leading-relaxed border-b border-slate-300 pb-5">
+      <section className="bg-slate-50 py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-12 text-center leading-relaxed border-b border-slate-300 pb-5">
             成果を偶然にしないための「3つの客観的分析」
           </h2>
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {analysisDetails.map(({ title, body }) => (
-              <div key={title} className="bg-white p-7 sm:p-10 rounded-xl shadow-sm border border-slate-200">
-                <h3 className="font-serif text-lg sm:text-xl font-bold mb-5 text-orange-700">{title}</h3>
-                <p className="text-slate-700 leading-relaxed">{body}</p>
+              <div key={title} className="bg-white p-6 sm:p-10 rounded-xl shadow-sm border border-slate-200">
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-orange-700 leading-snug">
+                  {title}
+                </h3>
+                <p className="text-base text-slate-700 leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <PreFooterCta heading="まずは80分の体験授業で、学習プロセスの改善点を見つけましょう" />
+      <PreFooterCta heading="私たちの指導方針を、実際の授業で体験してみませんか。" />
     </main>
   );
 }

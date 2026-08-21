@@ -53,7 +53,7 @@ const toHalfWidth = (value: string) =>
 const countDigits = (value: string) => (toHalfWidth(value).match(/\d/g) ?? []).length;
 
 const inputClassName =
-  'w-full px-4 py-3 rounded-lg border bg-white text-slate-900 outline-none transition-colors focus:border-orange-600 focus:ring-2 focus:ring-orange-600/30';
+  'w-full px-4 py-3.5 rounded-lg border bg-white text-base text-slate-900 outline-none transition-colors focus:border-orange-600 focus:ring-2 focus:ring-orange-600/30';
 
 const errorInputClassName = 'border-red-500';
 const normalInputClassName = 'border-slate-300';
@@ -350,8 +350,11 @@ export default function ContactForm() {
           disabled={isSubmitting}
           className="w-full bg-orange-600 hover:bg-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-md text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
         >
-          {isSubmitting ? '送信中...' : 'この内容で送信する（無料）'}
+          {isSubmitting ? '送信中...' : '無料体験・学習相談を申し込む'}
         </button>
+        <p className="mt-3 text-center text-sm text-slate-600 leading-relaxed">
+          送信後、日程調整についてご連絡します。
+        </p>
       </div>
     </form>
   );

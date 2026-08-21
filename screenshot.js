@@ -27,10 +27,29 @@ const PAGES = [
   { path: '/contact', filename: '05-contact' },
 ];
 
-const VIEWPORT = {
-  width: 1440,
-  height: 900,
-};
+// PC とスマホの両方を撮る（スマホ表示の崩れを確認するため）
+// sliceHeight は --slices 指定時の分割撮影の高さ
+const VIEWPORTS = [
+  {
+    name: 'pc',
+    width: 1440,
+    height: 900,
+    deviceScaleFactor: 1,
+    isMobile: false,
+    sliceHeight: 1500,
+  },
+  {
+    name: 'sp',
+    width: 375,
+    height: 812,
+    deviceScaleFactor: 2,
+    isMobile: true,
+    sliceHeight: 1000,
+  },
+];
+
+// node screenshot.js --slices で縦分割撮影（細部確認用）
+const useSlices = process.argv.includes('--slices');
 
 const OUTPUT_DIR = path.join(__dirname, 'screenshots');
 // ============================================
@@ -64,10 +83,12 @@ async function waitForImages(page) {
     const timeoutMs = 20000;
     const started = Date.now();
 
-    // lazy 指定を外して強制読み込みを促す
-    document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
-      img.loading = 'eager';
-    });
+    // lazy 指定を外して強制読み込みを促す（iframe の地図なども含む）
+    document
+      .querySelectorAll('img[loading="lazy"], iframe[loading="lazy"]')
+      .forEach((el) => {
+        el.loading = 'eager';
+      });
 
     const images = Array.from(document.images);
 
@@ -99,11 +120,69 @@ async function waitForImages(page) {
   });
 }
 
-async function capturePage(page, pagePath, filename) {
-  const url = `${BASE_URL}${pagePath}`;
-  const outPath = path.join(OUTPUT_DIR, `${filename}.png`);
+/** 意図しない横スクロールが発生していないか調べる */
+async function detectHorizontalOverflow(page) {
+  return page.evaluate(() => {
+    const docWidth = document.documentElement.clientWidth;
+    const scrollWidth = document.documentElement.scrollWidth;
 
-  console.log(`→ ${url}`);
+    const offenders = [];
+    if (scrollWidth > docWidth + 1) {
+      document.querySelectorAll('body *').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+        // 横スクロールを許可した要素（テーブル等）の内側は対象外
+        if (el.closest('.overflow-x-auto')) return;
+        if (rect.right > docWidth + 1 || rect.left < -1) {
+          offenders.push({
+            tag: el.tagName.toLowerCase(),
+            cls: (el.className || '').toString().slice(0, 70),
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+          });
+        }
+      });
+    }
+
+    return { docWidth, scrollWidth, offenders: offenders.slice(0, 8) };
+  });
+}
+
+/**
+ * フルページ画像は縦に長すぎて細部が見えないため、
+ * --slices を付けた場合は縦方向に分割して撮影する。
+ */
+async function captureSlices(page, filename, viewportName, sliceHeight) {
+  const pageHeight = await page.evaluate(
+    () => document.documentElement.scrollHeight
+  );
+  const pageWidth = await page.evaluate(
+    () => document.documentElement.clientWidth
+  );
+  const count = Math.ceil(pageHeight / sliceHeight);
+
+  for (let i = 0; i < count; i += 1) {
+    const y = i * sliceHeight;
+    const height = Math.min(sliceHeight, pageHeight - y);
+    const index = String(i + 1).padStart(2, '0');
+    const outPath = path.join(
+      OUTPUT_DIR,
+      `${viewportName}-${filename}-s${index}.png`
+    );
+
+    await page.screenshot({
+      path: outPath,
+      clip: { x: 0, y, width: pageWidth, height },
+      captureBeyondViewport: true,
+    });
+
+    console.log(`  ✓ ${path.relative(process.cwd(), outPath)}`);
+  }
+}
+
+async function capturePage(page, pagePath, filename, viewportName, options = {}) {
+  const url = `${BASE_URL}${pagePath}`;
+  const outPath = path.join(OUTPUT_DIR, `${viewportName}-${filename}.png`);
 
   await page.goto(url, {
     waitUntil: 'networkidle2',
@@ -119,12 +198,32 @@ async function capturePage(page, pagePath, filename) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await new Promise((resolve) => setTimeout(resolve, 200));
 
-  await page.screenshot({
-    path: outPath,
-    fullPage: true,
-  });
+  if (options.sliceHeight) {
+    await captureSlices(page, filename, viewportName, options.sliceHeight);
+  } else {
+    await page.screenshot({
+      path: outPath,
+      fullPage: true,
+    });
+  }
 
-  console.log(`  ✓ 保存: ${path.relative(process.cwd(), outPath)}`);
+  const overflow = await detectHorizontalOverflow(page);
+  const overflowNote =
+    overflow.scrollWidth > overflow.docWidth + 1
+      ? `  ⚠ 横はみ出し ${overflow.docWidth}px → ${overflow.scrollWidth}px`
+      : '';
+
+  if (options.sliceHeight) {
+    if (overflowNote) console.log(`  ${overflowNote.trim()}`);
+  } else {
+    console.log(`  ✓ ${path.relative(process.cwd(), outPath)}${overflowNote}`);
+  }
+
+  if (overflow.offenders.length > 0) {
+    overflow.offenders.forEach((o) => {
+      console.log(`      ${o.tag}.${o.cls} (left:${o.left} right:${o.right})`);
+    });
+  }
 }
 
 async function main() {
@@ -153,19 +252,31 @@ async function main() {
   });
 
   const page = await browser.newPage();
-  await page.setViewport(VIEWPORT);
 
   let success = 0;
   let failed = 0;
 
-  for (const { path: pagePath, filename } of PAGES) {
-    try {
-      await capturePage(page, pagePath, filename);
-      success += 1;
-    } catch (error) {
-      failed += 1;
-      console.error(`  ✗ 失敗: ${error.message}`);
-      console.error('    → npm run dev でサーバーが起動しているか確認してください');
+  for (const viewport of VIEWPORTS) {
+    console.log(`\n=== ${viewport.name.toUpperCase()} (${viewport.width}px) ===`);
+    await page.setViewport({
+      width: viewport.width,
+      height: viewport.height,
+      deviceScaleFactor: viewport.deviceScaleFactor,
+      isMobile: viewport.isMobile,
+      hasTouch: viewport.isMobile,
+    });
+
+    for (const { path: pagePath, filename } of PAGES) {
+      try {
+        await capturePage(page, pagePath, filename, viewport.name, {
+          sliceHeight: useSlices ? viewport.sliceHeight : undefined,
+        });
+        success += 1;
+      } catch (error) {
+        failed += 1;
+        console.error(`  ✗ 失敗 (${pagePath}): ${error.message}`);
+        console.error('    → npm run dev でサーバーが起動しているか確認してください');
+      }
     }
   }
 
