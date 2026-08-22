@@ -8,6 +8,7 @@
  *        node screenshot.js
  *
  * 保存先: ./screenshots/
+ *   実行ごとに中の .png を削除して撮り直します。git 管理対象外です。
  */
 
 const fs = require('fs');
@@ -53,6 +54,25 @@ const useSlices = process.argv.includes('--slices');
 
 const OUTPUT_DIR = path.join(__dirname, 'screenshots');
 // ============================================
+
+/**
+ * 保存先を空にしてから撮り直す。
+ * 分割数はページの長さで変わるため、消さずに撮ると前回の余分なスライスが
+ * 残り、古い画像を最新だと思って見てしまう。
+ */
+function resetOutputDir() {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+    return 0;
+  }
+
+  const stale = fs
+    .readdirSync(OUTPUT_DIR)
+    .filter((name) => name.toLowerCase().endsWith('.png'));
+
+  stale.forEach((name) => fs.unlinkSync(path.join(OUTPUT_DIR, name)));
+  return stale.length;
+}
 
 /** ページ全体をスクロールして、遅延読み込み画像をすべて発火させる */
 async function scrollThroughPage(page) {
@@ -232,12 +252,14 @@ async function capturePage(page, pagePath, filename, viewportName, options = {})
 }
 
 async function main() {
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  }
+  const removed = resetOutputDir();
 
   console.log(`撮影開始: ${BASE_URL}`);
-  console.log(`保存先:   ${OUTPUT_DIR}\n`);
+  console.log(`保存先:   ${OUTPUT_DIR}`);
+  if (removed > 0) {
+    console.log(`前回の画像 ${removed} 件を削除しました`);
+  }
+  console.log('');
 
   // Puppeteer 同梱 Chrome が無い環境では、インストール済みの Chrome を使う
   const systemChromeCandidates = [

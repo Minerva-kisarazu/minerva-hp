@@ -1,6 +1,9 @@
 node_modules/
 .next/
-.env*/
+.env*
 .DS_Store
 pnpm-lock.yaml
 package-lock.json
+
+# screenshot.js が生成するレビュー用画像。実行ごとに作り直すため管理しない
+screenshots/
