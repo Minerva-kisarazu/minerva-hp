@@ -9,9 +9,10 @@ export const metadata: Metadata = {
 };
 
 const worries = [
-  '家では勉強するように言っても、なかなか続かない',
-  'テスト前になると勉強するが、思うように点数が上がらない',
-  '間違えた問題を、なぜ間違えたのか本人が説明できない',
+  '「わかった」と言うのに、少し形が変わると解けなくなる',
+  '途中式を書かず、頭の中で計算して、いつも同じところを間違える',
+  '答えは出しているのに、聞かれていたのは別のことだった',
+  '宿題は出しているが、丸付けとやり直しまではしていない',
   '塾に通っているのに、自分から勉強するようにならない',
 ];
 
@@ -42,15 +43,15 @@ const steps = [
 const analysisAxes = [
   {
     title: '解き方・問題の解き進め方を分析',
-    body: '英単語を手本から1文字ずつ写していないか、数学で途中式を省いて同じ場所を間違えていないか。答えだけでなく「どう解いているか」を見て、失点につながる癖をその場で直します。',
+    body: '途中式を書かずに暗算で処理していないか。英単語を手本から1文字ずつ写していないか。前の問題の式の数字だけを変えて済ませていないか。答えだけでなく「どう解いているか」を見て、失点につながる動作をその場で直します。',
   },
   {
     title: 'どこで考えることを止めているかを分析',
-    body: '「間違えるのが怖い」で最初の一歩が止まる。「早く終わらせたい」で条件を読み飛ばす。能力不足ではなく、学習を止めている判断の癖を見つけて、机に向かう進め方を整えます。',
+    body: '「間違えるのが怖い」で最初の一歩が止まる。「早く終わらせたい」で条件を読み飛ばす。分からないと解答例からヒントを探し始める。能力不足ではなく、学習を止めている判断の癖を見つけて、机に向かう進め方を整えます。',
   },
   {
     title: '「分かる」と「できる」の境目を分析',
-    body: '「わかった」という言葉をそのまま信じません。対話で「自信を持って説明できる範囲」と「なんとなく解いている範囲」を切り分け、今やるべき学習をピンポイントで決めます。',
+    body: '「わかった」という言葉をそのまま信じません。「一言で言うと？」「この式は何を計算している？」と問い返し、自信を持って説明できる範囲と、なんとなく解いている範囲を切り分けて、今やるべき学習を決めます。',
   },
 ];
 
@@ -58,9 +59,17 @@ const processFlow = [
   { num: '01', title: '学習状況を分析', body: 'ノート・答案・解き方から、いまの課題を確認します。' },
   { num: '02', title: '原因を特定', body: '「なぜできないのか」を具体的にします。' },
   { num: '03', title: '授業で改善', body: '原因に合わせて、必要な内容を指導します。' },
-  { num: '04', title: '自習で定着', body: '自習スペースで、自分で解く時間を確保します。' },
+  {
+    num: '04',
+    title: '自習で定着',
+    body: '自習スペースで、自分で解いて丸付けまでする時間を確保します。',
+  },
   { num: '05', title: '次の課題を設定', body: '学習状況を見て、次に取り組む内容を決めます。' },
-  { num: '06', title: '保護者へ報告', body: '指導内容と今後の課題を、指導報告で共有します。' },
+  {
+    num: '06',
+    title: '保護者へ報告',
+    body: 'できたこと・止まった箇所・原因・次の一手を、その日のうちにお送りします。',
+  },
 ];
 
 const weekModel = [
@@ -70,16 +79,55 @@ const weekModel = [
   { day: '木', body: '自習室で個別課題' },
 ];
 
-const caseStudy = [
-  { label: '【学年・性別】', body: '木更津市内 中学2年生・男子' },
-  { label: '【ビフォー】', body: '定期テスト 数学38点' },
+const improvementPatterns = [
   {
-    label: '【原因の分析】',
-    body: '計算ミスではなく「途中式の管理不足」。ノートの余白や問題用紙の隅に計算を殴り書きし、自分で書いた数字を見失ってミスを誘発していました。',
+    subject: '数学・算数',
+    symptom: '計算ミスが多く、いつも同じところで間違える。',
+    cause:
+      '途中式を書かず、頭の中で処理している。ノートに残っていないため、どこで間違えたのかを本人も後から確認できない。',
+    action:
+      '式を縦に揃えて変形し、消しゴムを使わずすべてノートに残します。「書く量が増えて面倒に見えて、結果的に早く正確に解ける」と本人が実感するまで、自習室でも確認します。',
   },
   {
-    label: '【具体的な介入】',
-    body: '「ノートの書き方修正」。マス目に途中式を縦に揃えるルールを徹底し、自習室でも定着するまで確認します。',
+    subject: '英語',
+    symptom: '単語は覚えているのに、並び替えや英作文で点が取れない。',
+    cause:
+      '聞き覚えのある音の記憶で書いている。そのため be動詞と一般動詞が同じ文に混ざってしまう。',
+    action:
+      'まず主語と動詞を決める。疑問文は肯定文を作ってから書き換える。比較は基本の文を作ってから more や as を足す。単語の意味を知らなくても解ける問題を、確実に取れる形にします。',
+  },
+  {
+    subject: '国語',
+    symptom: '文章は読めているのに、記述問題と選択肢で失点する。',
+    cause:
+      '設問の指示を読んでいない。字数指定を見落とす。傍線部の近くにある言葉をそのまま写している。',
+    action:
+      '設問の指示に印をつけ、「一言で答えるなら何か」を決めてから字数に合わせて足していきます。因果・抽象と具体・対比といった論理関係は、短い文で練習してから長文に戻します。',
+  },
+];
+
+const reportStats = [
+  { value: '521', unit: '件', label: '直近半年に書いた指導報告の数' },
+  { value: '約10.7', unit: '万字', label: 'その報告に書かれた文章量' },
+  { value: '約200', unit: '字', label: '1回の授業あたりの記録量' },
+];
+
+const reportContents = [
+  {
+    title: '今日できていたこと',
+    body: '「後半の教科書表現は全問正解でした」のように、具体的な行動として書きます。',
+  },
+  {
+    title: 'どこで手が止まったか',
+    body: 'どの問題の、どの段階で止まったのかを特定して記録します。',
+  },
+  {
+    title: 'その原因の見立て',
+    body: '「知らない」のか「手順が抜けている」のか「読み飛ばしている」のかを切り分けます。',
+  },
+  {
+    title: '次にやること',
+    body: '本人への指示と、ご家庭にお願いしたいことを、動作のレベルまで具体的に書きます。',
   },
 ];
 
@@ -148,17 +196,20 @@ export default function Home() {
           </ul>
           <div className="mt-8 sm:mt-10 space-y-4 text-base sm:text-lg text-slate-700 leading-relaxed">
             <p>
-              これらの原因は、お子さまの「やる気」や「能力」のせいだけではありません。点数が伸び悩む本当の理由は、本人も気づいていない「学習の進め方の癖」にあります。
+              これらの原因は、お子さまの「やる気」や「能力」のせいだけではありません。
             </p>
             <p className="font-bold text-slate-900 text-lg sm:text-xl">
-              「勉強しているのに、なぜか成績が上がらない。」
+              一番多いのは、「聞けば分かるのに、自分ではできない」という状態です。
             </p>
-            <p>その原因は、「勉強時間が足りない」だけとは限りません。</p>
             <p>
-              私たちは、普段の学習の様子や答案、ノート、問題の解き方まで確認し、
+              毎回の授業で書いている指導報告を読み返すと、最も多く登場するのがこの記述です。一緒に読み直せば正しく答えられる。問いかければ答えられる。指摘されれば自分で気づける。それでも、ひとりで解こうとすると手が止まってしまう。
+            </p>
+            <p>
+              これは知識が足りないのではなく、
               <span className="font-bold text-slate-900">
-                「どこでつまずいているのか」から原因を探します。
+                知っていることを自分で引き出す手順が身についていない
               </span>
+              状態です。だから勉強時間を増やしても点数が変わりません。私たちは答案やノート、解いている最中の手元まで確認して、その手順のどこが抜けているのかを探します。
             </p>
           </div>
           <div className="relative mt-10 aspect-[16/9] rounded-2xl border border-slate-200 shadow-md overflow-hidden">
@@ -287,8 +338,15 @@ export default function Home() {
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
               授業と自習を組み合わせ、学習習慣まで支えます。
             </h2>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
               質の高い授業を受けても、それ以外の時間をダラダラ過ごせば成績は上がりません。ミネルバは、授業の分析結果と直結した課題を自習室で再現させます。家で勉強しないとお悩みの木更津市の中学生・高校生に、最高の学習環境を提供します。
+            </p>
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
+              ミネルバでは
+              <span className="font-bold text-white">
+                「解く・丸付けする・やり直す」までを一組で宿題
+              </span>
+              と考えます。解いただけで終わると、もともと解ける問題を解いただけになってしまうためです。
             </p>
             <h3 className="font-serif text-lg sm:text-xl font-bold text-orange-400 mb-4">
               中学生の1週間の学習モデル
@@ -341,53 +399,93 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ケーススタディ */}
+      {/* 改善の型 */}
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-center leading-relaxed border-b border-slate-200 pb-5">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
             成果は生徒ごとに異なりますが、改善の流れは共通しています
           </h2>
-          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 items-start">
-            <div className="relative h-[240px] sm:h-[360px] overflow-hidden rounded-2xl border border-slate-200 shadow-md">
-              <Image
-                src="/images/home-test.jpg"
-                alt="定期テスト数学の答案"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover object-center"
-              />
-            </div>
-            <article className="bg-white p-6 sm:p-10 rounded-xl shadow-sm border border-slate-200">
-              <dl className="space-y-5">
-                {caseStudy.map(({ label, body }) => (
-                  <div key={label}>
-                    <dt className="font-bold border-b border-slate-300 pb-2 mb-2">{label}</dt>
-                    <dd className="text-base text-slate-700 leading-relaxed">{body}</dd>
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12">
+            半年間の指導報告を読み返すと、つまずきの中身は驚くほど似た形に集まります。実際に多く見られる3つの型と、それぞれに対してミネルバが行っていることをご紹介します。
+          </p>
+          <div className="relative h-[200px] sm:h-[340px] overflow-hidden rounded-2xl border border-slate-200 shadow-md mb-10 sm:mb-12">
+            <Image
+              src="/images/home-test.jpg"
+              alt="赤ペンで採点された定期テストの答案"
+              fill
+              sizes="(min-width: 1152px) 1152px, 100vw"
+              className="object-cover object-center"
+            />
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            {improvementPatterns.map(({ subject, symptom, cause, action }) => (
+              <article
+                key={subject}
+                className="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-slate-200"
+              >
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 border-b border-slate-300 pb-3">
+                  {subject}
+                </h3>
+                <dl className="space-y-4 text-base leading-relaxed">
+                  <div>
+                    <dt className="font-bold text-slate-900 mb-1">表に出ている症状</dt>
+                    <dd className="text-slate-700">{symptom}</dd>
                   </div>
-                ))}
-                <div>
-                  <dt className="font-bold text-orange-700 border-b border-slate-300 pb-2 mb-2">
-                    【アフター（結果）】
-                  </dt>
-                  <dd className="text-lg sm:text-xl font-bold leading-relaxed">
-                    数学 72点に向上（ケアレスミスが完全にゼロになり大幅な得点アップを達成）。
-                  </dd>
-                </div>
-              </dl>
-            </article>
+                  <div>
+                    <dt className="font-bold text-slate-900 mb-1">実際の原因</dt>
+                    <dd className="text-slate-700">{cause}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold text-orange-700 mb-1">ミネルバで行うこと</dt>
+                    <dd className="text-slate-700">{action}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 指導報告書サンプル */}
+      {/* 指導報告書 */}
       <section className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
-            毎回の「指導報告」で、授業分析のすべてを可視化
+            毎回の授業を、その日のうちに「診断書」にしています
           </h2>
-          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-12 text-center">
-            ミネルバでは、今日の授業でお子さまが「どこで詰まり、どう修正したか」を毎回その日のうちに保護者様へ詳細にお送りします。塾での様子が手に取るようにわかります。
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12">
+            今日の授業でお子さまが何をできていて、どこで手が止まり、その原因は何で、次に何をするのか。それを毎回その日のうちに保護者様へお送りしています。「今日は一次関数をやりました」という報告ではありません。
           </p>
+
+          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
+            {reportStats.map(({ value, unit, label }) => (
+              <div
+                key={label}
+                className="bg-slate-50 border border-slate-200 rounded-xl px-5 py-6 text-center"
+              >
+                <dd className="font-serif font-bold text-navy-900 leading-none">
+                  <span className="text-4xl sm:text-5xl tabular-nums">{value}</span>
+                  <span className="text-xl sm:text-2xl ml-1">{unit}</span>
+                </dd>
+                <dt className="mt-3 text-base text-slate-700 leading-relaxed">{label}</dt>
+              </div>
+            ))}
+          </dl>
+
+          <h3 className="font-serif text-xl sm:text-2xl font-bold mb-6 leading-relaxed">
+            指導報告に必ず書く、4つのこと
+          </h3>
+          <ul className="grid sm:grid-cols-2 gap-5 sm:gap-6 mb-12 sm:mb-16">
+            {reportContents.map(({ title, body }) => (
+              <li
+                key={title}
+                className="bg-slate-50 border border-slate-200 rounded-xl p-5 sm:p-6"
+              >
+                <h4 className="font-bold text-lg text-orange-700 mb-2 leading-snug">{title}</h4>
+                <p className="text-base text-slate-700 leading-relaxed">{body}</p>
+              </li>
+            ))}
+          </ul>
+
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="relative h-[280px] sm:h-[420px] overflow-hidden rounded-2xl border border-slate-200 shadow-md">
               <Image
@@ -398,21 +496,27 @@ export default function Home() {
                 className="object-cover object-center"
               />
             </div>
-            <div className="mx-auto w-full max-w-sm rounded-[2rem] border-8 border-slate-900 bg-slate-900 shadow-xl overflow-hidden">
-              <div className="bg-navy-900 px-5 py-4 text-white">
-                <p className="text-xs text-orange-400 font-bold">学習塾ミネルバ</p>
-                <p className="text-sm font-bold mt-0.5">本日の指導報告</p>
-              </div>
-              <div className="bg-slate-100 px-4 py-5">
-                <p className="bg-white rounded-2xl rounded-tl-sm px-5 py-4 text-sm sm:text-base text-slate-800 leading-relaxed shadow-sm">
-                  本日の数学の連立方程式の演習では、立式のプロセスは完璧に理解できていました。しかし、計算の最終段階である引き算の符号ミスが2箇所連続して見られました。手の動きを観察したところ、暗算で処理しようとして焦り、ペンの動きが雑になっていることが原因です。「符号を変えるプロセスを必ず1行書き足す」という物理的な動作を約束させました。自習室でのワーク取り組み時にも、この約束が守られているか定着するまで繰り返し確認します。
-                </p>
+            <div>
+              <p className="text-base text-slate-600 leading-relaxed mb-5">
+                実際にお送りしている指導報告の一例です（内容は一部を変えています）。
+              </p>
+              <div className="mx-auto w-full max-w-sm rounded-[2rem] border-8 border-slate-900 bg-slate-900 shadow-xl overflow-hidden">
+                <div className="bg-navy-900 px-5 py-4 text-white">
+                  <p className="text-xs text-orange-400 font-bold">学習塾ミネルバ</p>
+                  <p className="text-sm font-bold mt-0.5">本日の指導報告</p>
+                </div>
+                <div className="bg-slate-100 px-4 py-5">
+                  <p className="bg-white rounded-2xl rounded-tl-sm px-5 py-4 text-base text-slate-800 leading-relaxed shadow-sm">
+                    本日は連立方程式の文章題を扱いました。式を作るところまでは正しくできていて、割合の問題も自分で立式できています。一方で、引き算と九九のところで計算ミスが続きました。手元を見ていると暗算で処理しようとしていて、途中式がノートに残っていないため、間違えた箇所をご本人も後から確認できない状態です。式を縦に揃えて、消しゴムを使わずに全部残すよう指導しました。宿題も同じ書き方でお願いします。次回の自習でも同じ形で解けているかを確認します。
+                  </p>
+                </div>
               </div>
             </div>
           </div>
+
           <div className="mt-12 sm:mt-14 flex justify-center">
-            <CtaButton href="/grades" variant="secondary">
-              指導方針・自習室の詳細はこちら
+            <CtaButton href="/policy" variant="secondary">
+              分析手法と指導の考え方はこちら
             </CtaButton>
           </div>
         </div>
