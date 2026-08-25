@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const sitemapItems = [
@@ -18,9 +19,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 mb-14">
           {/* 左カラム：基本情報 */}
           <div>
-            <h2 className="text-2xl font-serif font-bold mb-6 text-slate-900 tracking-wide border-b border-slate-300 pb-3">
-              学習塾ミネルバ
-            </h2>
+            <div className="mb-6 border-b border-slate-300 pb-4">
+              <Image
+                src="/images/logo-horizontal.svg"
+                alt="学習塾ミネルバ｜個別指導×自立学習"
+                width={280}
+                height={70}
+                unoptimized
+                className="h-12 w-auto max-w-full"
+              />
+            </div>
             <address className="not-italic space-y-2 leading-relaxed">
               <p>
                 <span className="font-bold text-slate-900">所在地：</span>
@@ -31,7 +39,7 @@ export default function Footer() {
                 <span className="font-bold text-slate-900">電話番号：</span>
                 <a
                   href="tel:0368206929"
-                  className="inline-flex items-center min-h-[44px] hover:text-orange-700 transition-colors underline underline-offset-2"
+                  className="inline-flex items-center min-h-[44px] hover:text-accent-700 transition-colors underline underline-offset-2"
                 >
                   03-6820-6929
                 </a>
@@ -67,7 +75,7 @@ export default function Footer() {
                   <li key={href}>
                     <Link
                       href={href}
-                      className="inline-flex items-center min-h-[44px] font-medium hover:text-orange-700 transition-colors"
+                      className="inline-flex items-center min-h-[44px] font-medium hover:text-accent-700 transition-colors"
                     >
                       {label}
                     </Link>
@@ -99,7 +107,7 @@ export default function Footer() {
 
         <div className="border-t border-slate-300 pt-10 text-center text-base leading-relaxed max-w-4xl mx-auto">
           <p>
-            千葉県木更津市金田東の学習塾ミネルバ。木更津市の中学生向け塾・高校受験対策・個別指導塾として、生徒一人ひとりの学習プロセスを最適化します。
+            千葉県木更津市金田東の学習塾ミネルバ。小学生から大学受験まで、木更津市の個別指導塾として、生徒一人ひとりの学習プロセスを最適化します。
           </p>
         </div>
 

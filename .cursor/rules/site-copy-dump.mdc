@@ -1,0 +1,23 @@
+---
+description: Keep SITE_COPY_FOR_REVIEW.txt synced when site copy changes
+alwaysApply: true
+---
+
+# Site copy dump sync
+
+Whenever you change **visible copy, page structure, FAQ, prices, CTA labels, header/footer text, or report carousel data** on this site, also update `SITE_COPY_FOR_REVIEW.txt` in the same turn so it matches production copy.
+
+## When to update
+- Edits under `app/**/page.tsx`, `components/{Header,Footer,PageHeader,PreFooterCta,CtaButton,ContactForm,ReportCarousel}.tsx`, `data/reportSamples.ts`
+- Any other change that alters what a visitor reads
+
+## When you may skip
+- Pure styling with no wording change
+- Image asset swaps with the same placement/role
+- Build/config/deps only
+
+## How to update
+- Reflect **current** page order, layout notes, and full visible text
+- Images: describe as「○○の画像」(do not invent new placements)
+- Keep the指導報告カルーセル as carousel data in the appendix (not as a vertical full dump on the home page description)
+- Do not leave the dump stale after a copy edit

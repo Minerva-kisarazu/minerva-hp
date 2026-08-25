@@ -25,13 +25,15 @@ export const metadata: Metadata = {
     template: "%s｜学習塾ミネルバ（木更津市の個別指導塾）",
   },
   description:
-    "木更津市金田東の個別指導塾、学習塾ミネルバ。勉強を教えるだけではない。成績が決まるプロセスそのものを分析します。中学生の定期テスト対策・高校受験対策に対応。",
+    "木更津市金田東の個別指導塾、学習塾ミネルバ。勉強を教えるだけではない。成績が決まるプロセスそのものを分析します。中学生の定期テスト対策から大学受験まで対応。",
   keywords: [
     "木更津市",
     "金田東",
     "個別指導塾",
     "学習塾",
     "中学生",
+    "高校生",
+    "大学受験",
     "高校受験対策",
     "定期テスト対策",
     "自習室",
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0D2136",
+  themeColor: "#006058",
 };
 
 export default function RootLayout({
@@ -57,10 +59,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable}`}>
-      <body className="font-sans bg-white text-slate-900 antialiased">
+      <body className="font-sans bg-white text-[#333333] antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-navy-900 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-900 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
         >
           本文へスキップ
         </a>

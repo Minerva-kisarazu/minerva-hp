@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import PreFooterCta from '@/components/PreFooterCta';
@@ -6,14 +6,14 @@ import PreFooterCta from '@/components/PreFooterCta';
 export const metadata: Metadata = {
   title: '指導方針',
   description:
-    '木更津市の個別指導塾 学習塾ミネルバの指導方針。「教えてもらう」から「自分で学べる」へ。必要なことは教えつつ、最初から答えを与えず、自分で考える力を育てます。',
+    '木更津市の個別指導塾 学習塾ミネルバの指導方針。答えを渡すだけでなく、解き方を教え、最後は自分で解けるようにする個別指導です。',
 };
 
 const founderMessage = [
   '塾講師として現場に立ち、多くの生徒たちを見てきて確信していることがあります。それは、同じ教室で同じ授業を受け、同じ教材を使っても、結果の出方には大きな差があるという現実です。',
   '今の時代、映像授業や良質な参考書は世の中に溢れています。しかし、どれほど優れた材料があっても、それを「自ら掴み取り、使いこなす力」がなければ、成果には結びつきません。',
-  '私は、勉強や受験こそが自分を鍛える最高の機会だと考えています。定期テストや志望校合格という明確な目標に向かって本気で努力し、壁を乗り越える。その過程で培われる「自分で目標を立て、考え、実行する力」こそが、これからの時代を生き抜くための何よりの武器になると信じています。',
-  '当塾は、単に答えを教えるだけの場所ではありません。受験という挑戦を、自分自身を成長させる最高のトレーニングに変える。そのために、私たちは「学習プロセスそのものを分析する」という思想を掲げ、生徒一人ひとりの「自律して学ぶ力」を構造的に鍛えていきます。',
+  '私は、勉強や受験こそが自分を鍛える大切な機会だと考えています。定期テストや志望校合格という明確な目標に向かって本気で努力し、壁を乗り越える。その過程で培われる「自分で目標を立て、考え、実行する力」は、その後の学びにも生きてくると信じています。',
+  '当塾は、単に答えを教えるだけの場所ではありません。受験という挑戦を通じて成長の場に変えるために、私たちは「学習プロセスそのものを分析する」という考え方のもと、生徒一人ひとりが、自分で学習を進められる力を身につけられるよう指導します。',
 ];
 
 const lessonFeatures = [
@@ -27,7 +27,7 @@ const lessonFeatures = [
   },
   {
     title: '「自力で読み解く」練習の徹底',
-    body: '解説を待つのではなく、まず自分の力で文章から要点を掴む。自分で丸付けをし、気づきを自分の言葉でメモする。この「正しい学習の作法」を繰り返すことで、1時間の学びから10を得る「吸収率」を劇的に引き上げます。',
+    body: '解説を待つのではなく、まず自分の力で文章から要点を掴む。自分で丸付けをし、気づきを自分の言葉でメモする。この「正しい学習の作法」を繰り返すことで、授業で分かったことを、自分で使えるようにしていきます。',
   },
 ];
 
@@ -81,14 +81,11 @@ export default function PolicyPage() {
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 leading-relaxed border-b border-slate-300 pb-5">
-            日々の学習を通じて、一生モノの「自ら学ぶ力」を
+            「教えてもらう」から、「自分で学べる」へ。
           </h2>
           <div className="mb-10 space-y-3 max-w-3xl">
-            <p className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-slate-900 leading-relaxed">
-              「教えてもらう」から、「自分で学べる」へ。
-            </p>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-              私たちは、目先の点数だけでなく、将来につながる学習習慣を育てます。
+              授業で答えを知るだけではなく、自分で考え、解き、間違いを直し、次に何をすればよいかを判断できる状態を目指します。
             </p>
           </div>
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -114,20 +111,29 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      <section className="bg-navy-900 text-white py-16 sm:py-24">
+      <section className="bg-brand-900 text-white py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <p className="text-sm font-bold text-orange-400 mb-3 text-center">【授業】理解する力を鍛える</p>
+          <p className="text-sm font-bold text-accent-400 mb-3 text-center">【授業】理解する力を鍛える</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed">
-            「教えすぎない」から、自分で考える力が育つ
+            「答えを教える」から、「自分で解ける」へ。
           </h2>
-          <div className="text-center text-base sm:text-lg text-slate-200 mb-12 leading-relaxed border-b border-navy-700 pb-8 space-y-2">
-            <p className="font-bold text-white text-lg sm:text-xl">必要なことは教えます。</p>
-            <p>ただし、最初から答えを与えることはしません。</p>
+          <div className="text-center text-base sm:text-lg text-slate-200 mb-12 leading-relaxed border-b border-brand-700 pb-8 space-y-6">
+            <div className="space-y-2 font-serif text-lg sm:text-xl font-bold text-white leading-relaxed">
+              <p>答えを教える。</p>
+              <p>ではなく、解き方を教える。</p>
+              <p>そして、その解き方を自分で使えるようにする。</p>
+            </div>
+            <div className="space-y-3 max-w-2xl mx-auto">
+              <p className="font-bold text-white text-lg sm:text-xl">必要なことは、きちんと教えます。</p>
+              <p>
+                ただ答えを渡して終わるのではなく、なぜその解き方になるのかを一緒に考え、最後は自分の力で解けるようにする。それが私たちの個別指導です。
+              </p>
+            </div>
           </div>
           <div className="space-y-6 sm:space-y-8">
             {lessonFeatures.map(({ title, body }) => (
-              <div key={title} className="bg-navy-800 p-6 sm:p-10 rounded-xl border border-navy-700">
-                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-orange-400">{title}</h3>
+              <div key={title} className="bg-brand-800 p-6 sm:p-10 rounded-xl border border-brand-700">
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-accent-400">{title}</h3>
                 <p className="text-base text-slate-200 leading-relaxed">{body}</p>
               </div>
             ))}
@@ -143,7 +149,7 @@ export default function PolicyPage() {
           <div className="space-y-6 sm:space-y-8">
             {analysisDetails.map(({ title, body }) => (
               <div key={title} className="bg-white p-6 sm:p-10 rounded-xl shadow-sm border border-slate-200">
-                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-orange-700 leading-snug">
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-accent-700 leading-snug">
                   {title}
                 </h3>
                 <p className="text-base text-slate-700 leading-relaxed">{body}</p>
@@ -155,7 +161,7 @@ export default function PolicyPage() {
 
       <section className="bg-white py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <p className="text-base font-bold text-orange-700 mb-3 text-center">
+          <p className="text-base font-bold text-accent-700 mb-3 text-center">
             【学習の作法】家庭学習まで含めて設計する
           </p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed">
@@ -173,7 +179,7 @@ export default function PolicyPage() {
                 <div className="flex items-baseline gap-3 mb-3">
                   <span
                     aria-hidden="true"
-                    className="font-serif font-bold text-2xl text-orange-600 tabular-nums flex-shrink-0"
+                    className="font-serif font-bold text-2xl text-brand-900 tabular-nums flex-shrink-0"
                   >
                     {String(index + 1).padStart(2, '0')}
                   </span>
@@ -183,6 +189,43 @@ export default function PolicyPage() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="bg-slate-50 py-16 sm:py-24">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-center leading-relaxed border-b border-slate-300 pb-5">
+            この指導をしている人
+          </h2>
+          <div className="bg-white p-6 sm:p-10 rounded-xl border border-slate-200 shadow-sm">
+            <div className="relative mx-auto mb-8 w-full max-w-sm aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+              <Image
+                src="/images/founder.jpg"
+                alt="学習塾ミネルバ 塾長 橋本陵平"
+                fill
+                sizes="(min-width: 640px) 384px, 100vw"
+                className="object-cover object-center"
+              />
+            </div>
+            <p className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mb-2 text-center sm:text-left">
+              塾長　橋本 陵平
+            </p>
+            <p className="text-base text-slate-600 mb-6 leading-relaxed text-center sm:text-left">
+              奈良県出身
+              <br />
+              大阪星光学院中高卒
+              <br />
+              早稲田大学政治経済学部卒
+            </p>
+            <div className="space-y-4 text-base sm:text-lg text-slate-700 leading-relaxed">
+              <p>
+                学生時代から塾講師として指導し、校長・教務主任を歴任。15年間、数百名以上の生徒を指導してきました。
+              </p>
+              <p>
+                結婚を機に木更津へ移住し、現在はミネルバを運営。一人ひとりの学習状況を見ながら指導しています。
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

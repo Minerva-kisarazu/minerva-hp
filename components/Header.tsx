@@ -1,5 +1,6 @@
-'use client';
+﻿'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -12,7 +13,8 @@ const navItems = [
   { href: '/contact', label: 'お問い合わせ' },
 ];
 
-const CTA_LABEL = '無料学習診断レポート付き体験授業を申し込む';
+const CTA_LABEL = '体験授業を申し込む';
+const CTA_LABEL_MOBILE = '無料学習診断レポート付き体験授業を申し込む';
 
 // デスクトップ横並びナビはこの幅未満だと文字が潰れるためハンバーガーに切り替える
 const DESKTOP_NAV_BREAKPOINT = 1280;
@@ -52,13 +54,20 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3 h-16">
-          <Link href="/" className="min-w-0 flex-1 xl:flex-none">
-            <span className="block font-serif font-bold text-slate-900 text-base sm:text-lg xl:text-xl">
-              学習塾ミネルバ
-            </span>
-            <span className="block text-[10px] sm:text-xs text-orange-700 font-medium truncate">
-              個別指導×自立学習｜木更津市の個別指導塾
-            </span>
+          <Link
+            href="/"
+            className="min-w-0 flex-shrink flex items-center py-1"
+            aria-label="学習塾ミネルバ ホーム"
+          >
+            <Image
+              src="/images/logo-horizontal.svg"
+              alt="学習塾ミネルバ｜個別指導×自立学習"
+              width={240}
+              height={60}
+              priority
+              unoptimized
+              className="h-10 sm:h-11 w-auto max-w-[min(100%,220px)] sm:max-w-[260px]"
+            />
           </Link>
 
           <nav aria-label="メインナビゲーション" className="hidden xl:flex items-center gap-4 flex-shrink-0">
@@ -69,8 +78,8 @@ export default function Header() {
                 aria-current={pathname === href ? 'page' : undefined}
                 className={`text-sm font-medium whitespace-nowrap py-2 border-b-2 transition-colors ${
                   pathname === href
-                    ? 'text-orange-700 border-orange-600'
-                    : 'text-slate-700 border-transparent hover:text-orange-700'
+                    ? 'text-brand-900 border-accent-500'
+                    : 'text-slate-700 border-transparent hover:text-brand-900'
                 }`}
               >
                 {label}
@@ -78,7 +87,7 @@ export default function Header() {
             ))}
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center bg-orange-600 hover:bg-orange-700 text-white font-bold px-4 py-2.5 rounded-lg transition-colors shadow-sm text-xs whitespace-nowrap"
+              className="inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-4 py-2.5 rounded-lg transition-colors shadow-sm text-sm whitespace-nowrap"
             >
               {CTA_LABEL}
             </Link>
@@ -120,7 +129,7 @@ export default function Header() {
                 href={href}
                 aria-current={pathname === href ? 'page' : undefined}
                 className={`py-4 border-b border-slate-100 font-medium ${
-                  pathname === href ? 'text-orange-700' : 'text-slate-900'
+                  pathname === href ? 'text-brand-900' : 'text-slate-900'
                 }`}
               >
                 {label}
@@ -128,9 +137,9 @@ export default function Header() {
             ))}
             <Link
               href="/contact"
-              className="mt-4 mb-2 inline-flex items-center justify-center bg-orange-600 hover:bg-orange-700 text-white font-bold px-5 py-4 rounded-lg text-center text-sm leading-snug"
+              className="mt-4 mb-2 inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-5 py-4 rounded-lg text-center text-sm leading-relaxed"
             >
-              {CTA_LABEL}
+              {CTA_LABEL_MOBILE}
             </Link>
           </div>
         </nav>

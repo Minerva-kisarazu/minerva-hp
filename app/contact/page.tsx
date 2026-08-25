@@ -66,7 +66,7 @@ export default function ContactPage() {
                 >
                   <span
                     aria-hidden="true"
-                    className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl"
+                    className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-brand-900 text-white rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl"
                   >
                     {index + 1}
                   </span>

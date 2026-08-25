@@ -1,6 +1,8 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Image from 'next/image';
-import CtaButton from '@/components/CtaButton';
+import CtaButton, { TrialCtaLabel } from '@/components/CtaButton';
+import ReportCarousel from '@/components/ReportCarousel';
+import { reportSamples } from '@/data/reportSamples';
 
 export const metadata: Metadata = {
   title: '学習塾ミネルバ｜木更津市金田東の個別指導塾・自立学習',
@@ -18,22 +20,25 @@ const worries = [
 
 const steps = [
   {
-    title: 'ステップ1：【分析する】',
-    body: '授業を通じて、ペンの動かし方、考える手が止まるポイント、理解の切れ目をプロの眼で正確につかみます。',
+    label: 'STEP 1',
+    title: '見つける',
+    body: '答案やノート、問題を解いている途中の様子から、どこでつまずいているのかを確認します。「計算が苦手」で終わらせず、どこで何が起きているのかを具体的にします。',
     image: '/images/analysis-pen.jpg',
     alt: 'ノートに途中式を書く手元',
     isGoal: false,
   },
   {
-    title: 'ステップ2：【改善する】',
-    body: '見つかった課題に対して、ノートの書き方や問題の読み進め方など、具体的な「正しい学習の作法」をその場で指導・修正します。',
+    label: 'STEP 2',
+    title: '直す',
+    body: 'つまずきの原因に合わせて、解き方や問題の読み方、ノートの使い方などを具体的に修正します。必要な知識はきちんと教え、正しいやり方を身につけます。',
     image: '/images/hero-desk.jpg',
     alt: 'デスクライトの下に置かれた学習机',
     isGoal: false,
   },
   {
-    title: 'ステップ3：【自立する（ゴール）】',
-    body: '正しいやり方を自習室での演習で再現し、誰に教えられなくても「自分の力で初見の問題を解ける」状態を確立します。',
+    label: 'STEP 3',
+    title: '自分でできるようにする',
+    body: '授業で教わったことを自習で実際に使い、自分の力で解けるかを確認します。「解説を見れば分かる」ではなく、「何も見ずに自分で解ける」ところまでつなげます。',
     image: '/images/study-back.jpg',
     alt: '自習室で一人で演習に取り組む生徒',
     isGoal: true,
@@ -42,33 +47,16 @@ const steps = [
 
 const analysisAxes = [
   {
-    title: '解き方・問題の解き進め方を分析',
-    body: '途中式を書かずに暗算で処理していないか。英単語を手本から1文字ずつ写していないか。前の問題の式の数字だけを変えて済ませていないか。答えだけでなく「どう解いているか」を見て、失点につながる動作をその場で直します。',
+    title: 'どう解いているかを見る',
+    body: '途中式を書いているか、設問をどう読んでいるか、問題をどんな順番で解いているか。答えだけでは分からない「解き方の癖」を確認します。',
   },
   {
-    title: 'どこで考えることを止めているかを分析',
-    body: '「間違えるのが怖い」で最初の一歩が止まる。「早く終わらせたい」で条件を読み飛ばす。分からないと解答例からヒントを探し始める。能力不足ではなく、学習を止めている判断の癖を見つけて、机に向かう進め方を整えます。',
+    title: 'どこで考えることを止めるかを見る',
+    body: '条件を読み飛ばす、分からないとすぐ解答を見る、答えを書いたあとに問いを確認しない。失点につながる「考え方の癖」を確認します。',
   },
   {
-    title: '「分かる」と「できる」の境目を分析',
-    body: '「わかった」という言葉をそのまま信じません。「一言で言うと？」「この式は何を計算している？」と問い返し、自信を持って説明できる範囲と、なんとなく解いている範囲を切り分けて、今やるべき学習を決めます。',
-  },
-];
-
-const processFlow = [
-  { num: '01', title: '学習状況を分析', body: 'ノート・答案・解き方から、いまの課題を確認します。' },
-  { num: '02', title: '原因を特定', body: '「なぜできないのか」を具体的にします。' },
-  { num: '03', title: '授業で改善', body: '原因に合わせて、必要な内容を指導します。' },
-  {
-    num: '04',
-    title: '自習で定着',
-    body: '自習スペースで、自分で解いて丸付けまでする時間を確保します。',
-  },
-  { num: '05', title: '次の課題を設定', body: '学習状況を見て、次に取り組む内容を決めます。' },
-  {
-    num: '06',
-    title: '保護者へ報告',
-    body: 'できたこと・止まった箇所・原因・次の一手を、その日のうちにお送りします。',
+    title: '「分かる」と「できる」の境目を見る',
+    body: '説明を聞いて分かった状態と、何も見ずに自分で解ける状態は同じではありません。その差を確認し、今必要な学習を決めます。',
   },
 ];
 
@@ -106,29 +94,10 @@ const improvementPatterns = [
   },
 ];
 
-const reportStats = [
-  { value: '521', unit: '件', label: '直近半年に書いた指導報告の数' },
-  { value: '約10.7', unit: '万字', label: 'その報告に書かれた文章量' },
-  { value: '約200', unit: '字', label: '1回の授業あたりの記録量' },
-];
-
-const reportContents = [
-  {
-    title: '今日できていたこと',
-    body: '「後半の教科書表現は全問正解でした」のように、具体的な行動として書きます。',
-  },
-  {
-    title: 'どこで手が止まったか',
-    body: 'どの問題の、どの段階で止まったのかを特定して記録します。',
-  },
-  {
-    title: 'その原因の見立て',
-    body: '「知らない」のか「手順が抜けている」のか「読み飛ばしている」のかを切り分けます。',
-  },
-  {
-    title: '次にやること',
-    body: '本人への指示と、ご家庭にお願いしたいことを、動作のレベルまで具体的に書きます。',
-  },
+const scoreCases = [
+  { grade: '中学2年', subject: '数学', before: 15, after: 74, diff: 59 },
+  { grade: '中学3年', subject: '数学', before: 33, after: 66, diff: 33 },
+  { grade: '中学2年', subject: '数学', before: 72, after: 97, diff: 25 },
 ];
 
 const reportBenefits = [
@@ -141,7 +110,7 @@ export default function Home() {
   return (
     <main id="main">
       {/* ヒーロー */}
-      <section className="bg-navy-900 text-white">
+      <section className="bg-brand-900 text-white">
         <div className="grid lg:grid-cols-2 lg:min-h-[calc(100vh-4rem)]">
           <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
             <h1 className="font-serif text-[1.65rem] leading-relaxed sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8">
@@ -157,8 +126,8 @@ export default function Home() {
               「なぜできないのか」を分析し、自分で学べる力を育てます。
             </p>
             <div className="sm:self-start">
-              <CtaButton href="/contact">
-                無料学習診断レポート付き体験授業はこちら
+              <CtaButton href="/contact" variant="onDark">
+                <TrialCtaLabel />
               </CtaButton>
             </div>
           </div>
@@ -187,7 +156,7 @@ export default function Home() {
                 key={worry}
                 className="flex items-start gap-4 bg-slate-50 border border-slate-200 rounded-xl px-5 py-4"
               >
-                <span aria-hidden="true" className="text-orange-600 mt-0.5 text-xl font-bold flex-shrink-0">
+                <span aria-hidden="true" className="text-brand-900 mt-0.5 text-xl font-bold flex-shrink-0">
                   □
                 </span>
                 <span className="text-base sm:text-lg leading-relaxed">{worry}</span>
@@ -209,7 +178,7 @@ export default function Home() {
               <span className="font-bold text-slate-900">
                 知っていることを自分で引き出す手順が身についていない
               </span>
-              状態です。だから勉強時間を増やしても点数が変わりません。私たちは答案やノート、解いている最中の手元まで確認して、その手順のどこが抜けているのかを探します。
+              状態です。だから勉強時間を増やしても点数が変わりません。私たちは答案やノート、解いている最中の手元まで確認して、その手順のどこが抜けているのかを探します。定期テストなら、同じミスで落としている数点がどこかを特定し、次のテストで取り切るところから始めます。
             </p>
           </div>
           <div className="relative mt-10 aspect-[16/9] rounded-2xl border border-slate-200 shadow-md overflow-hidden">
@@ -239,12 +208,12 @@ export default function Home() {
             </div>
             <div className="order-1 lg:order-2">
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 leading-relaxed">
-                偏差値45の子には「原因特定」を。
+                苦手な教科には「なぜ点が取れないのか」を。
                 <br />
-                偏差値65の子には「効率の最適化」を。
+                得意な教科には「さらに点を伸ばす手順」を。
               </h2>
               <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-                木更津市で塾をお探しの保護者様へ。点数が伸び悩んでいる子には、手が止まる物理的な理由が必ずあります。すでに高い実力がある子には、さらに上を目指すための無駄のない手順があります。どちらのステージにいる生徒にとっても、本当に必要なのは「自分の学習プロセスを客観的に把握し、自習の質を高める力」です。ミネルバは、すべての学力層の「自走」を支えます。
+                点数が伸び悩んでいる子には、途中式を書かない・設問を読み飛ばすなど、失点に直結する理由が必ずあります。すでに取れる単元がある子には、同じ勉強時間でも取りこぼしを減らし、記述や応用で加点する進め方があります。定期テストなら「あと10点」のために何を直すか、入試ならどの単元から埋めるかを、答案とノートから具体にします。どの学力の生徒にも共通して必要なのは、自分の学習の進め方を把握し、自習の質を上げることです。
               </p>
             </div>
           </div>
@@ -259,15 +228,25 @@ export default function Home() {
             <br />
             「自分でできるようになる」ことが目的です。
           </h2>
-          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-12 text-center sm:text-left">
-            ミネルバでは、お子さまの学習状況を分析し、「何ができていないのか」だけでなく、「なぜできないのか」まで確認します。分析は手段に過ぎません。最終的な目的は、正しいやり方を身につけ、自分の力で問題を解けるようになることです。
-          </p>
+          <div className="max-w-3xl mx-auto mb-10 space-y-2 font-serif text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed text-center">
+            <p>答えを教える。</p>
+            <p>ではなく、解き方を教える。</p>
+            <p>そして、その解き方を自分で使えるようにする。</p>
+          </div>
+          <div className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-12 space-y-4 text-center sm:text-left">
+            <p>
+              ミネルバでは、お子さまの学習状況を分析し、「何ができていないのか」だけでなく、「なぜできないのか」まで確認します。
+            </p>
+            <p>
+              ただし、分析は目的ではありません。見つかった課題を直し、正しい解き方を身につけ、最後は自分の力で問題を解けるようにする。そこまでを指導します。
+            </p>
+          </div>
           <ol className="grid md:grid-cols-3 gap-6 sm:gap-8">
             {steps.map((step) => (
               <li
-                key={step.title}
+                key={step.label}
                 className={`bg-slate-50 rounded-xl shadow-sm overflow-hidden ${
-                  step.isGoal ? 'border-2 border-orange-500' : 'border border-slate-200'
+                  step.isGoal ? 'border-2 border-brand-900' : 'border border-slate-200'
                 }`}
               >
                 <div className="relative h-44 sm:h-48">
@@ -280,9 +259,16 @@ export default function Home() {
                   />
                 </div>
                 <div className="p-6 sm:p-7">
+                  <p
+                    className={`text-sm font-bold mb-2 tracking-wide ${
+                      step.isGoal ? 'text-brand-900' : 'text-accent-700'
+                    }`}
+                  >
+                    {step.label}
+                  </p>
                   <h3
                     className={`font-serif text-lg sm:text-xl font-bold mb-3 ${
-                      step.isGoal ? 'text-orange-700' : 'text-slate-900'
+                      step.isGoal ? 'text-brand-900' : 'text-slate-900'
                     }`}
                   >
                     {step.title}
@@ -295,40 +281,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 指導の流れ（6ステップ） */}
-      <section className="bg-slate-50 py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-12 text-center leading-relaxed border-b border-slate-200 pb-5">
-            授業だけで終わらない。
-            <br />
-            学習プロセスそのものを改善します。
-          </h2>
-          <ol className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {processFlow.map((item) => (
-              <li
-                key={item.num}
-                className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 sm:p-6"
-              >
-                <p className="text-orange-600 font-serif font-bold text-2xl sm:text-3xl mb-2 tabular-nums">
-                  {item.num}
-                </p>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold mb-3 leading-snug">
-                  {item.title}
-                </h3>
-                <p className="text-base text-slate-700 leading-relaxed">{item.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
       {/* 授業と自習 */}
-      <section className="bg-navy-900 text-white">
+      <section className="bg-brand-900 text-white">
         <div className="grid lg:grid-cols-2">
           <div className="relative min-h-[240px] sm:min-h-[400px] lg:min-h-[560px]">
             <Image
               src="/images/study-room.jpg"
-              alt="私語厳禁で静かな学習塾ミネルバの自習室"
+              alt="学習塾ミネルバの自習室"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover object-center"
@@ -336,28 +295,28 @@ export default function Home() {
           </div>
           <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 lg:py-24">
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
-              授業と自習を組み合わせ、学習習慣まで支えます。
+              授業で分かったことを、自分で使えるところまで。
             </h2>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
-              質の高い授業を受けても、それ以外の時間をダラダラ過ごせば成績は上がりません。ミネルバは、授業の分析結果と直結した課題を自習室で再現させます。家で勉強しないとお悩みの木更津市の中学生・高校生に、最高の学習環境を提供します。
+              授業で見つかった課題とつながった内容を自習室で繰り返し、「分かった」で終わらず、自分で解ける状態までつなげます。
             </p>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
-              ミネルバでは
+              ミネルバでは、
               <span className="font-bold text-white">
                 「解く・丸付けする・やり直す」までを一組で宿題
               </span>
-              と考えます。解いただけで終わると、もともと解ける問題を解いただけになってしまうためです。
+              と考えます。解いただけで終わらせず、間違えた理由を確認し、もう一度自分で解くところまで行います。
             </p>
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-orange-400 mb-4">
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-accent-400 mb-4">
               中学生の1週間の学習モデル
             </h3>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {weekModel.map((item) => (
                 <li
                   key={item.day}
-                  className="bg-navy-800 border border-navy-700 rounded-lg px-4 py-3 flex items-center gap-3"
+                  className="bg-brand-800 border border-brand-700 rounded-lg px-4 py-3 flex items-center gap-3"
                 >
-                  <span className="font-bold text-orange-400 w-8 flex-shrink-0">{item.day}</span>
+                  <span className="font-bold text-accent-400 w-8 flex-shrink-0">{item.day}</span>
                   <span className="text-slate-200 text-base leading-relaxed">{item.body}</span>
                 </li>
               ))}
@@ -370,7 +329,7 @@ export default function Home() {
       <section className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-10 text-center leading-relaxed border-b border-slate-200 pb-5">
-            学習を最適化する、ミネルバの3つの分析視点
+            ミネルバでは、実際にこういうところまで見ています
           </h2>
           <div className="relative h-[200px] sm:h-[340px] overflow-hidden rounded-2xl border border-slate-200 shadow-md mb-10 sm:mb-12">
             <Image
@@ -405,9 +364,12 @@ export default function Home() {
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
             成果は生徒ごとに異なりますが、改善の流れは共通しています
           </h2>
-          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12">
-            半年間の指導報告を読み返すと、つまずきの中身は驚くほど似た形に集まります。実際に多く見られる3つの型と、それぞれに対してミネルバが行っていることをご紹介します。
-          </p>
+          <div className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12 space-y-3">
+            <p>生徒によってつまずく場所は違います。</p>
+            <p>
+              ただ、答案やノートを見ていくと、同じような失敗の型が見えてくることがあります。ミネルバでは、その原因を具体的に見つけ、勉強のやり方そのものを修正します。
+            </p>
+          </div>
           <div className="relative h-[200px] sm:h-[340px] overflow-hidden rounded-2xl border border-slate-200 shadow-md mb-10 sm:mb-12">
             <Image
               src="/images/home-test.jpg"
@@ -436,7 +398,7 @@ export default function Home() {
                     <dd className="text-slate-700">{cause}</dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-orange-700 mb-1">ミネルバで行うこと</dt>
+                    <dt className="font-bold text-brand-900 mb-1">ミネルバで行うこと</dt>
                     <dd className="text-slate-700">{action}</dd>
                   </div>
                 </dl>
@@ -446,73 +408,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 指導報告書 */}
+      {/* 実際の成績改善事例 */}
       <section className="bg-white py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
-            毎回の授業を、その日のうちに「診断書」にしています
+            実際の成績改善事例
           </h2>
-          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12">
-            今日の授業でお子さまが何をできていて、どこで手が止まり、その原因は何で、次に何をするのか。それを毎回その日のうちに保護者様へお送りしています。「今日は一次関数をやりました」という報告ではありません。
+          <div className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12 space-y-3 text-center sm:text-left">
+            <p>開校後最初の定期テストで、実際にこのような変化がありました。</p>
+            <p>
+              まだ掲載できる事例は限られていますが、今後も実際の指導事例を追加していきます。
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            {scoreCases.map((item) => (
+              <article
+                key={`${item.grade}-${item.before}-${item.after}`}
+                className="bg-slate-50 p-6 sm:p-8 rounded-xl border border-slate-200 text-center"
+              >
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-5 text-slate-900">
+                  {item.grade}｜{item.subject}
+                </h3>
+                <p className="text-base sm:text-lg text-slate-700 tabular-nums mb-3">
+                  {item.before}点 → {item.after}点
+                </p>
+                <p className="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tabular-nums">
+                  ＋{item.diff}点
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 指導報告書 */}
+      <section className="bg-slate-50 py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
+            授業では、こんなところまで見ています。
+          </h2>
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-8 sm:mb-10 text-center sm:text-left">
+            一人ひとりのつまずきを記録し、次の指導につなげています。学習内容・つまずき・行った指導・次回へのつなぎを、毎回その日のうちに保護者様へお送りしています。
           </p>
 
-          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
-            {reportStats.map(({ value, unit, label }) => (
-              <div
-                key={label}
-                className="bg-slate-50 border border-slate-200 rounded-xl px-5 py-6 text-center"
-              >
-                <dd className="font-serif font-bold text-navy-900 leading-none">
-                  <span className="text-4xl sm:text-5xl tabular-nums">{value}</span>
-                  <span className="text-xl sm:text-2xl ml-1">{unit}</span>
-                </dd>
-                <dt className="mt-3 text-base text-slate-700 leading-relaxed">{label}</dt>
-              </div>
-            ))}
-          </dl>
-
-          <h3 className="font-serif text-xl sm:text-2xl font-bold mb-6 leading-relaxed">
-            指導報告に必ず書く、4つのこと
-          </h3>
-          <ul className="grid sm:grid-cols-2 gap-5 sm:gap-6 mb-12 sm:mb-16">
-            {reportContents.map(({ title, body }) => (
-              <li
-                key={title}
-                className="bg-slate-50 border border-slate-200 rounded-xl p-5 sm:p-6"
-              >
-                <h4 className="font-bold text-lg text-orange-700 mb-2 leading-snug">{title}</h4>
-                <p className="text-base text-slate-700 leading-relaxed">{body}</p>
-              </li>
-            ))}
-          </ul>
-
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="relative h-[280px] sm:h-[420px] overflow-hidden rounded-2xl border border-slate-200 shadow-md">
-              <Image
-                src="/images/hero-lesson.jpg"
-                alt="授業中に生徒の手元を確認する講師"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover object-center"
-              />
-            </div>
-            <div>
-              <p className="text-base text-slate-600 leading-relaxed mb-5">
-                実際にお送りしている指導報告の一例です（内容は一部を変えています）。
-              </p>
-              <div className="mx-auto w-full max-w-sm rounded-[2rem] border-8 border-slate-900 bg-slate-900 shadow-xl overflow-hidden">
-                <div className="bg-navy-900 px-5 py-4 text-white">
-                  <p className="text-xs text-orange-400 font-bold">学習塾ミネルバ</p>
-                  <p className="text-sm font-bold mt-0.5">本日の指導報告</p>
-                </div>
-                <div className="bg-slate-100 px-4 py-5">
-                  <p className="bg-white rounded-2xl rounded-tl-sm px-5 py-4 text-base text-slate-800 leading-relaxed shadow-sm">
-                    本日は連立方程式の文章題を扱いました。式を作るところまでは正しくできていて、割合の問題も自分で立式できています。一方で、引き算と九九のところで計算ミスが続きました。手元を見ていると暗算で処理しようとしていて、途中式がノートに残っていないため、間違えた箇所をご本人も後から確認できない状態です。式を縦に揃えて、消しゴムを使わずに全部残すよう指導しました。宿題も同じ書き方でお願いします。次回の自習でも同じ形で解けているかを確認します。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ReportCarousel reports={reportSamples} />
 
           <div className="mt-12 sm:mt-14 flex justify-center">
             <CtaButton href="/policy" variant="secondary">
@@ -523,7 +462,7 @@ export default function Home() {
       </section>
 
       {/* フッター前CTA */}
-      <section className="bg-navy-900 text-white">
+      <section className="bg-brand-900 text-white">
         <div className="grid lg:grid-cols-2">
           <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 lg:py-24">
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
@@ -532,27 +471,27 @@ export default function Home() {
             <p className="text-lg sm:text-xl text-slate-300 mb-8 sm:mb-10 leading-relaxed">
               まずは80分の体験授業で見つけてみませんか。
             </p>
-            <div className="bg-navy-800 p-5 sm:p-8 rounded-xl mb-8 sm:mb-10 border border-navy-700">
-              <p className="font-bold mb-5 text-orange-400 leading-relaxed">
+            <div className="bg-[#004840]/80 p-5 sm:p-8 rounded-xl mb-8 sm:mb-10 border border-white/15">
+              <p className="font-bold mb-5 text-white leading-relaxed">
                 体験授業後には、お預かりしたお子さまの学習プロセスを精査し、以下の内容を明確にした「学習診断レポート」をお渡しします。
               </p>
               <ul className="space-y-3">
                 {reportBenefits.map((benefit) => (
                   <li key={benefit} className="flex items-start gap-3">
-                    <span aria-hidden="true" className="text-orange-500 mt-0.5 flex-shrink-0">
+                    <span aria-hidden="true" className="text-accent-400 mt-0.5 flex-shrink-0">
                       ✓
                     </span>
-                    <span className="text-base text-slate-200 leading-relaxed">{benefit}</span>
+                    <span className="text-base text-slate-100 leading-relaxed">{benefit}</span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-base text-slate-300 leading-relaxed">
+              <p className="mt-5 text-base text-slate-200 leading-relaxed">
                 現在の塾での勉強やテスト対策に手応えを感じていない方も、現状を打破する指針としてお役立てください。
               </p>
             </div>
-            <div className="sm:self-start">
-              <CtaButton href="/contact">
-                無料学習診断レポート付き体験授業を申し込む
+            <div className="sm:self-start w-full sm:w-auto">
+              <CtaButton href="/contact" variant="onDark">
+                <TrialCtaLabel />
               </CtaButton>
             </div>
           </div>

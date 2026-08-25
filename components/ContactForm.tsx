@@ -53,7 +53,7 @@ const toHalfWidth = (value: string) =>
 const countDigits = (value: string) => (toHalfWidth(value).match(/\d/g) ?? []).length;
 
 const inputClassName =
-  'w-full px-4 py-3.5 rounded-lg border bg-white text-base text-slate-900 outline-none transition-colors focus:border-orange-600 focus:ring-2 focus:ring-orange-600/30';
+  'w-full px-4 py-3.5 rounded-lg border bg-white text-base text-slate-900 outline-none transition-colors focus:border-brand-900 focus:ring-2 focus:ring-accent-500/30';
 
 const errorInputClassName = 'border-red-500';
 const normalInputClassName = 'border-slate-300';
@@ -173,14 +173,14 @@ export default function ContactForm() {
         </p>
         <p className="text-base text-slate-600 leading-relaxed mb-10">
           ご不明な点がございましたら、お気軽にお電話（
-          <a href="tel:0368206929" className="underline underline-offset-2 hover:text-orange-700">
+          <a href="tel:0368206929" className="underline underline-offset-2 hover:text-accent-700">
             03-6820-6929
           </a>
           ）でもお問い合わせください。
         </p>
         <Link
           href="/"
-          className="inline-flex items-center justify-center bg-navy-900 hover:bg-navy-800 text-white font-bold px-8 py-4 rounded-lg transition-colors shadow-md"
+          className="inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-8 py-4 rounded-lg transition-colors shadow-md"
         >
           ホームに戻る
         </Link>
@@ -300,7 +300,7 @@ export default function ContactForm() {
               <label
                 key={option}
                 htmlFor={`consultation-${index}`}
-                className="flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-orange-400 transition-colors"
+                className="flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-accent-500 transition-colors"
               >
                 <input
                   type="checkbox"
@@ -309,7 +309,7 @@ export default function ContactForm() {
                   value={option}
                   checked={formData.consultation.includes(option)}
                   onChange={(event) => handleCheckboxChange(option, event.target.checked)}
-                  className="mt-1 w-5 h-5 accent-orange-600 flex-shrink-0"
+                  className="mt-1 w-5 h-5 accent-brand-900 flex-shrink-0"
                 />
                 <span className="text-slate-800 leading-relaxed">{option}</span>
               </label>
@@ -348,7 +348,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-orange-600 hover:bg-orange-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-md text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+          className="w-full bg-brand-900 hover:bg-[#004840] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-md text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
         >
           {isSubmitting ? '送信中...' : '無料体験・学習相談を申し込む'}
         </button>

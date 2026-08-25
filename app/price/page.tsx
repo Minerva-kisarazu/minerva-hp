@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import PreFooterCta from '@/components/PreFooterCta';
 
@@ -21,10 +21,10 @@ const priceRows = [
 
 const otherFees = [
   { label: '入塾費', body: '22,000円（税込・初月のみ受講費と合わせて納入）' },
-  { label: '教材費', body: '使用するテキスト等の実費を別途納入していただきます。' },
+  { label: '教材費', body: '使用するテキスト等の実費を別途納入していただきます。目安は1教科につき2,000円程度です。' },
   {
     label: '講習費',
-    body: '春期・夏期・冬期の各季節講習は、年間カリキュラム完遂と学力維持のため原則全員参加となり、別途受講費が発生します。',
+    body: '春期・夏期・冬期の講習を年間の学習計画に沿って実施しています。原則として在籍生は参加対象となります。費用は時期・内容に応じて別途ご案内します。',
   },
 ];
 
@@ -58,31 +58,11 @@ const faqs = [
       '解いただけで提出されると、もともと解ける問題を解いただけになってしまいます。丸付けをして、間違えた理由を確認して、解き直す。ここまでが宿題です。また、授業から日が空くと前提から忘れてしまうため、当日か翌日に少しずつ始めていただくようお願いしています。まとめて取り組むより負担が軽く、定着もします。',
   },
   {
-    question: '集中力が続かないのですが、80分の授業はもちますか？',
-    summary:
-      '集中の続き方も観察の対象です。切れ方に合わせて、授業の進め方を調整します。',
-    detail:
-      '眠気の出るタイミング、手が止まる場面、手遊びが増える時間帯まで見て、集中しやすい科目や単元を前半に置くなど、その生徒に合う順番に組み替えます。あわせて、眠いときは無理に続けず15〜20分だけ眠ってから再開する、25〜30分ごとに短い休憩を挟むといった、家庭学習での具体的な進め方もお伝えします。',
-  },
-  {
     question: '個別指導だから、料金が高いのではありませんか？',
     summary:
-      '料金だけを見ると、一般的な個別指導塾より高く感じられる場合があります。ただし、授業時間だけではなく、授業外の学習まで含めて学習プロセスを支えることが目的です。',
+      '料金だけを見ると、一般的な個別指導塾より高く感じられる場合があります。ただし、授業時間だけでなく、授業の外での学習まで含めて支える料金です。',
     detail:
-      '集団塾に比べれば月謝の額面は高くなります。しかしミネルバの料金には、毎回の学習動作・判断の癖の分析、保護者様への即日指導報告、追加料金なしで毎日使える自習スペースでの5教科の進度管理・質問対応が含まれています。指導報告は1回あたり約200字で、その日にできたこと・手が止まった箇所・その原因・次にやることを毎回書いています。1回80分の授業時間を買うのではなく、「結果を出すための学習環境と管理への投資」と考えていただければ幸いです。',
-  },
-  {
-    question: '入塾するか決めていなくても、体験授業を受けられますか？',
-    summary:
-      'はい、受けられます。無理な勧誘は一切いたしません。',
-    detail:
-      'お子さま自身が「ここでやりたい」と納得し、保護者様が指導方針と環境を信頼していただいた場合のみ、お手続きをご案内しております。安心してお申し込みください。',
-  },
-  {
-    question: '他の塾に通いながら、利用することはできますか？',
-    summary: '可能です。併用して成果を出している生徒も在籍しています。',
-    detail:
-      '他塾の教材やカリキュラムにおける「つまずきの原因」をミネルバで分析・修正し、自習室で演習を重ねる通い方です。',
+      '集団塾に比べれば月謝の額面は高くなります。しかしミネルバの料金には、毎回の学習動作・判断の癖の分析、保護者様への即日指導報告、追加料金なしで毎日使える自習スペースでの5教科の進度管理・質問対応が含まれています。指導報告では、その日にできたこと・手が止まった箇所・その原因・次にやることを毎回書いています。1回80分の授業だけではなく、授業の外での学習まで含めて支える料金です。',
   },
   {
     question: '自習室は、授業がない日も利用できますか？',
@@ -93,7 +73,7 @@ const faqs = [
   },
   {
     question: '学校の定期テスト対策にも対応していますか？',
-    summary: 'はい、木更津市内の学校の定期テストに完全準拠しています。',
+    summary: 'はい、木更津市内の学校の定期テストにも対応しています。',
     detail:
       'テスト範囲に合わせて、提出必須の学校ワークの進行管理から、出題されやすい単元の確認まで徹底して行います。',
   },
@@ -131,10 +111,10 @@ export default function PricePage() {
               授業だけでなく、日々の学習まで含めてサポートします。
             </p>
             <p>
-              授業料には、個別指導だけでなく、学習状況の確認、自習室の利用、学習計画の管理、指導内容の共有などが含まれています。
+              授業料には、個別指導だけでなく、学習状況の確認、自習室の利用、授業で見つかった課題の整理、指導内容の共有などが含まれています。
             </p>
             <p>
-              毎月お支払いいただく「総支払額」には、月額受講費と施設費（2,200円/月）がすべて含まれています。1講座でも受講していただければ、自習室は授業日にかかわらず毎日ご利用いただけます。
+              以下は月額受講費に施設費（2,200円/月）が含まれた、毎月の「総支払額」です。1講座でも受講していただければ、自習室は授業日にかかわらず毎日ご利用いただけます。
             </p>
           </div>
 
@@ -143,7 +123,7 @@ export default function PricePage() {
             <table className="w-full min-w-[720px] border-collapse text-left">
               <caption className="sr-only">学年別・講座数別の月額総支払額（税込）</caption>
               <thead>
-                <tr className="bg-navy-900 text-white text-sm">
+                <tr className="bg-brand-900 text-white text-sm">
                   <th scope="col" className="px-5 py-4 font-bold">
                     学年
                   </th>
@@ -206,7 +186,7 @@ export default function PricePage() {
           </div>
 
           <div className="mt-10 sm:mt-12 bg-white p-6 sm:p-10 rounded-xl border border-slate-200 shadow-sm">
-            <h3 className="font-serif text-lg sm:text-xl font-bold mb-3 text-orange-700 border-b border-slate-200 pb-3">
+            <h3 className="font-serif text-lg sm:text-xl font-bold mb-3 text-accent-700 border-b border-slate-200 pb-3">
               入塾時に必要な費用
             </h3>
             <p className="text-base text-slate-700 mb-6 leading-relaxed">
@@ -224,9 +204,9 @@ export default function PricePage() {
         </div>
       </section>
 
-      <section className="bg-navy-900 text-white py-16 sm:py-24">
+      <section className="bg-brand-900 text-white py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-center leading-relaxed border-b border-navy-700 pb-5">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-center leading-relaxed border-b border-brand-700 pb-5">
             よくあるご質問（Q&amp;A）
           </h2>
 
@@ -234,9 +214,9 @@ export default function PricePage() {
             {faqs.map(({ question, summary, detail }) => (
               <article
                 key={question}
-                className="bg-navy-800 p-5 sm:p-8 rounded-xl border border-navy-700"
+                className="bg-brand-800 p-5 sm:p-8 rounded-xl border border-brand-700"
               >
-                <h3 className="font-serif text-base sm:text-lg font-bold mb-4 text-orange-400 leading-relaxed">
+                <h3 className="font-serif text-base sm:text-lg font-bold mb-4 text-accent-400 leading-relaxed">
                   <span className="mr-1">Q：</span>
                   {question}
                 </h3>
