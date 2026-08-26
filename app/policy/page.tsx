@@ -10,16 +10,19 @@ export const metadata: Metadata = {
 };
 
 const founderMessage = [
-  '塾講師として現場に立ち、多くの生徒たちを見てきて確信していることがあります。それは、同じ教室で同じ授業を受け、同じ教材を使っても、結果の出方には大きな差があるという現実です。',
-  '今の時代、映像授業や良質な参考書は世の中に溢れています。しかし、どれほど優れた材料があっても、それを「自ら掴み取り、使いこなす力」がなければ、成果には結びつきません。',
-  '私は、勉強や受験こそが自分を鍛える大切な機会だと考えています。定期テストや志望校合格という明確な目標に向かって本気で努力し、壁を乗り越える。その過程で培われる「自分で目標を立て、考え、実行する力」は、その後の学びにも生きてくると信じています。',
-  '当塾は、単に答えを教えるだけの場所ではありません。受験という挑戦を通じて成長の場に変えるために、私たちは「学習プロセスそのものを分析する」という考え方のもと、生徒一人ひとりが、自分で学習を進められる力を身につけられるよう指導します。',
+  '良い教材があることと、それを自分で使いこなせることとは別です。',
+  'どれほど良い授業や参考書があっても、問題を読んで必要な情報を取り出すことができなければ、解けません。解き方を知っていても、少し形が変わったときに何を使えばよいか考えられなければ、解けません。答えが出ても、自分の答えが問題の問いに合っているか確かめられなければ、失点します。',
+  'だから私は、勉強を通じて「自分で考えるための基本動作」を身につけてほしいと考えています。これは特別に難しいことではありません。',
+  '問題文をきちんと読む。何を聞かれているのかを確認する。分かっていることを整理する。自分で解き方を考える。答えを出す。そして、本当に合っているか確かめる。間違えたら、どこで考え方がずれたのかを振り返る。',
+  'この繰り返しが、教科を問わず必要になる「考える力」の土台になります。ミネルバでは、こうした力を単なる理念として語るのではなく、毎日の授業と自習の中で具体的に鍛えます。',
+  'そのために、答案やノートだけでなく、問題を解いている途中の様子まで確認し、「なぜできないのか」を分析します。分析は目的ではありません。生徒が自分で考え、自分で学習を進められるようになるための手段です。',
+  '受験や定期テストという具体的な目標に向かって勉強する中で、こうした力を身につけてほしい。それがミネルバの指導の根底にある考えです。',
 ];
 
 const lessonFeatures = [
   {
     title: '対話が生む「思考の言語化」',
-    body: '講師が一方的に解説するのをやめ、「なぜその答えになったのか」を生徒自身に説明させます。「一言で言うと何の話？」「この式は何を計算している？」「この長さは何を表している？」。授業中はこうした問いを繰り返し、曖昧な「わかったつもり」を残しません。',
+    body: '講師が一方的に解説するのをやめ、「なぜその答えになったのか」を生徒自身に説明させます。「一言で言うと何の話？」「この式は何を計算している？」「この長さは何を表している？」。授業中はこうした問いを繰り返し、曖昧な「わかったつもり」を残しません。自分の考えを言葉にできるかどうかを見ることで、本人がどこまで理解しているのかを確認します。',
   },
   {
     title: '「考える部分」と「覚えて機械的に処理する部分」を切り分ける',
@@ -27,7 +30,7 @@ const lessonFeatures = [
   },
   {
     title: '「自力で読み解く」練習の徹底',
-    body: '解説を待つのではなく、まず自分の力で文章から要点を掴む。自分で丸付けをし、気づきを自分の言葉でメモする。この「正しい学習の作法」を繰り返すことで、授業で分かったことを、自分で使えるようにしていきます。',
+    body: '解説を待つのではなく、まず自分の力で文章から要点を掴む。設問が何を聞いているのかを確認し、自分で答えを作る。自分で丸付けをし、間違えたところを確認し、気づきを自分の言葉でメモする。「読む→考える→解く→確かめる」という流れを繰り返すことで、授業で分かったことを、自分で使えるようにしていきます。',
   },
 ];
 
@@ -81,11 +84,11 @@ export default function PolicyPage() {
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 leading-relaxed border-b border-slate-300 pb-5">
-            「教えてもらう」から、「自分で学べる」へ。
+            「教えてもらう」から、「自分で考えて学べる」へ。
           </h2>
           <div className="mb-10 space-y-3 max-w-3xl">
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-              授業で答えを知るだけではなく、自分で考え、解き、間違いを直し、次に何をすればよいかを判断できる状態を目指します。
+              授業で答えを知るだけではなく、問題を自分で読み、考え、解き、間違いを直し、次に何をすればよいかを自分で判断できる状態を目指します。
             </p>
           </div>
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -113,7 +116,9 @@ export default function PolicyPage() {
 
       <section className="bg-brand-900 text-white py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <p className="text-sm font-bold text-accent-400 mb-3 text-center">【授業】理解する力を鍛える</p>
+          <p className="text-sm font-bold text-accent-400 mb-3 text-center">
+            【授業】自分で考えて解く力を鍛える
+          </p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed">
             「答えを教える」から、「自分で解ける」へ。
           </h2>
@@ -126,7 +131,7 @@ export default function PolicyPage() {
             <div className="space-y-3 max-w-2xl mx-auto">
               <p className="font-bold text-white text-lg sm:text-xl">必要なことは、きちんと教えます。</p>
               <p>
-                ただ答えを渡して終わるのではなく、なぜその解き方になるのかを一緒に考え、最後は自分の力で解けるようにする。それが私たちの個別指導です。
+                ただ答えを渡して終わるのではなく、なぜその解き方になるのかを一緒に考え、最後は自分の力で問題を読み、考え、解けるようにする。それが私たちの個別指導です。
               </p>
             </div>
           </div>
@@ -143,9 +148,18 @@ export default function PolicyPage() {
 
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-12 text-center leading-relaxed border-b border-slate-300 pb-5">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed border-b border-slate-300 pb-5">
             成果を偶然にしないための「客観的な分析」
           </h2>
+          <div className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 space-y-4">
+            <p>
+              私たちが学習プロセスを見るのは、細かなミスを探すためだけではありません。問題を読む、考える、解く、確かめるという一連の流れの中で、どこがうまくいっていないのかを具体的にするためです。
+            </p>
+            <p>
+              「思考力が足りない」「読解力がない」といった曖昧な言葉で終わらせず、「設問の条件を読んでいない」「必要な情報を整理せずに計算を始めている」「答えを書いたあとに問いを確認していない」というところまで具体化します。
+            </p>
+            <p>その具体性があるからこそ、次に何を練習すればよいのかが決まります。</p>
+          </div>
           <div className="space-y-6 sm:space-y-8">
             {analysisDetails.map(({ title, body }) => (
               <div key={title} className="bg-white p-6 sm:p-10 rounded-xl shadow-sm border border-slate-200">
@@ -162,14 +176,19 @@ export default function PolicyPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
           <p className="text-base font-bold text-accent-700 mb-3 text-center">
-            【学習の作法】家庭学習まで含めて設計する
+            【学習の進め方】家庭学習まで含めて設計する
           </p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed">
             ミネルバが生徒と交わしている、5つの約束
           </h2>
-          <p className="text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12 border-b border-slate-200 pb-8">
-            授業の時間は週に数時間しかありません。成績を決めるのは、それ以外の時間の使い方です。ミネルバでは「何を勉強するか」だけでなく「どう勉強するか」を具体的に決めて、生徒と共有しています。ご家庭でも同じ声かけをしていただけるよう、指導報告でお伝えします。
-          </p>
+          <div className="text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12 border-b border-slate-200 pb-8 space-y-3">
+            <p>
+              授業の時間は週に数時間しかありません。成績を決めるのは、それ以外の時間の使い方です。ミネルバでは「何を勉強するか」だけでなく「どう勉強するか」を具体的に決めて、生徒と共有しています。ご家庭でも同じ声かけをしていただけるよう、指導報告でお伝えします。
+            </p>
+            <p>
+              これらは単なる勉強のルールではありません。自分で学習を進めるために必要な「勉強のやり方」として、生徒と共有しています。
+            </p>
+          </div>
           <ol className="space-y-5 sm:space-y-6">
             {studyRules.map(({ title, body }, index) => (
               <li
