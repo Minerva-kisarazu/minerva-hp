@@ -63,6 +63,9 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  // ボット対策用（画面上は非表示）。値が入っていたら送信成功扱いにして実送信しない
+  const [website, setWebsite] = useState('');
 
   const clearError = (field: FieldName) => {
     setErrors((prev) => {
@@ -139,12 +142,36 @@ export default function ContactForm() {
     }
 
     setIsSubmitting(true);
+    setSubmitError('');
     try {
-      // TODO: 送信先が決まったらここで API ルート（またはフォームサービス）を呼ぶ。
-      // 現時点では送信処理が無く、入力内容はどこにも届かない。
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          website,
+        }),
+      });
+
+      const result = (await response.json().catch(() => null)) as
+        | { ok?: boolean; error?: string }
+        | null;
+
+      if (!response.ok || !result?.ok) {
+        setSubmitError(
+          result?.error ||
+            '送信に失敗しました。時間をおいて再度お試しいただくか、お電話でご連絡ください。'
+        );
+        return;
+      }
+
       setFormData(emptyForm);
+      setWebsite('');
       setIsSubmitted(true);
+    } catch {
+      setSubmitError(
+        '送信に失敗しました。通信環境をご確認のうえ、再度お試しいただくか、お電話でご連絡ください。'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -189,7 +216,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="max-w-2xl mx-auto">
+    <form onSubmit={handleSubmit} noValidate className="relative max-w-2xl mx-auto">
       <h2 className="sr-only">お申し込みフォーム</h2>
 
       <div className="space-y-8">
@@ -338,12 +365,32 @@ export default function ContactForm() {
           />
         </div>
 
+        {/* honeypot: 視覚的に隠すが、アクセシビリティ上も通常操作では触れない */}
+        <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
+          <label htmlFor="website">Website</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(event) => setWebsite(event.target.value)}
+          />
+        </div>
+
         <div className="bg-slate-100 border border-slate-200 rounded-lg p-5">
           <h3 className="font-bold text-base mb-2">個人情報の取り扱いについて</h3>
           <p className="text-base text-slate-700 leading-relaxed">
             お申し込み情報は、体験授業の実施に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。
           </p>
         </div>
+
+        {submitError && (
+          <p role="alert" className="text-center text-sm sm:text-base text-red-600 leading-relaxed">
+            {submitError}
+          </p>
+        )}
 
         <button
           type="submit"
