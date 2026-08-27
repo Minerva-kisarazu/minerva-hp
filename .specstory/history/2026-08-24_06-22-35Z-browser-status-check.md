@@ -14969,6 +14969,2492 @@ _**User**_
 
 _**Agent (default)**_
 
+<think><details><summary>Thought Process</summary>
+コミットとプッシュは完了している。フォームはGoogleスプレッドシートに送信したい。ドメインは後で変更するが、現状のjimdoドメインをそのまま使う。
+
+フォーム送信はGoogle Apps Script Web Appで実装する。ドメイン移行は後でjimdoからVercelへ行う。
+
+Next.jsのAPIルートからGoogle Apps Script Web Appへフォームデータを転送する方法を検討している。GoogleシートとスクリプトエディタでWeb Appをデプロイし、URLを環境変数に設定する。ContactFormの現在のフィールドも確認する必要がある。DNSレコードはjimdoドメインからVercelへ変更する。
+
+具体的なドメイン名が未指定なので確認が必要だ。jimdoサイトの接続解除とVercelへのA/CNAMEレコード設定も必要になる。ContactFormを更新して`/api/contact`経由でGoogle Apps Scriptへ送信する実装を進める。
+
+環境変数`GOOGLE_SHEETS_WEBAPP_URL`でGoogle Apps ScriptのURLを管理する。スクリプトコードは貼り付けだけで使える形で提供する。jimdoドメインからVercelへのDNS移行手順も解説する。ドメイン名はユーザーに確認する。ビルドが正常に動作するかも確認する。
+</details></think>
+
+_**Agent (default)**_
+
+フォームをスプレッドシート連携にし、Jimdoドメイン移行の手順も進めます。まずフォーム実装と現状を確認します。
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **`c:\Users\学習塾ミネルバ\createHP\minerva-hp`** (0 files)
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **`c:\Users\学習塾ミネルバ\createHP\minerva-hp`** (0 files)
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: git -C &#34;c:\Users\学習塾ミネルバ\createHP\minerva-hp&#34; status -sb; git -C &#34;c:\Users\学習塾ミネルバ\createHP\minerva-hp&#34; log -3 --oneline</summary>
+```bash
+git -C "c:\Users\学習塾ミネルバ\createHP\minerva-hp" status -sb; git -C "c:\Users\学習塾ミネルバ\createHP\minerva-hp" log -3 --oneline
+```
+
+```
+## main...origin/main
+a1cc52e up
+68b9e3d up
+21cb75f 指導報告データに2026年2月分を追加
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+`app/api/contact/route.ts` を実装し、Google Apps Script Web App へフォームデータを送信する。
+
+ContactForm から `/api/contact` を呼び出すよう更新する。`.env.example` に `GOOGLE_SHEETS_WEBAPP_URL` と `NEXT_PUBLIC_SITE_URL` を追加する。Apps Script のセットアップ手順は `scripts/google-sheets-contact.gs` に配置し、返答で説明する。Next.js API ルートの仕様確認も行う。Jimdo ドメイン移行は Vercel へのデプロイ後に検討する。
+
+Jimdo ドメインの DNS 移行方法を確認中。カスタム DNS または A/CNAME レコードが必要な場合がある。正確なドメイン名をユーザーに確認する必要がある。フォームにメール欄がないため、スプレッドシートの列構成に影響しない。Apps Script の `doPost` 関数を記述し始めた。
+
+Apps Script の `doPost` 関数を完成させた。フォームデータをスプレッドシートに書き込む処理を記述した。
+
+ブラウザから直接呼び出すと CORS エラーが発生する可能性があるため、サーバーサイドの API ルート経由で送信する方針を確定した。
+
+POST 時にリダイレクトが発生する場合もあるため、デプロイ URL の正しさを確認する必要がある。
+
+fetch で Apps Script を呼び出す際、`redirect: 'follow'` を指定してリダイレクトを追従させる。レスポンスが空 HTML になることがあるため、この設定が必要だ。
+
+スパム対策として、シンプルな honeypot フィールドを追加する。rate limiting は一旦見送る。
+
+`.env.local` はコミットしない。`.env.local.example` に環境変数を記載する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **`c:\Users\学習塾ミネルバ\createHP\minerva-hp\node_modules\next\dist\docs`** (1 file)
+
+| File |
+|------|
+| `../node_modules\next\dist\docs\01-app\03-api-reference\03-file-conventions\route.md` |
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "API /api/contact + ContactForm 連携",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "Apps Script テンプレート + env 例",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "Jimdoドメイン移行手順を整理",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Home: 3-step rewrite, remove 6-step, shorten analysis, study/improvement copy",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Policy: founder + 答えを教える section + terminology",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Grades: study room copy; Price: FAQ trim + wording",
+      "id": "3",
+      "status": "completed"
+    },
+    {
+      "content": "Sitewide: 自律→自立/自分で… unification check",
+      "id": "4",
+      "status": "completed"
+    }
+  ],
+  "success": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Next.js 16 の route.md を確認し、特別な設定がないか調べている。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\node_modules\next\dist\docs\01-app\03-api-reference\03-file-conventions\route.md</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\api\contact\route.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Apps Scriptファイルを作成する。
+
+.env.example と Google Sheets 連携用のスクリプトを新規作成する。.gitignore は既に .env* を除外している。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\scripts\google-sheets-contact.gs</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\.env.example</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\.gitignore</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "API /api/contact + ContactForm 連携",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Apps Script テンプレート + env 例",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Jimdoドメイン移行手順を整理",
+      "id": "3",
+      "status": "in_progress"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "API /api/contact + ContactForm 連携",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "Apps Script テンプレート + env 例",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "Jimdoドメイン移行手順を整理",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+.gitignore に .env* が含まれているため、環境変数ファイルも Git に追加されない。
+
+.env.example を .gitignore で除外しないよう修正する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\.gitignore</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm run build</summary>
+```bash
+npm run build
+```
+
+```
+npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> minerva-hp@1.0.0 build
+> next build
+
+▲ Next.js 16.3.1 (Turbopack)
+✓ Running next.config took 17ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1959ms
+  Running TypeScript ...
+  Finished TypeScript in 2.4s ...
+  Collecting page data using 12 workers ...
+  Generating static pages using 12 workers (0/11) ...
+  Generating static pages using 12 workers (2/11) 
+  Generating static pages using 12 workers (5/11) 
+  Generating static pages using 12 workers (8/11) 
+✓ Generating static pages using 12 workers (11/11) in 696ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/contact
+├ ○ /contact
+├ ○ /grades
+├ ○ /icon.svg
+├ ○ /policy
+├ ○ /price
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "API /api/contact + ContactForm 連携",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Apps Script テンプレート + env 例",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Jimdoドメイン移行手順を整理",
+      "id": "3",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "API /api/contact + ContactForm 連携",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Apps Script テンプレート + env 例",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Jimdoドメイン移行手順を整理",
+      "id": "3",
+      "status": "in_progress"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+ビルドが成功しました。これからGoogleスプレッドシートへのフォーム送信方法を確認し、jimdoドメインの使用方法も検討します。
+
+.env.example は .gitignore で除外済みです。ドメイン名は後で確認します。
+</details></think>
+
+_**Agent (default)**_
+
+フォーム連携の実装まで入れました。`npm run build` も通っています。
+
+## 実装したこと
+
+- `/api/contact` … フォーム内容を Google Apps Script 経由でスプレッドシートへ転送
+- `ContactForm` … 実送信＋失敗時メッセージ
+- `scripts/google-sheets-contact.gs` … 貼り付け用スクリプト
+- `.env.example` … 必要な環境変数の見本
+
+## あなた側の作業（スプレッドシート）
+
+1. Google スプレッドシートを新規作成（シート名は「申し込み」推奨）
+2. 拡張機能 → **Apps Script** → `scripts/google-sheets-contact.gs` の内容を貼って保存
+3. **デプロイ → 新しいデプロイ → ウェブアプリ**
+   - 実行ユーザー: **自分**
+   - アクセス: **全員**
+4. 発行された URL をコピー
+
+ローカル確認用（プロジェクト直下 `.env.local`）:
+
+```env
+GOOGLE_SHEETS_WEBAPP_URL=（ウェブアプリURL）
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+Vercel 公開時も同じ2つを Environment Variables に入れます。
+
+---
+
+## Jimdo ドメインの付け替え（概要）
+
+順番はこうです。
+
+1. **先に Vercel にデプロイ**（仮URL: `xxx.vercel.app`）
+2. Vercel → Domains で **今の Jimdo ドメインを追加**
+3. Jimdo / ドメイン管理画面で DNS を Vercel 向けに変更  
+   - よくある設定:  
+     - `@` → A `76.76.21.21`  
+     - `www` → CNAME `cname.vercel-dns.com`
+4. Jimdo 側のサイト公開を止める／ドメイン接続を外す（二重公開を防ぐ）
+5. `NEXT_PUBLIC_SITE_URL` を本番ドメインに更新して再デプロイ
+
+**注意:** Jimdo でドメインを「借りているだけ」か「レジストラが別」かで操作場所が違います。ドメイン名を教えてもらえれば、次の手順を具体化できます。
+
+---
+
+## 次に教えてほしいこと
+
+1. **今使っているドメイン名**（例: `www.〇〇.jp`）
+2. この変更を **コミット＆push** してよいか
+3. Vercel 連携はもう済んでいるか／これからか
+
+フォーム設定（Apps Script の URL）が取れれば、ローカル送信テストの手順もすぐ案内できます。
+
+---
+
+_**User**_
+
+一旦ストップで。まずフォーム部分を最終化するところから始めなければならない。
+現在構築中の学習塾ミネルバ公式HPについて、
+「問い合わせフォーム」の設計・実装を変更してください。
+
+今回の指示はフォーム設計を確定するためのものです。
+
+重要：
+・既存HPのデザイン、レイアウト、ページ構成、色、文章、画像は原則変更しない
+・今回指定するフォームに関係する部分以外を勝手に修正しない
+・既存の「体験授業」関連のコピーを今回の指示だけを理由に全面変更しない
+・Googleカレンダーの面談予約機能そのものは今回実装変更しない
+・今回は「総合問い合わせフォーム」の項目設計を確定し、将来の「面談事前アンケート」と分離できる構造にする
+
+==================================================
+【1. 総合問い合わせフォームの目的】
+==================================================
+
+このフォームは、
+「まだ何をするか完全には決まっていないが、塾について相談したい」
+というユーザーを受け付けるための総合問い合わせフォームです。
+
+問い合わせ時点では、塾側がその後の対応をしやすくするための基本情報を取得します。
+
+一方、
+・性別
+・生年月日
+・住所
+・詳しい学習状況
+・普段の学習時間
+・期待すること
+などの詳細情報は、問い合わせフォームでは取得しません。
+
+それらは後工程の「面談事前アンケート」で取得する前提です。
+
+==================================================
+【2. 総合問い合わせフォームの項目】
+==================================================
+
+以下の項目を実装してください。
+
+--------------------------------
+■ 生徒情報
+--------------------------------
+
+1. 生徒姓
+必須
+
+2. 生徒名
+必須
+
+3. 姓（カナ）
+必須
+
+4. 名（カナ）
+必須
+
+5. 学年
+必須
+
+選択肢：
+
+・小学1年
+・小学2年
+・小学3年
+・小学4年
+・小学5年
+・小学6年
+・中学1年
+・中学2年
+・中学3年
+・高校1年
+・高校2年
+・高校3年
+
+6. 学校名
+必須
+
+自由入力。
+
+「学校名が分からない」などを想定して、勝手に任意項目にはしない。
+
+--------------------------------
+■ 保護者・連絡先
+--------------------------------
+
+7. 保護者名
+必須
+
+8. メールアドレス
+必須
+
+9. 電話番号
+必須
+
+問い合わせ後の連絡・面談調整に使用するため必須。
+
+--------------------------------
+■ お問い合わせ内容
+--------------------------------
+
+10. お問い合わせの種類
+必須
+
+複数選択可能なチェックボックスにしてください。
+
+選択肢：
+
+□ 塾の指導内容について知りたい
+□ 料金について知りたい
+□ 面談について相談したい
+□ 体験授業について相談したい
+□ 資料・パンフレットがほしい
+□ 入塾について相談したい
+□ その他
+
+重要：
+「体験授業について相談したい」は必ず残してください。
+
+体験授業を希望するユーザーを取りこぼさないためです。
+
+ただし、この選択肢は
+「体験授業を即時予約する」
+という意味ではありません。
+
+ミネルバでは基本的に、
+
+問い合わせ
+→ 面談
+→ 必要に応じて体験授業
+
+という流れで対応します。
+
+したがって、フォーム内では「体験授業について相談したい」と表記してください。
+
+--------------------------------
+■ 自由記述
+--------------------------------
+
+11. ご相談・お問い合わせ内容
+任意
+
+説明文：
+
+「お子さまの学習状況や、ご質問など、事前にお伝えになりたいことがあればご記入ください。」
+
+自由記述のテキストエリア。
+
+必須にはしない。
+
+チェックボックスで問い合わせ内容を選択できるため、
+「相談内容を書かないと送信できない」構造にはしない。
+
+--------------------------------
+■ 当塾を知ったきっかけ
+--------------------------------
+
+12. 当塾を知ったきっかけ
+任意
+
+単一選択。
+
+選択肢：
+
+・Google検索
+・Googleマップ
+・チラシ
+・看板
+・Instagram・SNS
+・知人・友人からの紹介
+・ホームページ
+・その他
+・覚えていない／分からない
+
+必須にはしない。
+
+今後の集客効果の確認に利用できるようにする。
+
+==================================================
+【3. 必須項目】
+==================================================
+
+総合問い合わせフォームの必須項目は以下です。
+
+・生徒姓
+・生徒名
+・姓（カナ）
+・名（カナ）
+・学年
+・学校名
+・保護者名
+・メールアドレス
+・電話番号
+・お問い合わせの種類
+
+以上。
+
+以下は任意です。
+
+・ご相談・お問い合わせ内容
+・当塾を知ったきっかけ
+
+この必須／任意の設定を変更しないでください。
+
+==================================================
+【4. 問い合わせフォームでは取得しない情報】
+==================================================
+
+今回の総合問い合わせフォームには以下を入れないでください。
+
+・性別
+・生年月日
+・郵便番号
+・住所
+・気になる科目
+・学習時間
+・家庭学習状況
+・塾に期待すること
+・現在の詳しい学習状況
+・問い合わせのきっかけ以外の詳細マーケティング情報
+・その他、面談用の詳細アンケート項目
+
+これらは後工程の「面談事前アンケート」に分離します。
+
+==================================================
+【5. フォーム上部の説明文】
+==================================================
+
+問い合わせフォームの冒頭に、以下の説明を入れてください。
+
+見出し：
+
+「まずはお気軽にご相談ください。」
+
+本文：
+
+「料金や指導内容についてのご質問、お子さまの学習についてのご相談など、お気軽にお問い合わせください。
+初回は面談で、お子さまの現在の学習状況やお悩みを伺っています。
+体験授業をご希望の場合も、まずは面談でご希望や学習状況を確認したうえでご案内します。」
+
+現在のサイトデザインに合わせて自然に配置してください。
+
+==================================================
+【6. 送信ボタン】
+==================================================
+
+送信ボタンの文言：
+
+「お問い合わせを送信する」
+
+にしてください。
+
+「無料体験を申し込む」など、問い合わせフォームの役割と異なる文言には変更しないでください。
+
+==================================================
+【7. 送信後の扱い】
+==================================================
+
+フォーム送信後は、問い合わせ完了状態が明確に分かる画面へ遷移してください。
+
+ただし、今回の段階では「面談予約ページ」「面談事前アンケート」の詳細実装までは行いません。
+
+将来的には、
+
+問い合わせ
+↓
+面談予約
+↓
+面談事前アンケート
+
+につながる構造にするため、
+フォーム送信成功時に取得した情報を失わない構成にしてください。
+
+==================================================
+【8. データ保存】
+==================================================
+
+問い合わせフォームの送信データは、後工程でGoogleスプレッドシートへ保存できる構造にしてください。
+
+最低限、以下の列に対応できるデータ構造にしてください。
+
+・受付日時
+・生徒姓
+・生徒名
+・姓（カナ）
+・名（カナ）
+・学年
+・学校名
+・保護者名
+・メールアドレス
+・電話番号
+・お問い合わせの種類
+・ご相談・お問い合わせ内容
+・当塾を知ったきっかけ
+
+お問い合わせの種類は複数選択可能なので、
+保存時も複数の選択結果を欠落させないこと。
+
+==================================================
+【9. バリデーション】
+==================================================
+
+必須項目が未入力の場合は送信できないようにしてください。
+
+メールアドレスはメール形式をチェック。
+
+電話番号は一般的な日本の電話番号として入力可能な形式にしてください。
+
+学年は自由入力ではなく選択式。
+
+お問い合わせの種類は、
+最低1つ選択されていない場合は送信できないようにしてください。
+
+==================================================
+【10. UX】
+==================================================
+
+問い合わせフォームは、初回問い合わせとして入力負担が大きくなりすぎないことを重視してください。
+
+ただし、
+生徒氏名・学年・学校・保護者名・連絡先は塾側の対応に必要なので、必須項目として維持します。
+
+チェックボックスで相談内容を選べるため、
+ユーザーが長文を考えなくても問い合わせできる状態にしてください。
+
+スマートフォンでの入力を特に確認してください。
+
+・入力欄が画面幅を超えない
+・ラベルと入力欄の関係が分かる
+・チェックボックスを押しやすい
+・送信ボタンが押しやすい
+・エラーメッセージが分かりやすい
+
+==================================================
+【11. 今回変更しないもの】
+==================================================
+
+今回の指示では以下を変更しないでください。
+
+・HP全体のデザイン
+・ホームの文章
+・指導方針ページ
+・学年別ページ
+・料金ページ
+・指導報告カルーセル
+・実績3件
+・ロゴ
+・ブランドカラー
+・画像
+・ページ構成
+・Googleカレンダーの予約機能
+・LINE導線
+
+今回の作業対象は、
+「総合問い合わせフォームの設計・実装」
+です。
+
+==================================================
+【12. 今後のフォーム設計を前提にする】
+==================================================
+
+今後、別ページとして以下を実装する予定です。
+
+① 面談予約ページ
+Googleカレンダーの予約機能を利用する。
+
+② 面談事前アンケート
+面談予約後に回答してもらう詳細フォーム。
+
+面談事前アンケートでは、
+問い合わせフォームでは聞かなかった、
+・詳しい学習状況
+・気になる科目
+・学習時間
+・期待すること
+・現在の学習方法
+・面談で相談したいこと
+などを取得する予定です。
+
+そのため今回の問い合わせフォームに、
+面談用の詳細項目を追加しないでください。
+
+==================================================
+【13. 実装後の確認】
+==================================================
+
+実装後、以下を確認してください。
+
+□ 必須10項目が正しく必須になっている
+□ 任意2項目が任意になっている
+□ 学年が選択式
+□ お問い合わせの種類が複数選択可能なチェックボックス
+□ 体験授業について相談したい、が選択肢に存在する
+□ 自由記述欄が存在する
+□ きっかけが任意で存在する
+□ 面談用の詳細情報を問い合わせフォームに追加していない
+□ スマートフォンで入力しやすい
+□ バリデーションが機能する
+□ 送信成功状態が確認できる
+□ 将来的にGoogleスプレッドシートへ保存できるデータ構造になっている
+
+以上を満たすように実装してください。
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+問い合わせフォームの設計を確定する。必須項目と任意項目を明確にし、面談用の詳細情報は追加しない。スマートフォン対応とバリデーションも含め、実装後の確認項目を満たす構造にする。
+
+他の作業を停止し、問い合わせフォームの最終設計に集中する。ContactForm.tsx、APIルート、Google Apps Script、ページ内テキスト、レビュー用ファイルを順次更新する。既存ページやデザインは原則変更しない。
+</details></think>
+
+_**Agent (default)**_
+
+総合問い合わせフォームの設計確定から進めます。フォーム・API・説明文・スプレッドシート用データ構造だけ直し、他ページは触りません。
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\contact\page.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\api\contact\route.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp\\SITE_COPY_FOR_REVIEW.txt",
+  "pattern": "contact|お申し込み|ContactForm|体験"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp\\SITE_COPY_FOR_REVIEW.txt",
+  "pattern": "contact|お申し込み|ContactForm|体験",
+  "topFiles": [
+    {
+      "matchCount": 30,
+      "uri": "SITE_COPY_FOR_REVIEW.txt"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 30
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "ContactForm: 新項目・バリデーション・送信文言",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "contact page 説明文 + API/Apps Script データ構造",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt 同期",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "API /api/contact + ContactForm 連携",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Apps Script テンプレート + env 例",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "Jimdoドメイン移行手順を整理",
+      "id": "3",
+      "status": "completed"
+    }
+  ],
+  "success": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+問い合わせフォームの型定義とバリデーションを共有モジュールとして作成し、クライアントとAPIの整合性を保つ。
+
+送信成功時にinquiryIdをsessionStorageに保存し、将来の面談予約フローとデータ連携できる構造にする。問い合わせフォームの冒頭に指定された導入文言を配置する。既存の体験授業関連コピーは今回の指示以外では全面変更しない。
+
+問い合わせフォーム本体を新項目で完全に書き換える。送信成功メッセージを「問い合わせ完了」に緩和する。ページヘッダーと既存の体験授業ステップ部分はそのまま維持する。
+
+学校名を必須項目とする。姓・名（カナ）は平仮名とカタカナを許容するバリデーションとする。メールアドレスは標準正規表現で検証する。
+
+`lib/contactInquiry.ts` に型定義とサーバー側バリデーションを共通化する。クライアント側の学年選択肢もこちらから参照する。
+
+送信成功時は sessionStorage に JSON 形式の問い合わせデータを保存し、API から inquiryId を返す。成功画面は「お問い合わせを受け付けました」と表示する。
+
+環境変数 GOOGLE_SHEETS_WEBAPP_URL が未設定でも、ローカルでのフォーム最終確認が困難にならないよう、設計確定段階でこの制約を考慮する。
+
+GoogleスプレッドシートURLが未設定の場合、開発環境でフォームのUI最終確認を妨げないよう、成功レスポンスを返す。inquiryIdを返却し、警告ログを出力する。URLが未設定の場合は503エラーではなく正常終了とする。
+</details></think>
+
+_**Agent (default)**_
+
+共有のデータ型とフォーム本体を実装します。
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\lib\contactInquiry.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\api\contact\route.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\scripts\google-sheets-contact.gs</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SITE_COPY_FOR_REVIEW.txt の問い合わせセクションを更新している。
+
+.env.example の更新とビルド検証を確認している。問い合わせフォームの説明文のみを更新し、体験授業のコピーは変更しない。tsconfig の @/lib パス設定も確認している。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\.env.example</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+問い合わせフォームのセクションを更新する。ページの導入文とステップは変更しない。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm run build</summary>
+```bash
+npm run build
+```
+
+```
+npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> minerva-hp@1.0.0 build
+> next build
+
+▲ Next.js 16.3.1 (Turbopack)
+✓ Running next.config took 13ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1405ms
+  Running TypeScript ...
+  Finished TypeScript in 1829ms ...
+  Collecting page data using 12 workers ...
+  Generating static pages using 12 workers (0/11) ...
+  Generating static pages using 12 workers (2/11) 
+  Generating static pages using 12 workers (5/11) 
+  Generating static pages using 12 workers (8/11) 
+✓ Generating static pages using 12 workers (11/11) in 674ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/contact
+├ ○ /contact
+├ ○ /grades
+├ ○ /icon.svg
+├ ○ /policy
+├ ○ /price
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "ContactForm: 新項目・バリデーション・送信文言",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "contact page 説明文 + API/Apps Script データ構造",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt 同期",
+      "id": "3",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "ContactForm: 新項目・バリデーション・送信文言",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "contact page 説明文 + API/Apps Script データ構造",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt 同期",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+ユーザーの要望を整理している。学習塾HPの問い合わせフォーム設計を確定させる必要がある。既存デザインやレイアウトは原則維持する。必須10項目と任意2項目を正しく設定する。学年は選択式とする。お問い合わせの種類は複数選択可能なチェックボックスとする。体験授業について相談したいが選択肢に含まれる。自由記述欄と任意の「きっかけ」を設ける。面談用の詳細情報は追加しない。スマートフォン対応とバリデーションを確認する。将来的なGoogleスプレッドシート保存構造も考慮する。
+
+問い合わせページのイントロダクションとステップ部分は変更しない。
+</details></think>
+
+_**Agent (default)**_
+
+総合問い合わせフォームの設計どおり実装しました。他ページ・デザイン・体験関連の既存コピー（ページ上部の説明・ステップ）は触っていません。
+
+## 変更内容
+
+**フォーム（`ContactForm`）**
+- 指定の12項目（必須10／任意2）
+- 冒頭文「まずはお気軽にご相談ください。」
+- 「体験授業について相談したい」を含む複数選択
+- 送信ボタン「お問い合わせを送信する」
+- 完了画面＋`inquiryId`（sessionStorage にも保存＝後工程用）
+
+**データ構造（`lib/contactInquiry.ts` + API）**
+- スプレッドシート列に対応する正規化データ
+- `inquiryTypes` は配列のまま保持
+- Apps Script（`scripts/google-sheets-contact.gs`）も新列に更新
+
+## 確認済み
+
+| 項目 | 状態 |
+|---|---|
+| 必須10／任意2 | 準拠 |
+| 学年＝選択式 | 準拠 |
+| 種類＝複数チェック（体験相談あり） | 準拠 |
+| 自由記述・きっかけ＝任意 | 準拠 |
+| 面談用詳細項目なし | 準拠 |
+| build | 成功 |
+
+## 補足
+
+- `/contact` 上部の体験説明・5ステップは**そのまま**（今回の指示どおり全面変更していません）
+- Sheets URL 未設定でも、設計確認用に受付成功＋データ返却します（本番では `GOOGLE_SHEETS_WEBAPP_URL` 必須）
+
+ブラウザで `/contact` を開き、必須未入力・メール形式・チェック未選択のバリデーションを確認してみてください。
+
+---
+
+_**User**_
+
+現在構築中の学習塾ミネルバ公式HPについて、
+/contact（お問い合わせ）ページを、確定した問い合わせ導線に合わせて修正してください。
+
+今回の修正対象は主に/contactページです。
+
+重要：
+・サイト全体のデザイン、色、フォント、カード、余白、フォームUIの基本デザインは維持
+・ホーム、指導方針、学年別、料金ページは今回変更しない
+・問い合わせフォームの入力項目そのものは、現在実装されているものを基本維持
+・今回変更するのは「contactページの意味・説明・導線」と「送信後の流れ」
+・文章を勝手に大幅追加しない
+・現在のフォームUIを作り直さない
+・Googleカレンダーそのものの予約システムは変更しない
+
+==================================================
+【1. /contact のページタイトルを変更】
+==================================================
+
+現在：
+
+「無料体験授業・お問い合わせ」
+
+↓
+
+変更後：
+
+「お問い合わせ」
+
+ページのサブタイトルは現在の共通仕様に合わせて、
+
+「木更津市金田東の個別指導塾 学習塾ミネルバ」
+
+のままにする。
+
+---
+
+==================================================
+【2. contactページ冒頭の説明を変更】
+==================================================
+
+現在、冒頭にある「無料体験授業」を中心とした説明を、
+「総合的な問い合わせ窓口」の説明へ変更する。
+
+H2：
+
+「まずは、お子さまの学習についてご相談ください。」
+
+に変更。
+
+本文は以下を使用してください。
+
+「料金や指導内容についてのご質問、お子さまの学習についてのご相談、資料請求、面談・体験授業についてのお問い合わせを受け付けています。
+
+初めての方には、まず面談で、お子さまの現在の学習状況やお困りごとを伺っています。
+
+体験授業をご希望の場合も、まずは面談でご希望や学習状況を確認したうえでご案内しています。
+
+無理な勧誘は行っておりません。」
+
+既存デザインに合わせて自然に配置する。
+
+---
+
+==================================================
+【3. 現在の「無料学習診断レポート付き体験授業・お申し込み後のステップ」を削除】
+==================================================
+
+現在contactページにある、
+
+「無料学習診断レポート付き体験授業・お申し込み後のステップ」
+
+という見出しと、
+
+1 フォーム送信
+2 日程調整のご連絡
+3 個別面談＆体験授業（80分）
+4 学習診断レポートのお渡し
+5 ご検討
+
+という5つのステップは、現在の営業フローと合わないため削除する。
+
+特に、
+
+「フォーム送信
+→ 日程調整
+→ 個別面談＆体験授業」
+
+という表現は使用しない。
+
+当塾では、
+
+「まず面談」
+「必要に応じて体験授業」
+
+という流れであるため。
+
+---
+
+==================================================
+【4. 代わりに「お問い合わせ後の流れ」を簡潔に表示】
+==================================================
+
+削除した5ステップの位置に、
+以下の簡潔な案内を設置する。
+
+H2：
+
+「お問い合わせ後の流れ」
+
+3〜4ステップ程度で表示。
+
+STEP 1
+「お問い合わせ」
+
+本文：
+「フォームからご相談内容をお送りください。」
+
+STEP 2
+「面談」
+
+本文：
+「お子さまの学習状況やお困りごとを伺い、今後の学習についてご相談します。」
+
+STEP 3
+「必要に応じて体験授業」
+
+本文：
+「体験授業をご希望の場合は、面談で学習状況やご希望を確認したうえでご案内します。」
+
+STEP 4
+「ご検討」
+
+本文：
+「指導方針や環境がお子さまに合うか、ご家庭でご検討ください。」
+
+※「必ず体験授業を受ける」という意味にならないようにする。
+
+---
+
+==================================================
+【5. 問い合わせフォーム部分の見出しを整理】
+==================================================
+
+現在の問い合わせフォームの見出しを、
+
+「まずはお気軽にご相談ください。」
+
+として表示する。
+
+フォーム直前の説明として、以下を入れる。
+
+「料金や指導内容についてのご質問、お子さまの学習についてのご相談、資料請求など、まずはお気軽にお問い合わせください。」
+
+その下に現在実装されている問い合わせフォームを配置する。
+
+---
+
+==================================================
+【6. 現在実装済みのフォーム項目は基本維持】
+==================================================
+
+フォームについては現在の実装を基本維持する。
+
+現在実装されている以下を維持：
+
+【生徒情報】
+・生徒姓
+・生徒名
+・姓（カナ）
+・名（カナ）
+・学年
+・学校名
+
+【保護者・連絡先】
+・保護者名
+・メールアドレス
+・電話番号
+
+【お問い合わせ】
+・お問い合わせの種類（複数選択）
+・ご相談・お問い合わせ内容（自由記述）
+・当塾を知ったきっかけ
+
+お問い合わせの種類は現在の選択肢を維持する。
+
+・塾の指導内容について知りたい
+・料金について知りたい
+・面談について相談したい
+・体験授業について相談したい
+・資料・パンフレットがほしい
+・入塾について相談したい
+・その他
+
+「体験授業について相談したい」は必ず残す。
+
+今回のcontactページ修正では、フォーム項目を再設計しない。
+
+---
+
+==================================================
+【7. 体験授業を希望したユーザーへの説明】
+==================================================
+
+フォームの「お問い合わせの種類」で
+
+「体験授業について相談したい」
+
+を選択したユーザーに対しても、
+現在の塾の基本方針が伝わるようにする。
+
+ページ内の説明または送信後ページで、以下の内容を表示できるようにする。
+
+「体験授業をご希望の場合も、まずは面談でお子さまの学習状況やご希望を伺っています。
+
+面談後、必要に応じて体験授業をご案内します。」
+
+「体験授業の申込みを受け付けたので、すぐ授業日を決める」という挙動にはしない。
+
+---
+
+==================================================
+【8. 問い合わせフォーム送信後の完了ページを作成】
+==================================================
+
+問い合わせフォーム送信成功後、
+現在の簡単な完了表示だけではなく、
+「問い合わせ完了ページ」を表示する。
+
+ページタイトル：
+
+「お問い合わせありがとうございます」
+
+本文：
+
+「お問い合わせを受け付けました。
+
+内容を確認のうえ、必要に応じてメールまたはお電話にてご連絡いたします。」
+
+その下に、
+
+H2：
+
+「面談をご希望の方へ」
+
+本文：
+
+「当塾では、初めての方にはまず面談で、お子さまの現在の学習状況やお困りごとを伺っています。
+
+面談をご希望の方は、下記からご都合のよい日時をご予約いただけます。」
+
+CTA：
+
+「面談日時を予約する」
+
+このCTAから、面談予約ページへ進める。
+
+※問い合わせ内容が資料請求だけのユーザーにも、面談予約を必須に見せない。
+※「面談しなければならない」という印象を与えない。
+
+その下に、
+
+「資料・パンフレットをご希望の方」
+
+という案内を必要に応じて表示し、
+
+「料金・パンフレットを見る」
+
+から資料ページへ進める。
+
+---
+
+==================================================
+【9. 面談予約ページへの導線】
+==================================================
+
+問い合わせ完了ページから、
+
+「面談日時を予約する」
+
+を押した場合のみ、
+面談予約ページへ進む。
+
+面談予約ページでは、
+現在利用しているGoogleカレンダーの予約機能を利用する。
+
+今回のcontactページでは、
+Googleカレンダーそのものを実装変更しない。
+
+---
+
+==================================================
+【10. LINE相談はcontactページでも明確に案内】
+==================================================
+
+contactページの問い合わせフォーム周辺、
+またはフォーム下部に、
+
+H2：
+
+「LINEでもご相談いただけます」
+
+本文：
+
+「ちょっとしたご質問やご相談は、LINEからもお気軽にお問い合わせいただけます。」
+
+CTA：
+
+「LINEで相談する」
+
+現在利用しているLINE公式アカウントへリンクする。
+
+LINEと問い合わせフォームは別の問い合わせ経路として扱う。
+
+---
+
+==================================================
+【11. 「面談」と「体験授業」の関係を明確にする】
+==================================================
+
+contactページ全体で、
+
+「問い合わせ＝無料体験授業の申込み」
+
+という印象をなくす。
+
+正しい流れは、
+
+お問い合わせ
+↓
+面談
+↓
+必要に応じて体験授業
+↓
+ご検討
+
+です。
+
+この順序がページ内で矛盾しないようにする。
+
+---
+
+==================================================
+【12. 既存CTAの変更】
+==================================================
+
+現在contactページや各ページの下部で、
+
+「無料学習診断レポート付き体験授業を申し込む」
+
+をcontactページへの主要CTAとして表示している箇所については、
+今回の営業導線に合わせて見直す。
+
+contactページへの主要導線は、
+
+「お問い合わせ」
+
+または
+
+「まずはご相談ください」
+
+を基本とする。
+
+ただし、今回の修正でホームや他ページのCTAを勝手に全面変更しない。
+
+まず/contactページを正しい問い合わせ窓口として完成させる。
+
+---
+
+==================================================
+【13. デザイン】
+==================================================
+
+現在のcontactページのデザインは基本的に維持する。
+
+変更するのは、
+
+・ページタイトル
+・冒頭説明
+・旧5ステップ削除
+・新しい簡潔な「お問い合わせ後の流れ」
+・問い合わせ完了ページ
+・面談予約への導線
+・LINE案内
+
+のみ。
+
+フォームの見た目、
+入力欄、
+チェックボックス、
+ボタン、
+カード、
+余白、
+深緑・白・チャコールの配色は既存デザインを維持。
+
+---
+
+==================================================
+【14. スマートフォン】
+==================================================
+
+スマートフォン版では、
+
+・問い合わせフォームが横幅からはみ出さない
+・チェックボックスを押しやすい
+・送信ボタンが押しやすい
+・問い合わせ完了ページから面談予約CTAがすぐ見つかる
+・LINE CTAも視認しやすい
+
+ことを確認する。
+
+---
+
+==================================================
+【15. 最終状態】
+==================================================
+
+完成後のcontactページは、
+
+ページタイトル
+↓
+「まずは、お子さまの学習についてご相談ください。」
+↓
+お問い合わせ後の流れ
+↓
+問い合わせフォーム
+↓
+LINE相談
+↓
+フッター
+
+という構成を基本とする。
+
+問い合わせフォーム送信後は、
+
+問い合わせ完了ページ
+↓
+必要な人だけ「面談日時を予約する」
+↓
+面談予約ページ（Googleカレンダー）
+↓
+面談事前アンケート
+
+という次の導線につなげられる構造にする。
+
+今回の最優先事項は、
+**「無料体験授業の申込ページ」から「問い合わせの入口ページ」へcontactページの役割を変更すること**です。
+
+実装後、PC・スマートフォンの両方で、
+「問い合わせ → 完了 → 面談予約」
+の導線が自然につながることを確認してください。
+
+最後に、
+.cursor/rules/site-copy-dump.mdc
+も変更した文言と一致するよう同期してください。
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+/contactページの仕様更新を確認した。ページタイトルとサブタイトルを変更し、問い合わせ→完了→面談予約の導線に沿った構成に修正する。既存のフォームUIやデザインは維持する。
+
+5ステップの無料体験フローを削除し、問い合わせ後の4ステップ導線に置き換える。完了ページに面談予約と資料請求のCTAを配置し、LINE相談セクションを追加する。問い合わせと無料体験の違いを明確化する。
+
+他のページのCTAは変更しない。モバイル対応とSITE_COPY_FOR_REVIEW.txtの同期も行う。LINEURLや予約ページの有無を確認し、contact/page.tsxとContactForm.tsxを修正する。
+</details></think>
+
+_**Agent (default)**_
+
+`/contact` の導線・説明を確定フローに合わせます。既存のフォーム項目・デザインは維持し、ページ構成と完了後の流れだけ直します。
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts}",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp",
+  "pattern": "LINE|line\\.me|予約|calendar|consultation|お問い合わせ"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp",
+  "pattern": "LINE|line\\.me|予約|calendar|consultation|お問い合わせ",
+  "topFiles": [
+    {
+      "matchCount": 10,
+      "uri": ".\\components\\ContactForm.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".\\lib\\contactInquiry.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": ".\\app\\contact\\page.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".\\components\\Footer.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".\\components\\Header.tsx"
+    }
+  ],
+  "totalFiles": 5,
+  "totalMatches": 19
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\PageHeader.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\Header.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\site-config.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **5** results in **1** directory</summary>
+
+Directory: **`c:\Users\学習塾ミネルバ\createHP\minerva-hp`** (5 files)
+
+| File |
+|------|
+| `../.\app\policy\page.tsx` |
+| `../.\app\grades\page.tsx` |
+| `../.\app\page.tsx` |
+| `../.\app\contact\page.tsx` |
+| `../.\app\price\page.tsx` |
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+プロジェクト内に存在するLINE URLとGoogleカレンダー予約URLを特定する必要がある。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,txt,md,env*}",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp",
+  "pattern": "line\\.me|lin\\.ee|カレンダー|calendar|booking|面談"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp",
+  "pattern": "line\\.me|lin\\.ee|カレンダー|calendar|booking|面談",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "components\\Footer.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "app/contact/page.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "minerva-web-spec.txt"
+    },
+    {
+      "matchCount": 1,
+      "uri": "app\\contact\\page.tsx"
+    },
+    {
+      "matchCount": 60,
+      "uri": ".specstory/history/2026-08-24_06-22-35Z-browser-status-check.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-08-21_06-13-01Z-minerva-website-review.md"
+    },
+    {
+      "matchCount": 4,
+      "uri": "components\\ContactForm.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "lib\\contactInquiry.ts"
+    },
+    {
+      "matchCount": 60,
+      "uri": ".specstory\\history\\2026-08-24_06-22-35Z-browser-status-check.md"
+    },
+    {
+      "matchCount": 6,
+      "uri": "SITE_COPY_FOR_REVIEW.txt"
+    },
+    {
+      "matchCount": 1,
+      "uri": "components/Footer.tsx"
+    }
+  ],
+  "totalFiles": 11,
+  "totalMatches": 140
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\Footer.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\sitemap.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+コードベース内に既存のGoogleカレンダー予約ページやLINE URLがないことを確認した。
+
+Googleカレンダー予約ページとLINEリンクのURLを環境変数で管理するため、site-config.tsに定数を追加する。LINE URLと予約ページURLを.envファイルで設定し、/consultation ページを新設してGoogleカレンダー予約を組み込む方針を検討している。
+
+/consultation ページは Google カレンダー予約ページを iframe または外部リンクで埋め込むシンプルな構成とする。問い合わせ完了画面として /contact/thanks を新設し、sessionStorage から送信データを読み取って表示する。問い合わせデータがない場合は /contact へリダイレクトする。
+
+フォーム送信後は sessionStorage に問い合わせデータを保存し、/contact/thanks へ遷移させる。完了ページでは「体験授業について相談したい」が含まれる場合のみ体験授業に関する注記を表示する。資料請求のCTAは /price へ誘導する。フッターのサイトマップラベルも「お問い合わせ」に変更する。
+
+問い合わせフォームの導入文を簡潔に更新する。送信成功時は /contact/thanks へ遷移させ、既存のフィールドは維持する。
+
+/contact ページ構成は、ページヘッダー「お問い合わせ」、短い導入文、4ステップの流れ、問い合わせフォーム、LINE相談セクションの順とする。
+
+問い合わせフォーム内の重複した長い導入文を削除し、新しい短い文言に差し替える。体験授業に関する注記は、問い合わせタイプのチェックボックス付近と完了ページの両方に表示する。
+
+サイトマップに /consultation を追加する。
+
+LINE URLとGoogleカレンダー予約URLを環境変数で管理する。未設定時は空欄表示やダッシュリンクにフォールバックし、未設定時にセクション自体を非表示にするか検討している。コードベース内に残っていないか確認している。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp\\minerva-web-spec.txt",
+  "pattern": "line\\.me|lin\\.ee|公式LINE|calendar\\.google|appointments"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp\\minerva-web-spec.txt",
+  "pattern": "line\\.me|lin\\.ee|公式LINE|calendar\\.google|appointments",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "minerva-web-spec.txt"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\学習塾ミネルバ\\.cursor\\projects\\c-Users-createHP-minerva-hp\\agent-transcripts\\302561fb-4132-4484-b594-42ad244e2ca5\\302561fb-4132-4484-b594-42ad244e2ca5.jsonl",
+  "pattern": "line\\.me|lin\\.ee|calendar\\.app|appointments\\.google"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\学習塾ミネルバ\\.cursor\\projects\\c-Users-createHP-minerva-hp\\agent-transcripts\\302561fb-4132-4484-b594-42ad244e2ca5\\302561fb-4132-4484-b594-42ad244e2ca5.jsonl",
+  "pattern": "line\\.me|lin\\.ee|calendar\\.app|appointments\\.google",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\CtaButton.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+LINE URLが見つからなかったため、site-configの環境変数にURLを設定する。
+
+相談ページではGoogleカレンダー予約URLがあれば埋め込む。なければ電話連絡を案内するメッセージを表示する。ヘッダーのCTAは変更せず、ファイル実装を開始する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Rewrite /contact page structure + Footer label",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "Form intro + thanks page + consultation page + site-config",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt sync",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "ContactForm: 新項目・バリデーション・送信文言",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "contact page 説明文 + API/Apps Script データ構造",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt 同期",
+      "id": "3",
+      "status": "completed"
+    }
+  ],
+  "success": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\site-config.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\contact\page.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+CtaButtonコンポーネントがnext/linkを使っているため、外部URL（LINEなど）へのリンクが正しく機能していない。
+
+CtaButtonを修正せず、contactページとthanksページのLINEリンクのみ、スタイル付きの通常の`<a>`タグに差し替える方針に決めた。
+
+CtaButtonを修正し、外部URL（httpで始まるhref）の場合に通常の`<a>`タグをレンダリングするようにする。これでLINEリンクなどもCtaButton単体で正しく動作する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\CtaButton.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+CtaButtonコンポーネントの外部リンク対応を更新する。
+
+ContactFormを更新し、問い合わせ完了ページと面談予約ページを作成する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\CtaButton.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+コメント内の「深緑」を誤って「深绿」に変更したため、修正する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\CtaButton.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+Invalid arguments:
+old_string: Required
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\contact\thanks\page.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\consultation\page.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+ContactForm の書き込みに失敗したため、Write ツールを使って再試行する必要がある。
+
+完了ページのメタデータ取得のため、page.tsx をサーバーコンポーネント化してクライアントコンポーネントと分離する。ContactForm も再書き込みする。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactForm.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\ContactThanksContent.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\contact\thanks\page.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\components\Footer.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\app\sitemap.ts</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\.env.example</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+contactセクションの文言を更新し、SITE_COPY_FOR_REVIEW.txt と同期させる。
+
+overview も「無料体験授業・お問い合わせ」表記を含んでいれば修正する。site-copy-dump.mdc はコピー本体ではなくルールファイルなので、変更不要と判断。contact ページのヘッダー記述も確認する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SITE_COPYの概要に含まれるページ一覧とフッターラベルを更新している。
+
+フッター内のサイトマップも更新している。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp\\SITE_COPY_FOR_REVIEW.txt",
+  "pattern": "無料体験授業・お問い合わせ"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "c:\\Users\\学習塾ミネルバ\\createHP\\minerva-hp\\SITE_COPY_FOR_REVIEW.txt",
+  "pattern": "無料体験授業・お問い合わせ",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "SITE_COPY_FOR_REVIEW.txt"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: npm run build</summary>
+```bash
+npm run build
+```
+
+```
+npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> minerva-hp@1.0.0 build
+> next build
+
+▲ Next.js 16.3.1 (Turbopack)
+✓ Running next.config took 13ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1628ms
+  Running TypeScript ...
+  Finished TypeScript in 2.3s ...
+  Collecting page data using 14 workers ...
+  Generating static pages using 14 workers (0/13) ...
+  Generating static pages using 14 workers (3/13) 
+  Generating static pages using 14 workers (6/13) 
+  Generating static pages using 14 workers (9/13) 
+✓ Generating static pages using 14 workers (13/13) in 700ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/contact
+├ ○ /consultation
+├ ○ /contact
+├ ○ /contact/thanks
+├ ○ /grades
+├ ○ /icon.svg
+├ ○ /policy
+├ ○ /price
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+```
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+ページリストの置換が一部失敗している。grepで24行目が古いテキストのままになっている。
+
+該当ファイルを読み込んで修正する。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SITE_COPY内のナビゲーションとフッターのサイトマップ行を修正している。
+</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: c:\Users\学習塾ミネルバ\createHP\minerva-hp\SITE_COPY_FOR_REVIEW.txt</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Rewrite /contact page structure + Footer label",
+      "id": "1",
+      "status": "completed"
+    },
+    {
+      "content": "Form intro + thanks page + consultation page + site-config",
+      "id": "2",
+      "status": "completed"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt sync",
+      "id": "3",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Rewrite /contact page structure + Footer label",
+      "id": "1",
+      "status": "in_progress"
+    },
+    {
+      "content": "Form intro + thanks page + consultation page + site-config",
+      "id": "2",
+      "status": "pending"
+    },
+    {
+      "content": "SITE_COPY_FOR_REVIEW.txt sync",
+      "id": "3",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+contactページの修正内容をまとめます。LINE相談URLとGoogleカレンダー予約URLの設定が必要です。
+</details></think>
+
+_**Agent (default)**_
+
+`/contact` を「問い合わせ入口」に作り直しました。ホーム等のCTAはそのままです。
+
+## 変更内容
+
+**`/contact`**
+- タイトル「お問い合わせ」
+- 冒頭説明を総合窓口向けに変更
+- 旧5ステップ削除 →「お問い合わせ後の流れ」4ステップ
+- フォーム項目は維持（見出し・注記のみ調整）
+- 「体験授業について相談したい」選択時に面談優先の注記
+- LINE相談ブロック追加
+
+**送信後**
+- `/contact/thanks` … 完了ページ
+- 「面談日時を予約する」→ `/consultation`（任意導線）
+- 「料金・パンフレットを見る」→ `/price`
+
+**`/consultation`**
+- Googleカレンダー予約用ページ（本体は変更せず、URLを埋め込んで表示）
+
+**その他**
+- フッター表記を「お問い合わせ」に統一
+- `SITE_COPY_FOR_REVIEW.txt` 同期済み
+- build 成功
+
+## 設定が必要なもの
+
+`.env.local`（または Vercel）に：
+
+```env
+NEXT_PUBLIC_LINE_URL=（公式LINEのURL）
+NEXT_PUBLIC_GOOGLE_CALENDAR_BOOKING_URL=（Googleカレンダー予約のURL）
+```
+
+未設定でもページは動きますが、LINEは電話案内、カレンダーはプレースホルダ表示になります。
+
+URLが分かれば教えてください。こちらで反映します。
+
+---
+
+_**User**_
+
+LINEのURLはこれ
+https://lin.ee/YJ3KMWg 
+GoogleカレンダーのURLはこれ
+https://calendar.app.google/WyRL3eqXMN7dAYLk7 
+予約の埋め込みはこれ
+<!-- Google Calendar Appointment Scheduling begin -->
+<iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ28uAPiv4l_lHKycK6NJfqNHbzej_ij-jmY8C3TtmpLBaLl-YsGjMuvZQZTTGZKwF1bq7g2UKBc?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+<!-- end Google Calendar Appointment Scheduling -->
+
+---
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
 <summary>Tool use: **read_file_v2** • Read file: </summary>
 
@@ -14984,17 +17470,16 @@ No results found
 
 _**Agent (default)**_
 
-<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
-<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **0** directories</summary>
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+Status: **loading**
 
-No results found
 </details></tool-use>
 
 _**Agent (default)**_
 
-<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
-<summary>Tool use: **run_terminal_command_v2** • Run command: git -C &#34;c:\Users\学習塾ミネルバ\createHP\minerva-hp&#34; status -sb; git -C &#34;c:\Users\学習塾ミネルバ\createHP\minerva-hp&#34; log -3 --oneline</summary>
-```bash
-git -C "c:\Users\学習塾ミネルバ\createHP\minerva-hp" status -sb; git -C "c:\Users\学習塾ミネルバ\createHP\minerva-hp" log -3 --oneline
-```
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+Status: **loading**
+
 </details></tool-use>

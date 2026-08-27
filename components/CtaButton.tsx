@@ -18,26 +18,37 @@ const variantClasses: Record<Variant, string> = {
     'bg-white text-brand-900 border-2 border-accent-500 hover:bg-accent-500 hover:text-white hover:border-accent-500',
 };
 
+function isExternalHref(href: string) {
+  return /^https?:\/\//i.test(href);
+}
+
 export default function CtaButton({
   href,
   children,
   variant = 'primary',
   fullWidthOnMobile = true,
 }: Props) {
+  const className = [
+    'inline-flex items-center justify-center rounded-lg font-bold shadow-md',
+    'min-h-[48px] px-5 py-3.5 sm:px-8 sm:py-4',
+    'text-sm sm:text-base lg:text-lg',
+    'text-center leading-relaxed tracking-wide',
+    'transition-colors duration-200',
+    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500',
+    fullWidthOnMobile ? 'w-full sm:w-auto max-w-full' : '',
+    variantClasses[variant],
+  ].join(' ');
+
+  if (isExternalHref(href)) {
+    return (
+      <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className={[
-        'inline-flex items-center justify-center rounded-lg font-bold shadow-md',
-        'min-h-[48px] px-5 py-3.5 sm:px-8 sm:py-4',
-        'text-sm sm:text-base lg:text-lg',
-        'text-center leading-relaxed tracking-wide',
-        'transition-colors duration-200',
-        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500',
-        fullWidthOnMobile ? 'w-full sm:w-auto max-w-full' : '',
-        variantClasses[variant],
-      ].join(' ')}
-    >
+    <Link href={href} className={className}>
       {children}
     </Link>
   );

@@ -1,53 +1,54 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import ContactForm from '@/components/ContactForm';
+import CtaButton from '@/components/CtaButton';
+import { LINE_URL } from '@/app/site-config';
 
 export const metadata: Metadata = {
-  title: '無料体験授業・お問い合わせ',
+  title: 'お問い合わせ',
   description:
-    '木更津市の個別指導塾 学習塾ミネルバの無料学習診断レポート付き体験授業（80分）のお申し込み・お問い合わせフォーム。',
+    '木更津市金田東の個別指導塾 学習塾ミネルバへのお問い合わせ。料金・指導内容・面談・体験授業についてのご相談を受け付けています。',
 };
 
-const steps = [
+const flowSteps = [
   {
-    title: 'フォーム送信',
-    body: '下記フォームより、必要事項を入力して送信してください。',
+    title: 'お問い合わせ',
+    body: 'フォームからご相談内容をお送りください。',
   },
   {
-    title: '日程調整のご連絡',
-    body: '2営業日以内にお電話または公式LINEにて、体験授業（80分）の日時をご相談します。',
+    title: '面談',
+    body: 'お子さまの学習状況やお困りごとを伺い、今後の学習についてご相談します。',
   },
   {
-    title: '個別面談＆体験授業（80分）',
-    body: '教室での個別指導を体験していただきながら、お子さまの学習の様子を確認します。問題を解いている様子を見ながら、問題をどう読み、どう考え、どこで手が止まるのかを確認します。',
-  },
-  {
-    title: '学習診断レポートのお渡し',
-    body: '体験授業で確認した内容をもとに、「思考が止まっているポイント」や、問題を読む・考える・解く・確かめる過程のどこに改善点があるのかをレポートにまとめてお渡しします。',
+    title: '必要に応じて体験授業',
+    body: '体験授業をご希望の場合は、面談で学習状況やご希望を確認したうえでご案内します。',
   },
   {
     title: 'ご検討',
-    body: '指導方針や環境がお子さまに合うかどうか、ご家庭でじっくりご検討ください。',
+    body: '指導方針や環境がお子さまに合うか、ご家庭でご検討ください。',
   },
 ];
 
 export default function ContactPage() {
   return (
     <main id="main">
-      <PageHeader title="無料体験授業・お問い合わせ" />
+      <PageHeader title="お問い合わせ" />
 
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
           <div className="mb-12 sm:mb-14 space-y-4">
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed border-b border-slate-300 pb-5">
-              まずは、お子さまの「今の学習状況」を一緒に確認します。
+              まずは、お子さまの学習についてご相談ください。
             </h2>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-              無料体験授業では、ただ授業を受けていただくだけではありません。
-              お子さまの学習の様子を確認し、「何ができていて、どこに改善点があるのか」を一緒に整理します。体験授業では、問題を解いている様子を見ながら、問題をどう読み、どう考え、どこで手が止まるのかを確認します。
+              料金や指導内容についてのご質問、お子さまの学習についてのご相談、資料請求、面談・体験授業についてのお問い合わせを受け付けています。
             </p>
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-              体験授業を受けたうえで、ご家庭でじっくりご検討ください。
+              初めての方には、まず面談で、お子さまの現在の学習状況やお困りごとを伺っています。
+            </p>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+              体験授業をご希望の場合も、まずは面談でご希望や学習状況を確認したうえでご案内しています。
             </p>
             <p className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
               無理な勧誘は行っておりません。
@@ -56,10 +57,10 @@ export default function ContactPage() {
 
           <div className="mb-14 sm:mb-16">
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-8 sm:mb-10 text-center leading-relaxed border-b border-slate-300 pb-5">
-              無料学習診断レポート付き体験授業・お申し込み後のステップ
+              お問い合わせ後の流れ
             </h2>
             <ol className="space-y-4">
-              {steps.map(({ title, body }, index) => (
+              {flowSteps.map(({ title, body }, index) => (
                 <li
                   key={title}
                   className="flex gap-4 bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-sm"
@@ -80,6 +81,42 @@ export default function ContactPage() {
           </div>
 
           <ContactForm />
+
+          <div className="mt-14 sm:mt-16 bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold mb-4 leading-relaxed border-b border-slate-200 pb-4">
+              LINEでもご相談いただけます
+            </h2>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed mb-6">
+              ちょっとしたご質問やご相談は、LINEからもお気軽にお問い合わせいただけます。
+            </p>
+            {LINE_URL ? (
+              <CtaButton href={LINE_URL} variant="secondary">
+                LINEで相談する
+              </CtaButton>
+            ) : (
+              <p className="text-base text-slate-600 leading-relaxed">
+                公式LINEのリンク設定後にこちらからご利用いただけます。当面はお電話（
+                <a
+                  href="tel:0368206929"
+                  className="underline underline-offset-2 hover:text-accent-700"
+                >
+                  03-6820-6929
+                </a>
+                ）または上記フォームよりお問い合わせください。
+              </p>
+            )}
+            <p className="mt-4 text-sm text-slate-500 leading-relaxed">
+              LINEとお問い合わせフォームは、どちらからでもご相談いただけます。
+            </p>
+          </div>
+
+          <p className="mt-10 text-center text-sm text-slate-500 leading-relaxed">
+            料金の詳細は{' '}
+            <Link href="/price" className="underline underline-offset-2 hover:text-accent-700">
+              受講料・よくあるご質問
+            </Link>{' '}
+            でもご確認いただけます。
+          </p>
         </div>
       </section>
     </main>

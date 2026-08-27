@@ -1,28 +1,34 @@
 /**
- * 学習塾ミネルバ — お申し込みフォーム → スプレッドシート連携
+ * 学習塾ミネルバ — 総合問い合わせフォーム → スプレッドシート連携
+ *
+ * 列（1行目ヘッダー）:
+ * 受付日時 / 生徒姓 / 生徒名 / 姓（カナ） / 名（カナ） / 学年 / 学校名 /
+ * 保護者名 / メールアドレス / 電話番号 / お問い合わせの種類 /
+ * ご相談・お問い合わせ内容 / 当塾を知ったきっかけ / 受付ID / submittedAt(ISO)
  *
  * 使い方:
- * 1. 新しい Google スプレッドシートを作成
- * 2. 1行目にヘッダーを入れる（下記 HEADER と同じ順）
- * 3. 拡張機能 → Apps Script を開き、このファイルの内容を貼り付けて保存
- * 4. デプロイ → 新しいデプロイ → 種類: ウェブアプリ
- *    - 説明: contact form
- *    - 次のユーザーとして実行: 自分
- *    - アクセスできるユーザー: 全員
- * 5. デプロイ後の「ウェブアプリ URL」をコピーし、
- *    Vercel / ローカルの GOOGLE_SHEETS_WEBAPP_URL に設定する
- *
- * コードを更新したら「デプロイ → デプロイを管理 → 編集 → 新バージョン」で再デプロイする
+ * 1. 新しい Google スプレッドシートを作成（シート名「申し込み」推奨）
+ * 2. 拡張機能 → Apps Script にこの内容を貼り付けて保存
+ * 3. デプロイ → 新しいデプロイ → ウェブアプリ
+ *    - 実行ユーザー: 自分 / アクセス: 全員
+ * 4. ウェブアプリ URL を GOOGLE_SHEETS_WEBAPP_URL に設定
  */
 
 var HEADER = [
-  '受信日時',
-  'お名前',
+  '受付日時',
+  '生徒姓',
+  '生徒名',
+  '姓（カナ）',
+  '名（カナ）',
   '学年',
   '学校名',
+  '保護者名',
+  'メールアドレス',
   '電話番号',
-  'ご相談内容',
-  'メッセージ',
+  'お問い合わせの種類',
+  'ご相談・お問い合わせ内容',
+  '当塾を知ったきっかけ',
+  '受付ID',
   'submittedAt(ISO)',
 ];
 
@@ -41,6 +47,13 @@ function ensureHeader_(sheet) {
   }
 }
 
+function joinInquiryTypes_(value) {
+  if (Array.isArray(value)) {
+    return value.join(' / ');
+  }
+  return value || '';
+}
+
 function doPost(e) {
   try {
     var raw = (e && e.postData && e.postData.contents) || '{}';
@@ -53,18 +66,25 @@ function doPost(e) {
 
     sheet.appendRow([
       new Date(),
-      data.name || '',
+      data.studentLastName || '',
+      data.studentFirstName || '',
+      data.studentLastNameKana || '',
+      data.studentFirstNameKana || '',
       data.grade || '',
       data.schoolName || '',
+      data.guardianName || '',
+      data.email || '',
       data.phone || '',
-      Array.isArray(data.consultation) ? data.consultation.join(' / ') : data.consultation || '',
+      joinInquiryTypes_(data.inquiryTypes),
       data.message || '',
+      data.referralSource || '',
+      data.inquiryId || '',
       data.submittedAt || '',
     ]);
 
-    return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(
-      ContentService.MimeType.JSON
-    );
+    return ContentService.createTextOutput(
+      JSON.stringify({ ok: true, inquiryId: data.inquiryId || '' })
+    ).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(
       JSON.stringify({ ok: false, error: String(error) })
@@ -72,9 +92,8 @@ function doPost(e) {
   }
 }
 
-/** ブラウザで開いたときの疎通確認用 */
 function doGet() {
   return ContentService.createTextOutput(
-    JSON.stringify({ ok: true, service: 'minerva-contact' })
+    JSON.stringify({ ok: true, service: 'minerva-contact-inquiry' })
   ).setMimeType(ContentService.MimeType.JSON);
 }

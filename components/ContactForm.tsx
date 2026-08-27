@@ -1,73 +1,96 @@
 'use client';
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
-import Link from 'next/link';
-
-const gradeOptions = [
-  '小学1年',
-  '小学2年',
-  '小学3年',
-  '小学4年',
-  '小学5年',
-  '小学6年',
-  '中学1年',
-  '中学2年',
-  '中学3年',
-  '高校1年',
-  '高校2年',
-  '高校3年',
-];
-
-const consultationOptions = [
-  '無料学習診断レポート付き体験授業（80分）の申し込み',
-  '現在の学習状況についての個別相談希望',
-  '資料請求・その他お問い合わせ',
-];
+import { useRouter } from 'next/navigation';
+import {
+  CONTACT_INQUIRY_STORAGE_KEY,
+  GRADE_OPTIONS,
+  INQUIRY_TYPE_OPTIONS,
+  REFERRAL_SOURCE_OPTIONS,
+  validateContactInquiry,
+  type ContactFieldName,
+  type ContactInquiryData,
+} from '@/lib/contactInquiry';
 
 type FormState = {
-  name: string;
+  studentLastName: string;
+  studentFirstName: string;
+  studentLastNameKana: string;
+  studentFirstNameKana: string;
   grade: string;
   schoolName: string;
+  guardianName: string;
+  email: string;
   phone: string;
-  consultation: string[];
+  inquiryTypes: string[];
   message: string;
+  referralSource: string;
 };
-
-type FieldName = keyof FormState;
 
 const emptyForm: FormState = {
-  name: '',
+  studentLastName: '',
+  studentFirstName: '',
+  studentLastNameKana: '',
+  studentFirstNameKana: '',
   grade: '',
   schoolName: '',
+  guardianName: '',
+  email: '',
   phone: '',
-  consultation: [],
+  inquiryTypes: [],
   message: '',
+  referralSource: '',
 };
 
-// 全角で入力されることが多いため、桁数を数える前に半角へ寄せる
-const toHalfWidth = (value: string) =>
-  value
-    .replace(/[０-９]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0xfee0))
-    .replace(/[ー－―‐−]/g, '-');
-
-const countDigits = (value: string) => (toHalfWidth(value).match(/\d/g) ?? []).length;
+const TRIAL_INQUIRY_OPTION = '体験授業について相談したい';
 
 const inputClassName =
-  'w-full px-4 py-3.5 rounded-lg border bg-white text-base text-slate-900 outline-none transition-colors focus:border-brand-900 focus:ring-2 focus:ring-accent-500/30';
+  'w-full min-w-0 px-4 py-3.5 rounded-lg border bg-white text-base text-slate-900 outline-none transition-colors focus:border-brand-900 focus:ring-2 focus:ring-accent-500/30';
 
 const errorInputClassName = 'border-red-500';
 const normalInputClassName = 'border-slate-300';
 
+const fieldOrder: ContactFieldName[] = [
+  'studentLastName',
+  'studentFirstName',
+  'studentLastNameKana',
+  'studentFirstNameKana',
+  'grade',
+  'schoolName',
+  'guardianName',
+  'email',
+  'phone',
+  'inquiryTypes',
+];
+
+function RequiredMark() {
+  return <span className="text-red-600 ml-1">必須</span>;
+}
+
+function OptionalMark() {
+  return <span className="text-slate-500 font-medium ml-1">任意</span>;
+}
+
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p id={id} role="alert" className="mt-2 text-sm text-red-600">
+      {message}
+    </p>
+  );
+}
+
 export default function ContactForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormState>(emptyForm);
-  const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<ContactFieldName, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  // ボット対策用（画面上は非表示）。値が入っていたら送信成功扱いにして実送信しない
   const [website, setWebsite] = useState('');
 
-  const clearError = (field: FieldName) => {
+  const wantsTrial = formData.inquiryTypes.includes(TRIAL_INQUIRY_OPTION);
+
+  const clearError = (field: ContactFieldName) => {
     setErrors((prev) => {
       if (!prev[field]) return prev;
       const next = { ...prev };
@@ -81,51 +104,25 @@ export default function ContactForm() {
   ) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    clearError(name as FieldName);
+    clearError(name as ContactFieldName);
   };
 
-  const handleCheckboxChange = (option: string, checked: boolean) => {
+  const handleInquiryTypeChange = (option: string, checked: boolean) => {
     setFormData((prev) => ({
       ...prev,
-      consultation: checked
-        ? [...prev.consultation, option]
-        : prev.consultation.filter((item) => item !== option),
+      inquiryTypes: checked
+        ? [...prev.inquiryTypes, option]
+        : prev.inquiryTypes.filter((item) => item !== option),
     }));
-    clearError('consultation');
+    clearError('inquiryTypes');
   };
 
-  const validate = (): Partial<Record<FieldName, string>> => {
-    const nextErrors: Partial<Record<FieldName, string>> = {};
-
-    if (!formData.name.trim()) {
-      nextErrors.name = 'お名前を入力してください';
-    }
-
-    if (!formData.grade) {
-      nextErrors.grade = 'お子様の学年を選択してください';
-    }
-
-    const phoneDigits = countDigits(formData.phone);
-    if (!formData.phone.trim()) {
-      nextErrors.phone = '電話番号を入力してください';
-    } else if (phoneDigits < 10 || phoneDigits > 11) {
-      nextErrors.phone = '電話番号は市外局番からの10桁または11桁でご入力ください';
-    }
-
-    if (formData.consultation.length === 0) {
-      nextErrors.consultation = 'ご相談内容を1つ以上選択してください';
-    }
-
-    return nextErrors;
-  };
-
-  const focusFirstError = (nextErrors: Partial<Record<FieldName, string>>) => {
-    const order: FieldName[] = ['name', 'grade', 'phone', 'consultation'];
-    const firstField = order.find((field) => nextErrors[field]);
+  const focusFirstError = (nextErrors: Partial<Record<ContactFieldName, string>>) => {
+    const firstField = fieldOrder.find((field) => nextErrors[field]);
     if (!firstField) return;
 
     const target = document.getElementById(
-      firstField === 'consultation' ? 'consultation-0' : firstField
+      firstField === 'inquiryTypes' ? 'inquiryTypes-0' : firstField
     );
     target?.focus();
   };
@@ -133,16 +130,17 @@ export default function ContactForm() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validate();
-    setErrors(nextErrors);
-
-    if (Object.keys(nextErrors).length > 0) {
-      focusFirstError(nextErrors);
+    const validated = validateContactInquiry(formData);
+    if ('errors' in validated) {
+      setErrors(validated.errors);
+      focusFirstError(validated.errors);
       return;
     }
 
+    setErrors({});
     setIsSubmitting(true);
     setSubmitError('');
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -154,10 +152,10 @@ export default function ContactForm() {
       });
 
       const result = (await response.json().catch(() => null)) as
-        | { ok?: boolean; error?: string }
+        | { ok?: boolean; error?: string; inquiry?: ContactInquiryData }
         | null;
 
-      if (!response.ok || !result?.ok) {
+      if (!response.ok || !result?.ok || !result.inquiry) {
         setSubmitError(
           result?.error ||
             '送信に失敗しました。時間をおいて再度お試しいただくか、お電話でご連絡ください。'
@@ -165,9 +163,15 @@ export default function ContactForm() {
         return;
       }
 
+      try {
+        sessionStorage.setItem(CONTACT_INQUIRY_STORAGE_KEY, JSON.stringify(result.inquiry));
+      } catch {
+        // sessionStorage 不可環境でも完了ページへ進む
+      }
+
       setFormData(emptyForm);
       setWebsite('');
-      setIsSubmitted(true);
+      router.push('/contact/thanks');
     } catch {
       setSubmitError(
         '送信に失敗しました。通信環境をご確認のうえ、再度お試しいただくか、お電話でご連絡ください。'
@@ -177,195 +181,311 @@ export default function ContactForm() {
     }
   };
 
-  if (isSubmitted) {
-    return (
-      <div className="max-w-2xl mx-auto bg-white p-8 sm:p-12 rounded-xl border border-slate-200 shadow-sm text-center">
-        <svg
-          className="mx-auto h-16 w-16 text-green-600"
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M5 13l4 4L19 7" />
-        </svg>
-        <h2 className="font-serif text-2xl sm:text-3xl font-bold mt-8 mb-6">
-          お申し込みありがとうございます
-        </h2>
-        <p className="text-slate-700 leading-relaxed mb-4">
-          お申し込みを受け付けました。2営業日以内にお電話または公式LINEにて、体験授業の日程についてご連絡いたします。
-        </p>
-        <p className="text-base text-slate-600 leading-relaxed mb-10">
-          ご不明な点がございましたら、お気軽にお電話（
-          <a href="tel:0368206929" className="underline underline-offset-2 hover:text-accent-700">
-            03-6820-6929
-          </a>
-          ）でもお問い合わせください。
-        </p>
-        <Link
-          href="/"
-          className="inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-8 py-4 rounded-lg transition-colors shadow-md"
-        >
-          ホームに戻る
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} noValidate className="relative max-w-2xl mx-auto">
-      <h2 className="sr-only">お申し込みフォーム</h2>
+      <div className="mb-10 sm:mb-12 space-y-4">
+        <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed border-b border-slate-300 pb-5">
+          まずはお気軽にご相談ください。
+        </h2>
+        <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+          料金や指導内容についてのご質問、お子さまの学習についてのご相談、資料請求など、まずはお気軽にお問い合わせください。
+        </p>
+      </div>
 
-      <div className="space-y-8">
-        <div>
-          <label htmlFor="name" className="block text-base font-bold mb-2">
-            お名前
-            <span className="text-red-600 ml-1">必須</span>
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            placeholder="例：山田 太郎"
-            autoComplete="name"
-            aria-invalid={Boolean(errors.name)}
-            aria-describedby={errors.name ? 'name-error' : undefined}
-            className={`${inputClassName} ${errors.name ? errorInputClassName : normalInputClassName}`}
-          />
-          {errors.name && (
-            <p id="name-error" role="alert" className="mt-2 text-sm text-red-600">
-              {errors.name}
-            </p>
-          )}
-        </div>
+      <div className="space-y-10">
+        <fieldset className="space-y-6">
+          <legend className="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2">
+            生徒情報
+          </legend>
 
-        <div>
-          <label htmlFor="grade" className="block text-base font-bold mb-2">
-            お子様の学年
-            <span className="text-red-600 ml-1">必須</span>
-          </label>
-          <select
-            id="grade"
-            name="grade"
-            value={formData.grade}
-            onChange={handleInputChange}
-            aria-invalid={Boolean(errors.grade)}
-            aria-describedby={errors.grade ? 'grade-error' : undefined}
-            className={`${inputClassName} ${errors.grade ? errorInputClassName : normalInputClassName}`}
-          >
-            <option value="">選択してください</option>
-            {gradeOptions.map((grade) => (
-              <option key={grade} value={grade}>
-                {grade}
-              </option>
-            ))}
-          </select>
-          {errors.grade && (
-            <p id="grade-error" role="alert" className="mt-2 text-sm text-red-600">
-              {errors.grade}
-            </p>
-          )}
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="studentLastName" className="block text-base font-bold mb-2">
+                生徒姓
+                <RequiredMark />
+              </label>
+              <input
+                type="text"
+                id="studentLastName"
+                name="studentLastName"
+                value={formData.studentLastName}
+                onChange={handleInputChange}
+                placeholder="例：山田"
+                autoComplete="family-name"
+                aria-invalid={Boolean(errors.studentLastName)}
+                aria-describedby={errors.studentLastName ? 'studentLastName-error' : undefined}
+                className={`${inputClassName} ${errors.studentLastName ? errorInputClassName : normalInputClassName}`}
+              />
+              <FieldError id="studentLastName-error" message={errors.studentLastName} />
+            </div>
+            <div>
+              <label htmlFor="studentFirstName" className="block text-base font-bold mb-2">
+                生徒名
+                <RequiredMark />
+              </label>
+              <input
+                type="text"
+                id="studentFirstName"
+                name="studentFirstName"
+                value={formData.studentFirstName}
+                onChange={handleInputChange}
+                placeholder="例：太郎"
+                autoComplete="given-name"
+                aria-invalid={Boolean(errors.studentFirstName)}
+                aria-describedby={errors.studentFirstName ? 'studentFirstName-error' : undefined}
+                className={`${inputClassName} ${errors.studentFirstName ? errorInputClassName : normalInputClassName}`}
+              />
+              <FieldError id="studentFirstName-error" message={errors.studentFirstName} />
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="schoolName" className="block text-base font-bold mb-2">
-            学校名
-            <span className="text-slate-500 font-medium ml-1">任意</span>
-          </label>
-          <input
-            type="text"
-            id="schoolName"
-            name="schoolName"
-            value={formData.schoolName}
-            onChange={handleInputChange}
-            placeholder="例：木更津市立金田中学校"
-            className={`${inputClassName} ${normalInputClassName}`}
-          />
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="studentLastNameKana" className="block text-base font-bold mb-2">
+                姓（カナ）
+                <RequiredMark />
+              </label>
+              <input
+                type="text"
+                id="studentLastNameKana"
+                name="studentLastNameKana"
+                value={formData.studentLastNameKana}
+                onChange={handleInputChange}
+                placeholder="例：ヤマダ"
+                autoComplete="off"
+                aria-invalid={Boolean(errors.studentLastNameKana)}
+                aria-describedby={
+                  errors.studentLastNameKana ? 'studentLastNameKana-error' : undefined
+                }
+                className={`${inputClassName} ${errors.studentLastNameKana ? errorInputClassName : normalInputClassName}`}
+              />
+              <FieldError id="studentLastNameKana-error" message={errors.studentLastNameKana} />
+            </div>
+            <div>
+              <label htmlFor="studentFirstNameKana" className="block text-base font-bold mb-2">
+                名（カナ）
+                <RequiredMark />
+              </label>
+              <input
+                type="text"
+                id="studentFirstNameKana"
+                name="studentFirstNameKana"
+                value={formData.studentFirstNameKana}
+                onChange={handleInputChange}
+                placeholder="例：タロウ"
+                autoComplete="off"
+                aria-invalid={Boolean(errors.studentFirstNameKana)}
+                aria-describedby={
+                  errors.studentFirstNameKana ? 'studentFirstNameKana-error' : undefined
+                }
+                className={`${inputClassName} ${errors.studentFirstNameKana ? errorInputClassName : normalInputClassName}`}
+              />
+              <FieldError id="studentFirstNameKana-error" message={errors.studentFirstNameKana} />
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="phone" className="block text-base font-bold mb-2">
-            電話番号
-            <span className="text-red-600 ml-1">必須</span>
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            inputMode="tel"
-            value={formData.phone}
-            onChange={handleInputChange}
-            placeholder="例：090-1234-5678"
-            autoComplete="tel"
-            aria-invalid={Boolean(errors.phone)}
-            aria-describedby={errors.phone ? 'phone-error' : undefined}
-            className={`${inputClassName} ${errors.phone ? errorInputClassName : normalInputClassName}`}
-          />
-          {errors.phone && (
-            <p id="phone-error" role="alert" className="mt-2 text-sm text-red-600">
-              {errors.phone}
-            </p>
-          )}
-        </div>
+          <div>
+            <label htmlFor="grade" className="block text-base font-bold mb-2">
+              学年
+              <RequiredMark />
+            </label>
+            <select
+              id="grade"
+              name="grade"
+              value={formData.grade}
+              onChange={handleInputChange}
+              aria-invalid={Boolean(errors.grade)}
+              aria-describedby={errors.grade ? 'grade-error' : undefined}
+              className={`${inputClassName} ${errors.grade ? errorInputClassName : normalInputClassName}`}
+            >
+              <option value="">選択してください</option>
+              {GRADE_OPTIONS.map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
+              ))}
+            </select>
+            <FieldError id="grade-error" message={errors.grade} />
+          </div>
+
+          <div>
+            <label htmlFor="schoolName" className="block text-base font-bold mb-2">
+              学校名
+              <RequiredMark />
+            </label>
+            <input
+              type="text"
+              id="schoolName"
+              name="schoolName"
+              value={formData.schoolName}
+              onChange={handleInputChange}
+              placeholder="例：木更津市立金田中学校"
+              aria-invalid={Boolean(errors.schoolName)}
+              aria-describedby={errors.schoolName ? 'schoolName-error' : undefined}
+              className={`${inputClassName} ${errors.schoolName ? errorInputClassName : normalInputClassName}`}
+            />
+            <FieldError id="schoolName-error" message={errors.schoolName} />
+          </div>
+        </fieldset>
+
+        <fieldset className="space-y-6">
+          <legend className="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2">
+            保護者・連絡先
+          </legend>
+
+          <div>
+            <label htmlFor="guardianName" className="block text-base font-bold mb-2">
+              保護者名
+              <RequiredMark />
+            </label>
+            <input
+              type="text"
+              id="guardianName"
+              name="guardianName"
+              value={formData.guardianName}
+              onChange={handleInputChange}
+              placeholder="例：山田 花子"
+              autoComplete="name"
+              aria-invalid={Boolean(errors.guardianName)}
+              aria-describedby={errors.guardianName ? 'guardianName-error' : undefined}
+              className={`${inputClassName} ${errors.guardianName ? errorInputClassName : normalInputClassName}`}
+            />
+            <FieldError id="guardianName-error" message={errors.guardianName} />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-base font-bold mb-2">
+              メールアドレス
+              <RequiredMark />
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              inputMode="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="例：example@email.com"
+              autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? 'email-error' : undefined}
+              className={`${inputClassName} ${errors.email ? errorInputClassName : normalInputClassName}`}
+            />
+            <FieldError id="email-error" message={errors.email} />
+          </div>
+
+          <div>
+            <label htmlFor="phone" className="block text-base font-bold mb-2">
+              電話番号
+              <RequiredMark />
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              inputMode="tel"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder="例：090-1234-5678"
+              autoComplete="tel"
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? 'phone-error' : undefined}
+              className={`${inputClassName} ${errors.phone ? errorInputClassName : normalInputClassName}`}
+            />
+            <FieldError id="phone-error" message={errors.phone} />
+          </div>
+        </fieldset>
 
         <fieldset
-          aria-invalid={Boolean(errors.consultation)}
-          aria-describedby={errors.consultation ? 'consultation-error' : undefined}
+          aria-invalid={Boolean(errors.inquiryTypes)}
+          aria-describedby={errors.inquiryTypes ? 'inquiryTypes-error' : undefined}
+          className="space-y-4"
         >
-          <legend className="block text-base font-bold mb-2">
-            ご相談内容
-            <span className="text-red-600 ml-1">必須</span>
-            <span className="text-slate-500 font-medium ml-1">複数選択可</span>
+          <legend className="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2">
+            お問い合わせ内容
           </legend>
+          <p className="text-base font-bold">
+            お問い合わせの種類
+            <RequiredMark />
+            <span className="text-slate-500 font-medium ml-1">複数選択可</span>
+          </p>
           <div className="space-y-2">
-            {consultationOptions.map((option, index) => (
+            {INQUIRY_TYPE_OPTIONS.map((option, index) => (
               <label
                 key={option}
-                htmlFor={`consultation-${index}`}
-                className="flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-accent-500 transition-colors"
+                htmlFor={`inquiryTypes-${index}`}
+                className="flex items-start gap-3 p-3.5 sm:p-4 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-accent-500 transition-colors"
               >
                 <input
                   type="checkbox"
-                  id={`consultation-${index}`}
-                  name="consultation"
+                  id={`inquiryTypes-${index}`}
+                  name="inquiryTypes"
                   value={option}
-                  checked={formData.consultation.includes(option)}
-                  onChange={(event) => handleCheckboxChange(option, event.target.checked)}
+                  checked={formData.inquiryTypes.includes(option)}
+                  onChange={(event) => handleInquiryTypeChange(option, event.target.checked)}
                   className="mt-1 w-5 h-5 accent-brand-900 flex-shrink-0"
                 />
-                <span className="text-slate-800 leading-relaxed">{option}</span>
+                <span className="text-slate-800 leading-relaxed text-base">{option}</span>
               </label>
             ))}
           </div>
-          {errors.consultation && (
-            <p id="consultation-error" role="alert" className="mt-2 text-sm text-red-600">
-              {errors.consultation}
-            </p>
+          <FieldError id="inquiryTypes-error" message={errors.inquiryTypes} />
+
+          {wantsTrial && (
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 sm:p-5">
+              <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                体験授業をご希望の場合も、まずは面談でお子さまの学習状況やご希望を伺っています。
+              </p>
+              <p className="mt-2 text-sm sm:text-base text-slate-700 leading-relaxed">
+                面談後、必要に応じて体験授業をご案内します。
+              </p>
+            </div>
           )}
         </fieldset>
 
         <div>
           <label htmlFor="message" className="block text-base font-bold mb-2">
-            メッセージ・具体的なお悩み
-            <span className="text-slate-500 font-medium ml-1">任意</span>
+            ご相談・お問い合わせ内容
+            <OptionalMark />
           </label>
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-3">
+            お子さまの学習状況や、ご質問など、事前にお伝えになりたいことがあればご記入ください。
+          </p>
           <textarea
             id="message"
             name="message"
             rows={5}
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="例：家で勉強せず、テストでの計算ミスが多いです。ノートの書き方から直したいと考えています。"
+            placeholder="ご自由にご記入ください"
             className={`${inputClassName} ${normalInputClassName} leading-relaxed resize-y`}
           />
         </div>
 
-        {/* honeypot: 視覚的に隠すが、アクセシビリティ上も通常操作では触れない */}
+        <div>
+          <label htmlFor="referralSource" className="block text-base font-bold mb-2">
+            当塾を知ったきっかけ
+            <OptionalMark />
+          </label>
+          <select
+            id="referralSource"
+            name="referralSource"
+            value={formData.referralSource}
+            onChange={handleInputChange}
+            aria-invalid={Boolean(errors.referralSource)}
+            aria-describedby={errors.referralSource ? 'referralSource-error' : undefined}
+            className={`${inputClassName} ${errors.referralSource ? errorInputClassName : normalInputClassName}`}
+          >
+            <option value="">選択してください（任意）</option>
+            {REFERRAL_SOURCE_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <FieldError id="referralSource-error" message={errors.referralSource} />
+        </div>
+
         <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
           <label htmlFor="website">Website</label>
           <input
@@ -382,7 +502,7 @@ export default function ContactForm() {
         <div className="bg-slate-100 border border-slate-200 rounded-lg p-5">
           <h3 className="font-bold text-base mb-2">個人情報の取り扱いについて</h3>
           <p className="text-base text-slate-700 leading-relaxed">
-            お申し込み情報は、体験授業の実施に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。
+            お問い合わせ情報は、ご連絡・面談調整など対応に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。
           </p>
         </div>
 
@@ -397,10 +517,10 @@ export default function ContactForm() {
           disabled={isSubmitting}
           className="w-full bg-brand-900 hover:bg-[#004840] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-md text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
         >
-          {isSubmitting ? '送信中...' : '無料体験・学習相談を申し込む'}
+          {isSubmitting ? '送信中...' : 'お問い合わせを送信する'}
         </button>
         <p className="mt-3 text-center text-base text-slate-600 leading-relaxed">
-          送信後、日程調整についてご連絡します。
+          送信後、内容を確認のうえご連絡します。
         </p>
       </div>
     </form>

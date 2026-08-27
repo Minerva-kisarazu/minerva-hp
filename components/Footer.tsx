@@ -6,7 +6,7 @@ const sitemapItems = [
   { href: '/policy', label: '指導方針' },
   { href: '/grades', label: '学年別のご案内' },
   { href: '/price', label: '受講料・よくあるご質問' },
-  { href: '/contact', label: '無料体験授業・お問い合わせ' },
+  { href: '/contact', label: 'お問い合わせ' },
 ];
 
 const MAP_EMBED_SRC =
