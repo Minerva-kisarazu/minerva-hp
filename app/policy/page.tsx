@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import PreFooterCta from '@/components/PreFooterCta';
@@ -114,32 +114,34 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      <section className="bg-brand-900 text-white py-16 sm:py-24">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <p className="text-sm font-bold text-accent-400 mb-3 text-center">
+      <section className="bg-brand-900 text-white py-14 sm:py-20">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12 text-center">
+          <p className="text-sm sm:text-base font-bold text-accent-400 mb-4">
             【授業】自分で考えて解く力を鍛える
           </p>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
             「答えを教える」から、「自分で解ける」へ。
           </h2>
-          <div className="text-center text-base sm:text-lg text-slate-200 mb-12 leading-relaxed border-b border-brand-700 pb-8 space-y-6">
-            <div className="space-y-2 font-serif text-lg sm:text-xl font-bold text-white leading-relaxed">
-              <p>答えを教える。</p>
-              <p>ではなく、解き方を教える。</p>
-              <p>そして、その解き方を自分で使えるようにする。</p>
-            </div>
-            <div className="space-y-3 max-w-2xl mx-auto">
-              <p className="font-bold text-white text-lg sm:text-xl">必要なことは、きちんと教えます。</p>
-              <p>
-                ただ答えを渡して終わるのではなく、なぜその解き方になるのかを一緒に考え、最後は自分の力で問題を読み、考え、解けるようにする。それが私たちの個別指導です。
-              </p>
-            </div>
+          <div className="space-y-2 font-serif text-lg sm:text-xl font-bold text-white leading-relaxed mb-6">
+            <p>答えを教える。</p>
+            <p>ではなく、解き方を教える。</p>
+            <p>そして、その解き方を自分で使えるようにする。</p>
           </div>
+          <p className="text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl mx-auto">
+            必要なことは、きちんと教えます。ただ答えを渡して終わるのではなく、最後は自分の力で問題を読み、考え、解けるようにする。それが私たちの個別指導です。
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="space-y-6 sm:space-y-8">
             {lessonFeatures.map(({ title, body }) => (
-              <div key={title} className="bg-brand-800 p-6 sm:p-10 rounded-xl border border-brand-700">
-                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-accent-400">{title}</h3>
-                <p className="text-base text-slate-200 leading-relaxed">{body}</p>
+              <div key={title} className="card-padded">
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-brand-900 border-b border-slate-200 pb-3">
+                  {title}
+                </h3>
+                <p className="body-text">{body}</p>
               </div>
             ))}
           </div>
@@ -248,7 +250,10 @@ export default function PolicyPage() {
         </div>
       </section>
 
-      <PreFooterCta heading="私たちの指導方針を、実際の授業で体験してみませんか。" />
+      <PreFooterCta
+        heading="指導方針について、まずはお気軽にご相談ください。"
+        subtext="面談でお子さまの学習状況を確認したうえで、必要に応じて体験授業をご案内します。"
+      />
     </main>
   );
 }

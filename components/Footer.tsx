@@ -15,10 +15,10 @@ const MAP_EMBED_SRC =
 export default function Footer() {
   return (
     <footer className="bg-slate-50 text-slate-700 border-t border-slate-200 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 mb-14">
-          {/* 左カラム：基本情報 */}
-          <div>
+      <div className="site-container">
+        {/* スマホ：塾情報 → サイトマップ → アクセス */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-14 mb-14">
+          <div className="order-1">
             <div className="mb-6 border-b border-slate-300 pb-4">
               <Image
                 src="/images/logo-horizontal.svg"
@@ -29,13 +29,13 @@ export default function Footer() {
                 className="h-12 w-auto max-w-full"
               />
             </div>
-            <address className="not-italic space-y-2 leading-relaxed">
+            <address className="not-italic space-y-3 leading-relaxed text-base">
               <p>
                 <span className="font-bold text-slate-900">所在地：</span>
                 <span className="whitespace-nowrap">〒292-0009</span>{' '}
                 <span className="whitespace-nowrap">千葉県木更津市金田東5-4-6</span>
               </p>
-              <p className="flex items-center gap-1">
+              <p className="flex items-center gap-1 flex-wrap">
                 <span className="font-bold text-slate-900">電話番号：</span>
                 <a
                   href="tel:0368206929"
@@ -49,24 +49,23 @@ export default function Footer() {
             <dl className="mt-6 pt-6 border-t border-slate-300 space-y-5 text-base leading-relaxed">
               <div>
                 <dt className="font-bold text-slate-900">開校時間（通塾・自習室利用）</dt>
-                <dd className="mt-1">平日 16:00〜21:40</dd>
-                <dd className="mt-1 text-sm text-slate-600">
+                <dd className="mt-1.5">平日 16:00〜21:40</dd>
+                <dd className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
                   当面の間、土曜日・日曜日は休講となります。テスト前や講習時を除く。
                 </dd>
               </div>
               <div>
                 <dt className="font-bold text-slate-900">お問い合わせ受付時間（お電話・窓口）</dt>
-                <dd className="mt-1">平日 16:00〜21:40 ／ 土曜日 14:00〜20:00</dd>
-                <dd className="mt-1 text-sm text-slate-600">
+                <dd className="mt-1.5">平日 16:00〜21:40 ／ 土曜日 14:00〜20:00</dd>
+                <dd className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
                   土曜日は授業・自習室は休講ですが、お問い合わせの受付・入塾面談の実施は承っております。
                 </dd>
               </div>
             </dl>
           </div>
 
-          {/* 中央カラム：サイトマップ */}
-          <div>
-            <h2 className="text-lg font-bold mb-6 text-slate-900 tracking-wide border-b border-slate-300 pb-3">
+          <div className="order-2">
+            <h2 className="text-lg font-bold mb-5 text-slate-900 tracking-wide border-b border-slate-300 pb-3">
               サイトマップ
             </h2>
             <nav aria-label="フッターナビゲーション">
@@ -75,7 +74,7 @@ export default function Footer() {
                   <li key={href}>
                     <Link
                       href={href}
-                      className="inline-flex items-center min-h-[44px] font-medium hover:text-accent-700 transition-colors"
+                      className="inline-flex items-center min-h-[48px] font-medium text-base hover:text-accent-700 transition-colors"
                     >
                       {label}
                     </Link>
@@ -85,12 +84,11 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* 右カラム：地図 */}
-          <div>
-            <h2 className="text-lg font-bold mb-6 text-slate-900 tracking-wide border-b border-slate-300 pb-3">
+          <div className="order-3">
+            <h2 className="text-lg font-bold mb-5 text-slate-900 tracking-wide border-b border-slate-300 pb-3">
               アクセス
             </h2>
-            <div className="rounded-lg h-64 overflow-hidden border border-slate-200 shadow-sm">
+            <div className="rounded-xl h-64 overflow-hidden border border-slate-200 shadow-sm">
               <iframe
                 src={MAP_EMBED_SRC}
                 width="100%"
@@ -106,7 +104,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-300 pt-10 text-center text-base leading-relaxed max-w-4xl mx-auto">
-          <p>
+          <p className="text-slate-700">
             千葉県木更津市金田東の学習塾ミネルバ。小学生から大学受験まで、木更津市の個別指導塾として、生徒一人ひとりの学習プロセスを最適化します。
           </p>
         </div>

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import PreFooterCta from '@/components/PreFooterCta';
 
@@ -123,7 +123,7 @@ export default function PricePage() {
             <table className="w-full min-w-[720px] border-collapse text-left">
               <caption className="sr-only">学年別・講座数別の月額総支払額（税込）</caption>
               <thead>
-                <tr className="bg-brand-900 text-white text-sm">
+                <tr className="bg-brand-900 text-white text-base">
                   <th scope="col" className="px-5 py-4 font-bold">
                     学年
                   </th>
@@ -134,7 +134,7 @@ export default function PricePage() {
                   ))}
                   <th scope="col" className="px-5 py-4 font-bold text-right whitespace-nowrap">
                     5講座目以降
-                    <span className="block text-xs font-medium text-slate-300">1講座につき</span>
+                    <span className="block text-sm font-medium text-slate-300 mt-0.5">1講座につき</span>
                   </th>
                 </tr>
               </thead>
@@ -210,22 +210,22 @@ export default function PricePage() {
             よくあるご質問（Q&amp;A）
           </h2>
 
-          <div className="space-y-5 sm:space-y-6">
+          <div className="space-y-6 sm:space-y-7">
             {faqs.map(({ question, summary, detail }) => (
               <article
                 key={question}
-                className="bg-brand-800 p-5 sm:p-8 rounded-xl border border-brand-700"
+                className="bg-brand-800 p-6 sm:p-8 rounded-xl border border-brand-700"
               >
-                <h3 className="font-serif text-base sm:text-lg font-bold mb-4 text-accent-400 leading-relaxed">
+                <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-accent-400 leading-relaxed pb-3 border-b border-brand-700">
                   <span className="mr-1">Q：</span>
                   {question}
                 </h3>
-                <p className="text-base text-slate-100 leading-relaxed font-medium">
-                  <span className="mr-1">A：</span>
+                <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-medium mb-1">
+                  <span className="mr-1 font-bold text-white">A：</span>
                   {summary}
                 </p>
                 {detail && (
-                  <p className="mt-3 text-base text-slate-300 leading-relaxed">{detail}</p>
+                  <p className="mt-4 text-base text-slate-300 leading-relaxed">{detail}</p>
                 )}
               </article>
             ))}
@@ -233,7 +233,10 @@ export default function PricePage() {
         </div>
       </section>
 
-      <PreFooterCta heading="料金や授業内容について、まずはお気軽にご相談ください。" />
+      <PreFooterCta
+        heading="料金や授業内容について、まずはお気軽にご相談ください。"
+        subtext="面談で学習状況を確認したうえで、必要に応じて体験授業をご案内します。"
+      />
 
       <script
         type="application/ld+json"

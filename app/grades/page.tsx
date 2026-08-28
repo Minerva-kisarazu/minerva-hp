@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import PreFooterCta from '@/components/PreFooterCta';
@@ -251,7 +251,7 @@ export default function GradesPage() {
                       </td>
                       <td className="px-5 py-4 text-base text-slate-200 leading-relaxed">
                         <span
-                          className={`inline-block text-xs font-bold px-2 py-0.5 rounded mr-2 align-middle ${
+                          className={`inline-block text-sm font-bold px-2.5 py-0.5 rounded mr-2 align-middle ${
                             row.isLesson ? 'bg-accent-500 text-brand-900' : 'bg-brand-800 text-slate-200'
                           }`}
                         >
@@ -282,7 +282,7 @@ export default function GradesPage() {
                       <p className="font-bold text-slate-100 mb-1">{row.time}</p>
                       <p className="text-slate-300">
                         <span
-                          className={`inline-block text-xs font-bold px-2 py-0.5 rounded mr-2 align-middle ${
+                          className={`inline-block text-sm font-bold px-2.5 py-0.5 rounded mr-2 align-middle ${
                             row.isLesson ? 'bg-accent-500 text-brand-900' : 'bg-brand-800 text-slate-200'
                           }`}
                         >
@@ -322,7 +322,10 @@ export default function GradesPage() {
         </div>
       </section>
 
-      <PreFooterCta heading="高校・大学受験の勉強の進め方についても、まずは授業でご相談ください。" />
+      <PreFooterCta
+        heading="高校・大学受験の勉強の進め方についても、まずはお気軽にご相談ください。"
+        subtext="お子さまの学年や目標に合わせて、面談でご説明します。"
+      />
     </main>
   );
 }

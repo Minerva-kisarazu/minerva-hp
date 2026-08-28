@@ -67,7 +67,7 @@ export default function RootLayout({
           本文へスキップ
         </a>
         <Header />
-        <div className="pt-16">{children}</div>
+        <div className="site-shell pt-16">{children}</div>
         <Footer />
       </body>
     </html>

@@ -13,26 +13,26 @@ function ReportCard({ report }: { report: ReportSample }) {
   return (
     <article className="h-full flex flex-col bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
       <header className="bg-brand-900 px-5 py-4 text-white">
-        <p className="text-xs font-bold text-accent-400">学習塾ミネルバ｜指導報告</p>
-        <p className="font-serif font-bold text-lg mt-1 leading-snug">
+        <p className="text-sm font-bold text-accent-400">学習塾ミネルバ｜指導報告</p>
+        <p className="font-serif font-bold text-lg sm:text-xl mt-1 leading-snug">
           {report.grade}｜{report.subject}
         </p>
       </header>
       <div className="flex-1 p-5 sm:p-6 space-y-4 text-base leading-relaxed">
         <div>
-          <h4 className="text-sm font-bold text-brand-900 mb-1">学習内容</h4>
+          <h4 className="text-sm sm:text-base font-bold text-brand-900 mb-1.5">学習内容</h4>
           <p className="text-[#333333]">{report.topic}</p>
         </div>
         <div>
-          <h4 className="text-sm font-bold text-brand-900 mb-1">つまずき</h4>
+          <h4 className="text-sm sm:text-base font-bold text-brand-900 mb-1.5">つまずき</h4>
           <p className="text-[#333333]">{report.stuck}</p>
         </div>
         <div>
-          <h4 className="text-sm font-bold text-brand-900 mb-1">今回の指導</h4>
+          <h4 className="text-sm sm:text-base font-bold text-brand-900 mb-1.5">今回の指導</h4>
           <p className="text-[#333333]">{report.guidance}</p>
         </div>
         <div>
-          <h4 className="text-sm font-bold text-brand-900 mb-1">次回</h4>
+          <h4 className="text-sm sm:text-base font-bold text-brand-900 mb-1.5">次回</h4>
           <p className="text-[#333333]">{report.next}</p>
         </div>
       </div>
@@ -136,7 +136,7 @@ export default function ReportCarousel({ reports }: Props) {
       </p>
 
       <div className="flex items-center justify-between gap-3 mb-4">
-        <p className="text-sm text-slate-600 tabular-nums">{pageLabel}</p>
+        <p className="text-sm sm:text-base text-slate-600 tabular-nums">{pageLabel}</p>
         <div className="flex items-center gap-2">
           <button
             type="button"

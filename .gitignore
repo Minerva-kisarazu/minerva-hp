@@ -8,3 +8,13 @@ package-lock.json
 
 # screenshot.js が生成するレビュー用画像。実行ごとに作り直すため管理しない
 screenshots/
+
+# 印刷用PDF（scripts/export-print-pdf.js でローカル生成。公開DLは準備完了まで未リンク）
+public/downloads/
+
+# 参照用の元PDF（リポジトリには含めない）
+*.pdf
+
+# Jimdo 既存GAS/HTMLの控え（Chat Webhook 等の秘密情報を含む）
+jimdogas
+jimdhtml

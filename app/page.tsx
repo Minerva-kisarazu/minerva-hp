@@ -1,6 +1,6 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Image from 'next/image';
-import CtaButton, { TrialCtaLabel } from '@/components/CtaButton';
+import CtaButton, { ContactCtaLabel } from '@/components/CtaButton';
 import ReportCarousel from '@/components/ReportCarousel';
 import { reportSamples } from '@/data/reportSamples';
 
@@ -112,8 +112,8 @@ export default function Home() {
       {/* ヒーロー */}
       <section className="bg-brand-900 text-white">
         <div className="grid lg:grid-cols-2 lg:min-h-[calc(100vh-4rem)]">
-          <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
-            <h1 className="font-serif text-[1.65rem] leading-relaxed sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8">
+          <div className="flex flex-col justify-center px-5 sm:px-10 lg:px-16 py-14 sm:py-20 lg:py-24">
+            <h1 className="font-serif text-[1.75rem] leading-relaxed sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8">
               「なぜできないのか」を見抜く。
               <br />
               「どうすればもっと伸びるのか」を設計する。
@@ -127,7 +127,7 @@ export default function Home() {
             </p>
             <div className="sm:self-start">
               <CtaButton href="/contact" variant="onDark">
-                <TrialCtaLabel />
+                <ContactCtaLabel />
               </CtaButton>
             </div>
           </div>
@@ -146,24 +146,24 @@ export default function Home() {
 
       {/* お悩み共感 */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-10 text-center leading-relaxed border-b border-slate-200 pb-5">
+        <div className="site-container-narrow">
+          <h2 className="section-heading-bordered text-center">
             お子さまに、こんなお悩みはありませんか？
           </h2>
-          <ul className="space-y-4">
+          <ul className="space-y-4 sm:space-y-5">
             {worries.map((worry) => (
               <li
                 key={worry}
-                className="flex items-start gap-4 bg-slate-50 border border-slate-200 rounded-xl px-5 py-4"
+                className="flex items-start gap-4 card-padded py-4 sm:py-5 bg-slate-50"
               >
-                <span aria-hidden="true" className="text-brand-900 mt-0.5 text-xl font-bold flex-shrink-0">
+                <span aria-hidden="true" className="text-brand-900 mt-0.5 text-xl font-bold flex-shrink-0 w-6">
                   □
                 </span>
-                <span className="text-base sm:text-lg leading-relaxed">{worry}</span>
+                <span className="text-base sm:text-lg leading-[1.85] flex-1">{worry}</span>
               </li>
             ))}
           </ul>
-          <div className="mt-8 sm:mt-10 space-y-4 text-base sm:text-lg text-slate-700 leading-relaxed">
+          <div className="mt-8 sm:mt-10 space-y-4 body-text">
             <p>
               これらの原因は、お子さまの「やる気」や「能力」のせいだけではありません。
             </p>
@@ -201,7 +201,7 @@ export default function Home() {
 
       {/* ターゲット */}
       <section className="bg-slate-50 py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="site-container-wide">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div className="relative h-[260px] sm:h-[420px] overflow-hidden rounded-2xl border border-slate-200 shadow-md order-2 lg:order-1">
               <Image
@@ -237,7 +237,7 @@ export default function Home() {
 
       {/* ミネルバの本質（3ステップ） */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="site-container-wide">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed border-b border-slate-200 pb-5">
             分析して終わりではありません。
             <br />
@@ -314,14 +314,14 @@ export default function Home() {
               className="object-cover object-center"
             />
           </div>
-          <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 lg:py-24">
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
+          <div className="flex flex-col justify-center px-5 sm:px-10 lg:px-16 py-14 lg:py-24">
+            <h2 className="section-heading text-white mb-6">
               授業で分かったことを、自分で使えるところまで。
             </h2>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
+            <p className="body-text text-slate-200 mb-6">
               授業で見つかった課題とつながった内容を自習室で繰り返し、「分かった」で終わらず、自分で問題を読み、考え、解いて、答えを確かめられる状態までつなげます。
             </p>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
+            <p className="body-text text-slate-200 mb-8">
               ミネルバでは、
               <span className="font-bold text-white">
                 「解く・丸付けする・やり直す」までを一組で宿題
@@ -348,7 +348,7 @@ export default function Home() {
 
       {/* 3つの分析視点 */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="site-container-wide">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-10 text-center leading-relaxed border-b border-slate-200 pb-5">
             ミネルバでは、答えだけでなく「どう考えているか」まで見ています
           </h2>
@@ -381,7 +381,7 @@ export default function Home() {
 
       {/* 改善の型 */}
       <section className="bg-slate-50 py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="site-container-wide">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
             成果は生徒ごとに異なりますが、改善の流れは共通しています
           </h2>
@@ -431,7 +431,7 @@ export default function Home() {
 
       {/* 実際の成績改善事例 */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="site-container-wide">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
             実際の成績改善事例
           </h2>
@@ -467,7 +467,7 @@ export default function Home() {
 
       {/* 指導報告書 */}
       <section className="bg-slate-50 py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="site-container-wide">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
             授業では、こんなところまで見ています。
           </h2>
@@ -491,12 +491,15 @@ export default function Home() {
       {/* フッター前CTA */}
       <section className="bg-brand-900 text-white">
         <div className="grid lg:grid-cols-2">
-          <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-14 lg:py-24">
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-relaxed">
+          <div className="flex flex-col justify-center px-5 sm:px-10 lg:px-16 py-14 lg:py-24">
+            <h2 className="section-heading text-white mb-6">
               勉強しているのに伸びない理由。あるいは、もっと伸びるための改善点。
             </h2>
-            <p className="text-lg sm:text-xl text-slate-300 mb-8 sm:mb-10 leading-relaxed">
-              まずは80分の体験授業で見つけてみませんか。
+            <p className="text-lg sm:text-xl text-slate-200 mb-3 leading-relaxed">
+              まずは面談で、お子さまの学習状況を確認しませんか。
+            </p>
+            <p className="body-text-muted text-slate-400 mb-8 sm:mb-10">
+              必要に応じて、80分の体験授業と学習診断レポートをご案内します。
             </p>
             <div className="bg-[#004840]/80 p-5 sm:p-8 rounded-xl mb-8 sm:mb-10 border border-white/15">
               <p className="font-bold mb-5 text-white leading-relaxed">
@@ -521,7 +524,7 @@ export default function Home() {
             </div>
             <div className="sm:self-start w-full sm:w-auto">
               <CtaButton href="/contact" variant="onDark">
-                <TrialCtaLabel />
+                <ContactCtaLabel />
               </CtaButton>
             </div>
           </div>

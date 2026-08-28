@@ -182,21 +182,19 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="relative max-w-2xl mx-auto">
-      <div className="mb-10 sm:mb-12 space-y-4">
+    <form onSubmit={handleSubmit} noValidate className="relative">
+      <div className="mb-8 sm:mb-10 space-y-4">
         <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed border-b border-slate-300 pb-5">
           まずはお気軽にご相談ください。
         </h2>
-        <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+        <p className="body-text">
           料金や指導内容についてのご質問、お子さまの学習についてのご相談、資料請求など、まずはお気軽にお問い合わせください。
         </p>
       </div>
 
       <div className="space-y-10">
-        <fieldset className="space-y-6">
-          <legend className="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2">
-            生徒情報
-          </legend>
+        <fieldset className="form-fieldset">
+          <legend className="form-legend">生徒情報</legend>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
@@ -328,10 +326,8 @@ export default function ContactForm() {
           </div>
         </fieldset>
 
-        <fieldset className="space-y-6">
-          <legend className="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2">
-            保護者・連絡先
-          </legend>
+        <fieldset className="form-fieldset">
+          <legend className="form-legend">保護者・連絡先</legend>
 
           <div>
             <label htmlFor="guardianName" className="block text-base font-bold mb-2">
@@ -399,22 +395,20 @@ export default function ContactForm() {
         <fieldset
           aria-invalid={Boolean(errors.inquiryTypes)}
           aria-describedby={errors.inquiryTypes ? 'inquiryTypes-error' : undefined}
-          className="space-y-4"
+          className="form-fieldset"
         >
-          <legend className="font-serif text-lg sm:text-xl font-bold text-brand-900 mb-2">
-            お問い合わせ内容
-          </legend>
-          <p className="text-base font-bold">
+          <legend className="form-legend">お問い合わせ内容</legend>
+          <p className="text-base font-bold -mt-2 mb-1">
             お問い合わせの種類
             <RequiredMark />
-            <span className="text-slate-500 font-medium ml-1">複数選択可</span>
+            <span className="text-slate-500 font-medium ml-1 text-sm sm:text-base">複数選択可</span>
           </p>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {INQUIRY_TYPE_OPTIONS.map((option, index) => (
               <label
                 key={option}
                 htmlFor={`inquiryTypes-${index}`}
-                className="flex items-start gap-3 p-3.5 sm:p-4 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-accent-500 transition-colors"
+                className="flex items-center gap-4 min-h-[52px] p-4 rounded-xl border border-slate-200 bg-white cursor-pointer hover:border-accent-500 hover:bg-slate-50 transition-colors"
               >
                 <input
                   type="checkbox"
@@ -423,34 +417,36 @@ export default function ContactForm() {
                   value={option}
                   checked={formData.inquiryTypes.includes(option)}
                   onChange={(event) => handleInquiryTypeChange(option, event.target.checked)}
-                  className="mt-1 w-5 h-5 accent-brand-900 flex-shrink-0"
+                  className="w-5 h-5 accent-brand-900 flex-shrink-0"
                 />
-                <span className="text-slate-800 leading-relaxed text-base">{option}</span>
+                <span className="text-slate-800 leading-relaxed text-base flex-1">{option}</span>
               </label>
             ))}
           </div>
           <FieldError id="inquiryTypes-error" message={errors.inquiryTypes} />
 
           {wantsTrial && (
-            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 sm:p-5">
-              <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+              <p className="body-text">
                 体験授業をご希望の場合も、まずは面談でお子さまの学習状況やご希望を伺っています。
               </p>
-              <p className="mt-2 text-sm sm:text-base text-slate-700 leading-relaxed">
+              <p className="mt-3 body-text">
                 面談後、必要に応じて体験授業をご案内します。
               </p>
             </div>
           )}
         </fieldset>
 
-        <div>
-          <label htmlFor="message" className="block text-base font-bold mb-2">
-            ご相談・お問い合わせ内容
-            <OptionalMark />
-          </label>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-3">
-            お子さまの学習状況や、ご質問など、事前にお伝えになりたいことがあればご記入ください。
-          </p>
+        <fieldset className="form-fieldset">
+          <legend className="form-legend">ご相談・自由記述</legend>
+          <div>
+            <label htmlFor="message" className="block text-base font-bold mb-2">
+              ご相談・お問い合わせ内容
+              <OptionalMark />
+            </label>
+            <p className="body-text-muted mb-3">
+              お子さまの学習状況や、ご質問など、事前にお伝えになりたいことがあればご記入ください。
+            </p>
           <textarea
             id="message"
             name="message"
@@ -460,13 +456,16 @@ export default function ContactForm() {
             placeholder="ご自由にご記入ください"
             className={`${inputClassName} ${normalInputClassName} leading-relaxed resize-y`}
           />
-        </div>
+          </div>
+        </fieldset>
 
-        <div>
-          <label htmlFor="referralSource" className="block text-base font-bold mb-2">
-            当塾を知ったきっかけ
-            <OptionalMark />
-          </label>
+        <fieldset className="form-fieldset">
+          <legend className="form-legend">当塾を知ったきっかけ</legend>
+          <div>
+            <label htmlFor="referralSource" className="sr-only">
+              当塾を知ったきっかけ
+              <OptionalMark />
+            </label>
           <select
             id="referralSource"
             name="referralSource"
@@ -484,6 +483,14 @@ export default function ContactForm() {
             ))}
           </select>
           <FieldError id="referralSource-error" message={errors.referralSource} />
+          </div>
+        </fieldset>
+
+        <div className="bg-slate-100 border border-slate-200 rounded-xl p-5 sm:p-6">
+          <h3 className="font-bold text-base mb-2">個人情報の取り扱いについて</h3>
+          <p className="body-text">
+            お問い合わせ情報は、ご連絡・面談調整など対応に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。
+          </p>
         </div>
 
         <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -499,13 +506,6 @@ export default function ContactForm() {
           />
         </div>
 
-        <div className="bg-slate-100 border border-slate-200 rounded-lg p-5">
-          <h3 className="font-bold text-base mb-2">個人情報の取り扱いについて</h3>
-          <p className="text-base text-slate-700 leading-relaxed">
-            お問い合わせ情報は、ご連絡・面談調整など対応に必要な範囲内で保護し、第三者に開示することはありません。また、電話での営業は行っておりません。
-          </p>
-        </div>
-
         {submitError && (
           <p role="alert" className="text-center text-sm sm:text-base text-red-600 leading-relaxed">
             {submitError}
@@ -515,7 +515,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-brand-900 hover:bg-[#004840] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-md text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
+          className="w-full bg-brand-900 hover:bg-[#004840] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold min-h-[52px] py-4 rounded-xl transition-colors shadow-md text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
         >
           {isSubmitting ? '送信中...' : 'お問い合わせを送信する'}
         </button>

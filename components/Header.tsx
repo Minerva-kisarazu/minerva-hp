@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,10 +13,9 @@ const navItems = [
   { href: '/contact', label: 'お問い合わせ' },
 ];
 
-const CTA_LABEL = '体験授業を申し込む';
-const CTA_LABEL_MOBILE = '無料学習診断レポート付き体験授業を申し込む';
+const CTA_LABEL = 'ご相談・お問い合わせ';
+const CTA_LABEL_MOBILE = 'まずはお気軽にご相談ください';
 
-// デスクトップ横並びナビはこの幅未満だと文字が潰れるためハンバーガーに切り替える
 const DESKTOP_NAV_BREAKPOINT = 1280;
 
 export default function Header() {
@@ -50,9 +49,13 @@ export default function Header() {
     };
   }, [isOpen]);
 
+  if (pathname?.startsWith('/print')) {
+    return null;
+  }
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex items-center justify-between gap-3 h-16">
           <Link
             href="/"
@@ -70,7 +73,7 @@ export default function Header() {
             />
           </Link>
 
-          <nav aria-label="メインナビゲーション" className="hidden xl:flex items-center gap-4 flex-shrink-0">
+          <nav aria-label="メインナビゲーション" className="hidden xl:flex items-center gap-5 flex-shrink-0">
             {navItems.slice(0, 4).map(({ href, label }) => (
               <Link
                 key={href}
@@ -87,7 +90,7 @@ export default function Header() {
             ))}
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-4 py-2.5 rounded-lg transition-colors shadow-sm text-sm whitespace-nowrap"
+              className="inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-5 py-2.5 rounded-xl transition-colors shadow-sm text-sm whitespace-nowrap min-h-[44px]"
             >
               {CTA_LABEL}
             </Link>
@@ -122,13 +125,13 @@ export default function Header() {
           aria-label="メインナビゲーション"
           className="xl:hidden absolute left-0 right-0 top-16 bg-white border-b border-slate-200 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto"
         >
-          <div className="flex flex-col px-4 py-4">
+          <div className="flex flex-col px-5 py-4">
             {navItems.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
                 aria-current={pathname === href ? 'page' : undefined}
-                className={`py-4 border-b border-slate-100 font-medium ${
+                className={`py-4 border-b border-slate-100 font-medium text-base leading-relaxed ${
                   pathname === href ? 'text-brand-900' : 'text-slate-900'
                 }`}
               >
@@ -137,7 +140,7 @@ export default function Header() {
             ))}
             <Link
               href="/contact"
-              className="mt-4 mb-2 inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-5 py-4 rounded-lg text-center text-sm leading-relaxed"
+              className="mt-5 mb-2 inline-flex items-center justify-center bg-brand-900 hover:bg-[#004840] text-white font-bold px-5 py-4 rounded-xl text-center text-base leading-relaxed min-h-[52px]"
             >
               {CTA_LABEL_MOBILE}
             </Link>
