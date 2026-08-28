@@ -1,5 +1,6 @@
 node_modules/
 .next/
+out/
 .env*
 !.env.example
 .DS_Store
@@ -18,3 +19,6 @@ public/downloads/
 # Jimdo 既存GAS/HTMLの控え（Chat Webhook 等の秘密情報を含む）
 jimdogas
 jimdhtml
+
+# Cursor の会話ログ（GAS 等の貼り付けでシークレットが混ざるためコミットしない）
+.specstory/
