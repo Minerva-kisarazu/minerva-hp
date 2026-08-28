@@ -15,7 +15,7 @@ body:has([data-print-document]) {
 
 .print-document {
   color: #222;
-  font-family: var(--font-noto-sans-jp), 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  font-family: var(--font-zen-kaku), 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
 }
 
 .print-toolbar {
@@ -143,7 +143,7 @@ body:has([data-print-document]) {
 }
 
 .print-index h1 {
-  font-family: var(--font-noto-serif-jp), serif;
+  font-family: var(--font-zen-old-mincho), serif;
   color: #006058;
   font-size: 1.6rem;
 }
@@ -452,7 +452,7 @@ body:has([data-print-document]) {
 
 .pm1-panel h1 {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 21pt;
 
@@ -510,7 +510,7 @@ body:has([data-print-document]) {
 
   margin-top: 1.5mm;
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 14pt;
 
@@ -758,7 +758,7 @@ body:has([data-print-document]) {
 
 .pm-head h1 {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 15pt;
 
@@ -954,7 +954,7 @@ body:has([data-print-document]) {
 
   margin-top: 1.8mm;
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 13pt;
 
@@ -1171,7 +1171,7 @@ body:has([data-print-document]) {
 
   margin-top: 1mm;
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 16pt;
 
@@ -1203,7 +1203,7 @@ body:has([data-print-document]) {
 
   margin-top: 1mm;
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 15pt;
 
@@ -1243,7 +1243,7 @@ body:has([data-print-document]) {
 
 .pm3-mech h3 {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 9.5pt;
 
@@ -2093,7 +2093,7 @@ body:has([data-print-document]) {
 
 .pm4-contact .info h3 {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 13pt;
 
@@ -2265,7 +2265,7 @@ body:has([data-print-document]) {
 
 .fy-top-copy h1 {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 20pt;
 
@@ -2339,7 +2339,7 @@ body:has([data-print-document]) {
 
 .fy-worry h2 {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 12pt;
 
@@ -2485,7 +2485,7 @@ body:has([data-print-document]) {
 
   margin-top: 1.5mm;
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 13pt;
 
@@ -2727,7 +2727,7 @@ body:has([data-print-document]) {
 
 .fy-results .s {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 14pt;
 
@@ -2743,7 +2743,7 @@ body:has([data-print-document]) {
 
 .fy-results .d {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 14pt;
 
@@ -2779,7 +2779,7 @@ body:has([data-print-document]) {
 
 .fy-cta .label {
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 12pt;
 
@@ -3263,7 +3263,7 @@ body:has([data-print-document]) {
 
   text-align: center;
 
-  font-family: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
 
   font-size: 10pt;
 
@@ -3764,7 +3764,7 @@ body:has([data-print-document]) {
   display: block;
   font-size: 15pt !important;
   color: #006058;
-  font-family: var(--font-noto-serif-jp), serif;
+  font-family: var(--font-zen-old-mincho), serif;
   margin-bottom: 1.5mm;
 }
 .pm3-week span {

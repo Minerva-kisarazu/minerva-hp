@@ -48,7 +48,7 @@ export const printFlyerWorries = [
 ] as const;
 
 export const printCoreMessage = {
-  lines: ['答えを教える。', 'ではなく、解き方を教える。', 'そして、その解き方を自分で使えるようにする。'],
+  lines: ['答えを教える。', 'ではなく、解き方の考え方を教える。', 'そして、その考え方を自分で使えるようにする。'],
 } as const;
 
 export const printSteps = [

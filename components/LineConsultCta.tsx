@@ -21,7 +21,7 @@ const baseButton =
   'inline-flex items-center justify-center gap-2.5 rounded-xl font-bold min-h-[48px] sm:min-h-[52px] px-5 sm:px-7 py-3 text-base sm:text-lg text-center leading-relaxed transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C755]';
 
 const variantClasses: Record<Variant, string> = {
-  hero: `${baseButton} w-full sm:w-auto border-2 border-[#4ade80]/80 text-white bg-[#06C755]/10 hover:bg-[#06C755]/25 hover:border-[#4ade80]`,
+  hero: `${baseButton} w-full sm:w-auto bg-[#06C755] hover:bg-[#05b34c] text-white shadow-md border-2 border-[#06C755]`,
   band: `${baseButton} w-full sm:w-auto bg-[#06C755] hover:bg-[#05b34c] text-white shadow-md`,
   footer: `${baseButton} w-full sm:w-auto bg-[#06C755] hover:bg-[#05b34c] text-white shadow-md border-2 border-[#06C755]`,
 };

@@ -10,10 +10,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* 保護者向け本文：15〜16px基準、行間は詰まりすぎないように */
+  /* 保護者向け本文：16px基準。行間は読みやすさを保ちつつ詰めすぎない */
   body {
     font-size: 16px;
-    line-height: 1.85;
+    line-height: 1.7;
   }
 
   h1,
@@ -64,11 +64,31 @@
 
   /* 本文・補足の階層（12px未満は使わない） */
   .body-text {
-    @apply text-base sm:text-lg text-slate-700 leading-[1.85];
+    @apply text-base sm:text-lg text-slate-700 leading-[1.7];
   }
 
   .body-text-muted {
-    @apply text-sm sm:text-base text-slate-600 leading-[1.8];
+    @apply text-sm sm:text-base text-slate-600 leading-[1.65];
+  }
+
+  .insight-callout {
+    @apply rounded-2xl border-l-4 border-accent-500 bg-brand-50 px-5 py-5 sm:px-6 sm:py-6 text-base sm:text-lg font-bold text-brand-900 leading-[1.65] shadow-sm;
+  }
+
+  .flow-label {
+    @apply inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold tracking-wide uppercase;
+  }
+
+  .flow-label-symptom {
+    @apply flow-label text-slate-500;
+  }
+
+  .flow-label-cause {
+    @apply flow-label text-slate-600;
+  }
+
+  .flow-label-action {
+    @apply flow-label text-brand-900;
   }
 
   /* セクション見出し */

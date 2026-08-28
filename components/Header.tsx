@@ -13,7 +13,7 @@ const navItems = [
   { href: '/contact', label: 'お問い合わせ' },
 ];
 
-const CTA_LABEL = 'ご相談・お問い合わせ';
+const CTA_LABEL = 'お問い合わせ';
 const CTA_LABEL_MOBILE = 'まずはお気軽にご相談ください';
 
 const DESKTOP_NAV_BREAKPOINT = 1024;

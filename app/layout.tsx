@@ -1,20 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
+import { Zen_Kaku_Gothic_New, Zen_Old_Mincho } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
 // CJK フォントはスライス数が多く、preload するとリンクタグが大量に生成されるため無効化する
-const notoSansJP = Noto_Sans_JP({
+const zenKakuGothic = Zen_Kaku_Gothic_New({
   weight: ["400", "500", "700"],
-  variable: "--font-noto-sans-jp",
+  variable: "--font-zen-kaku",
   display: "swap",
   preload: false,
 });
 
-const notoSerifJP = Noto_Serif_JP({
-  weight: ["700"],
-  variable: "--font-noto-serif-jp",
+const zenOldMincho = Zen_Old_Mincho({
+  weight: ["600", "700"],
+  variable: "--font-zen-old-mincho",
   display: "swap",
   preload: false,
 });
@@ -58,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${notoSerifJP.variable}`}>
+    <html lang="ja" className={`${zenKakuGothic.variable} ${zenOldMincho.variable}`}>
       <body className="font-sans bg-white text-[#333333] antialiased">
         <a
           href="#main"
