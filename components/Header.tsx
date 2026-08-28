@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ const navItems = [
 const CTA_LABEL = 'ご相談・お問い合わせ';
 const CTA_LABEL_MOBILE = 'まずはお気軽にご相談ください';
 
-const DESKTOP_NAV_BREAKPOINT = 1280;
+const DESKTOP_NAV_BREAKPOINT = 1024;
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +73,7 @@ export default function Header() {
             />
           </Link>
 
-          <nav aria-label="メインナビゲーション" className="hidden xl:flex items-center gap-5 flex-shrink-0">
+          <nav aria-label="メインナビゲーション" className="hidden lg:flex items-center gap-5 flex-shrink-0">
             {navItems.slice(0, 4).map(({ href, label }) => (
               <Link
                 key={href}
@@ -99,7 +99,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setIsOpen((open) => !open)}
-            className="xl:hidden flex-shrink-0 inline-flex items-center justify-center w-11 h-11 text-slate-800 hover:bg-slate-100 rounded-lg"
+            className="lg:hidden flex-shrink-0 inline-flex items-center justify-center w-11 h-11 text-slate-800 hover:bg-slate-100 rounded-lg"
             aria-label={isOpen ? 'メニューを閉じる' : 'メニューを開く'}
             aria-expanded={isOpen}
             aria-controls="mobile-nav"
@@ -123,7 +123,7 @@ export default function Header() {
         <nav
           id="mobile-nav"
           aria-label="メインナビゲーション"
-          className="xl:hidden absolute left-0 right-0 top-16 bg-white border-b border-slate-200 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto"
+          className="lg:hidden absolute left-0 right-0 top-16 bg-white border-b border-slate-200 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto"
         >
           <div className="flex flex-col px-5 py-4">
             {navItems.map(({ href, label }) => (
