@@ -5,15 +5,24 @@ import type { ReportSample } from '@/data/reportSamples';
 
 type Props = {
   reports: ReportSample[];
+  /** カード見出しの補足（例：公開サンプル） */
+  sampleBadge?: string;
 };
 
 const PC_VISIBLE = 3;
 
-function ReportCard({ report }: { report: ReportSample }) {
+function ReportCard({ report, sampleBadge }: { report: ReportSample; sampleBadge?: string }) {
   return (
     <article className="h-full flex flex-col bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
       <header className="bg-brand-900 px-5 py-4 text-white">
-        <p className="text-sm font-bold text-accent-400">学習塾ミネルバ｜指導報告</p>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <p className="text-sm font-bold text-accent-400">学習塾ミネルバ｜指導報告</p>
+          {sampleBadge ? (
+            <span className="text-[11px] sm:text-xs font-bold px-2 py-0.5 rounded-full bg-white/15 text-slate-100">
+              {sampleBadge}
+            </span>
+          ) : null}
+        </div>
         <p className="font-serif font-bold text-lg sm:text-xl mt-1 leading-snug">
           {report.grade}｜{report.subject}
         </p>
@@ -40,7 +49,7 @@ function ReportCard({ report }: { report: ReportSample }) {
   );
 }
 
-export default function ReportCarousel({ reports }: Props) {
+export default function ReportCarousel({ reports, sampleBadge = '公開サンプル' }: Props) {
   const labelId = useId();
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -175,7 +184,7 @@ export default function ReportCarousel({ reports }: Props) {
               key={report.id}
               className="w-full md:w-1/3 flex-shrink-0 px-1.5 sm:px-2 box-border"
             >
-              <ReportCard report={report} />
+              <ReportCard report={report} sampleBadge={sampleBadge} />
             </li>
           ))}
         </ul>

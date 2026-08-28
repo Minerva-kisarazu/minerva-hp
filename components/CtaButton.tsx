@@ -55,10 +55,11 @@ export default function CtaButton({
 /** サイト共通：/contact への主要CTA（問い合わせ→面談の入口） */
 export function ContactCtaLabel() {
   return (
-    <span>
-      お問い合わせ・
-      <br className="sm:hidden" />
-      ご相談はこちら
+    <span className="inline-flex flex-col items-center gap-0.5">
+      <span className="text-sm sm:text-[0.95rem] font-semibold leading-snug opacity-95">
+        まずは面談で学習状況を相談
+      </span>
+      <span className="leading-snug">お問い合わせはこちら</span>
     </span>
   );
 }

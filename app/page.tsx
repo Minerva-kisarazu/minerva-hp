@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import CtaButton, { ContactCtaLabel } from '@/components/CtaButton';
+import LineConsultCta, { LineConsultBand } from '@/components/LineConsultCta';
 import ReportCarousel from '@/components/ReportCarousel';
 import { reportSamples } from '@/data/reportSamples';
+import { scoreCases } from '@/data/scoreCases';
 
 export const metadata: Metadata = {
   title: '学習塾ミネルバ｜木更津市金田東の個別指導塾・自立学習',
@@ -94,12 +96,6 @@ const improvementPatterns = [
   },
 ];
 
-const scoreCases = [
-  { grade: '中学2年', subject: '数学', before: 15, after: 74, diff: 59 },
-  { grade: '中学3年', subject: '数学', before: 33, after: 66, diff: 33 },
-  { grade: '中学2年', subject: '数学', before: 72, after: 97, diff: 25 },
-];
-
 const reportBenefits = [
   'どこで思考が止まっているのか',
   '何を最優先で克服すべきなのか',
@@ -125,10 +121,19 @@ export default function Home() {
               <br />
               その先にあるのは、誰かに教えてもらわなくても、自分で学習を進められる状態です。
             </p>
-            <div className="sm:self-start">
+            <div className="max-w-md">
+              <p className="text-xs sm:text-sm font-medium text-accent-400 mb-2 tracking-wide">
+                面談のお申し込み
+              </p>
               <CtaButton href="/contact" variant="onDark">
                 <ContactCtaLabel />
               </CtaButton>
+              <div className="mt-6 pt-6 border-t border-white/20">
+                <p className="text-sm text-slate-300 mb-3 leading-relaxed">
+                  ちょっとしたご相談はLINEから
+                </p>
+                <LineConsultCta variant="hero" />
+              </div>
             </div>
           </div>
           <div className="relative min-h-[240px] sm:min-h-[400px] lg:min-h-full">
@@ -262,6 +267,93 @@ export default function Home() {
             </p>
             <p>これがミネルバの「自分でできるようにする」という指導です。</p>
           </div>
+
+          {/* 3STEP ビジュアルサマリー（文章を読まなくても流れが分かる） */}
+          <div className="mb-10 sm:mb-12" aria-hidden="true">
+            <div className="hidden md:flex items-stretch justify-center max-w-4xl mx-auto">
+              {steps.map((step, index) => (
+                <div key={step.label} className="flex items-stretch flex-1 min-w-0">
+                  <div
+                    className={`flex-1 flex flex-col items-center justify-center text-center px-3 lg:px-5 py-5 lg:py-6 rounded-xl border-2 ${
+                      step.isGoal
+                        ? 'bg-brand-900 border-brand-900 text-white shadow-md'
+                        : 'bg-white border-brand-900/25 text-slate-900 shadow-sm'
+                    }`}
+                  >
+                    <span
+                      className={`text-xs font-bold tracking-widest mb-2 ${
+                        step.isGoal ? 'text-accent-400' : 'text-accent-700'
+                      }`}
+                    >
+                      {step.label}
+                    </span>
+                    <span
+                      className={`font-serif text-lg lg:text-xl font-bold leading-snug ${
+                        step.isGoal ? 'text-white' : 'text-brand-900'
+                      }`}
+                    >
+                      {step.title}
+                    </span>
+                  </div>
+                  {index < steps.length - 1 ? (
+                    <div className="flex items-center px-1 lg:px-2 text-brand-900 flex-shrink-0">
+                      <svg
+                        className="w-7 h-7 lg:w-9 lg:h-9"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+            <ol className="md:hidden space-y-3 max-w-sm mx-auto">
+              {steps.map((step, index) => (
+                <li key={step.label} className="relative">
+                  <div
+                    className={`flex items-center gap-4 rounded-xl border-2 px-4 py-4 ${
+                      step.isGoal
+                        ? 'bg-brand-900 border-brand-900 text-white'
+                        : 'bg-white border-brand-900/20 text-slate-900'
+                    }`}
+                  >
+                    <span
+                      className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${
+                        step.isGoal ? 'bg-accent-500 text-brand-900' : 'bg-brand-900 text-white'
+                      }`}
+                    >
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p
+                        className={`text-xs font-bold tracking-wide mb-0.5 ${
+                          step.isGoal ? 'text-accent-400' : 'text-accent-700'
+                        }`}
+                      >
+                        {step.label}
+                      </p>
+                      <p className={`font-serif text-lg font-bold ${step.isGoal ? 'text-white' : 'text-brand-900'}`}>
+                        {step.title}
+                      </p>
+                    </div>
+                  </div>
+                  {index < steps.length - 1 ? (
+                    <div className="flex justify-center py-1 text-brand-900" aria-hidden="true">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 5v14M7 13l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+          </div>
+
           <ol className="grid md:grid-cols-3 gap-6 sm:gap-8">
             {steps.map((step) => (
               <li
@@ -379,6 +471,8 @@ export default function Home() {
         </div>
       </section>
 
+      <LineConsultBand />
+
       {/* 改善の型 */}
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="site-container-wide">
@@ -448,17 +542,51 @@ export default function Home() {
             {scoreCases.map((item) => (
               <article
                 key={`${item.grade}-${item.before}-${item.after}`}
-                className="bg-slate-50 p-6 sm:p-8 rounded-xl border border-slate-200 text-center"
+                className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden flex flex-col"
               >
-                <h3 className="font-serif text-lg sm:text-xl font-bold mb-5 text-slate-900">
-                  {item.grade}｜{item.subject}
-                </h3>
-                <p className="text-base sm:text-lg text-slate-700 tabular-nums mb-3">
-                  {item.before}点 → {item.after}点
-                </p>
-                <p className="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tabular-nums">
-                  ＋{item.diff}点
-                </p>
+                <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-5 border-b border-slate-200 bg-white text-center">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold mb-4 text-slate-900">
+                    {item.grade}｜{item.subject}
+                  </h3>
+                  <p className="font-serif text-2xl sm:text-3xl font-bold text-brand-900 tabular-nums leading-none">
+                    <span className="text-slate-500 text-xl sm:text-2xl font-sans font-medium">
+                      {item.before}点
+                    </span>
+                    <span className="mx-2 sm:mx-3 text-accent-600" aria-hidden="true">
+                      →
+                    </span>
+                    <span>{item.after}点</span>
+                  </p>
+                  <p className="mt-3 text-sm sm:text-base font-bold text-accent-700 tabular-nums">
+                    ＋{item.diff}点
+                  </p>
+                </div>
+                <dl className="flex-1 px-6 sm:px-8 py-5 sm:py-6 space-y-5 text-sm sm:text-base leading-relaxed">
+                  <div>
+                    <dt className="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2">
+                      <span
+                        className="w-6 h-6 rounded-md bg-slate-200 text-slate-700 text-xs flex items-center justify-center flex-shrink-0"
+                        aria-hidden="true"
+                      >
+                        原
+                      </span>
+                      原因
+                    </dt>
+                    <dd className="text-slate-800">{item.cause}</dd>
+                  </div>
+                  <div>
+                    <dt className="flex items-center gap-2 text-sm font-bold text-brand-900 mb-2">
+                      <span
+                        className="w-6 h-6 rounded-md bg-brand-900 text-white text-xs flex items-center justify-center flex-shrink-0"
+                        aria-hidden="true"
+                      >
+                        改
+                      </span>
+                      改善
+                    </dt>
+                    <dd className="text-slate-800">{item.improvement}</dd>
+                  </div>
+                </dl>
               </article>
             ))}
           </div>
@@ -468,17 +596,41 @@ export default function Home() {
       {/* 指導報告書 */}
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="site-container-wide">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-200 pb-5">
+          <div className="text-center mb-6 sm:mb-8">
+            <p className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-brand-900 bg-white border border-brand-900/20 rounded-full px-4 py-2 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-accent-500 flex-shrink-0" aria-hidden="true" />
+              実際の指導報告を一部公開しています
+            </p>
+          </div>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 text-center leading-relaxed border-b border-slate-200 pb-5">
             授業では、こんなところまで見ています。
           </h2>
-          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-8 sm:mb-10 text-center sm:text-left">
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 text-center">
+            毎回お送りしている指導報告のうち、ミネルバの指導内容が具体的に分かる記録を一部ご紹介します。
+          </p>
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-4 sm:mb-5 text-center sm:text-left">
             一人ひとりのつまずきを記録し、次の指導につなげています。学習内容・つまずき・行った指導・次回へのつなぎを、毎回その日のうちに保護者様へお送りしています。
           </p>
           <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-8 sm:mb-10 text-center sm:text-left">
             そこには、単に「○○を勉強しました」と書くのではなく、「どこで考え方が止まったのか」「何を直したのか」「次に何を自分でできるようにするのか」まで記録しています。
           </p>
 
-          <ReportCarousel reports={reportSamples} />
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 lg:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5 sm:mb-6 pb-4 border-b border-slate-100">
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-accent-700 tracking-wide mb-1">
+                  指導報告の公開サンプル
+                </p>
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                  学習内容・つまずき・今回の指導・次回までを、実際の記録から抜粋しています。
+                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 flex-shrink-0">
+                ※個人が特定されない範囲で掲載
+              </p>
+            </div>
+            <ReportCarousel reports={reportSamples} />
+          </div>
 
           <div className="mt-12 sm:mt-14 flex justify-center">
             <CtaButton href="/policy" variant="secondary">
@@ -498,8 +650,11 @@ export default function Home() {
             <p className="text-lg sm:text-xl text-slate-200 mb-3 leading-relaxed">
               まずは面談で、お子さまの学習状況を確認しませんか。
             </p>
+            <p className="text-sm sm:text-base text-slate-400 mb-6 leading-relaxed">
+              お問い合わせ → 面談 → 必要に応じて体験授業、の順でご案内します。
+            </p>
             <p className="body-text-muted text-slate-400 mb-8 sm:mb-10">
-              必要に応じて、80分の体験授業と学習診断レポートをご案内します。
+              体験授業をご希望の場合も、まず面談で学習状況やご希望を伺ったうえで、80分の体験授業と学習診断レポートをご案内します。
             </p>
             <div className="bg-[#004840]/80 p-5 sm:p-8 rounded-xl mb-8 sm:mb-10 border border-white/15">
               <p className="font-bold mb-5 text-white leading-relaxed">
@@ -522,10 +677,21 @@ export default function Home() {
                 現在の塾での勉強やテスト対策に手応えを感じていない方も、現状を打破する指針としてお役立てください。
               </p>
             </div>
-            <div className="sm:self-start w-full sm:w-auto">
-              <CtaButton href="/contact" variant="onDark">
-                <ContactCtaLabel />
-              </CtaButton>
+            <div className="space-y-6 w-full sm:max-w-md">
+              <div>
+                <p className="text-xs sm:text-sm font-medium text-accent-400 mb-2 tracking-wide">
+                  面談のお申し込み
+                </p>
+                <CtaButton href="/contact" variant="onDark">
+                  <ContactCtaLabel />
+                </CtaButton>
+              </div>
+              <div className="pt-6 border-t border-white/20">
+                <p className="text-sm text-slate-300 mb-3 leading-relaxed">
+                  ちょっとしたご相談はLINEから
+                </p>
+                <LineConsultCta variant="footer" />
+              </div>
             </div>
           </div>
           <div className="relative min-h-[240px] sm:min-h-[400px] lg:min-h-full">
