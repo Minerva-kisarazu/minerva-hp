@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import PreFooterCta from '@/components/PreFooterCta';
+import { ImprovementFlowCard } from '@/components/home/HomeVisualBlocks';
+import { improvementPatterns } from '@/data/improvementPatterns';
 
 export const metadata: Metadata = {
   title: '指導方針',
@@ -169,6 +171,25 @@ export default function PolicyPage() {
                 </h3>
                 <p className="text-base text-slate-700 leading-relaxed">{body}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="improvement-patterns" className="bg-slate-50 py-16 sm:py-24 scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center leading-relaxed border-b border-slate-300 pb-5">
+            成果は生徒ごとに異なりますが、改善の流れは共通しています
+          </h2>
+          <div className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12 space-y-3">
+            <p>生徒によってつまずく場所は違います。</p>
+            <p>
+              ただ、答案やノートを見ていくと、同じような失敗の型が見えてくることがあります。ミネルバでは、その原因を具体的に見つけ、勉強のやり方そのものを修正します。
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
+            {improvementPatterns.map((pattern) => (
+              <ImprovementFlowCard key={pattern.subject} {...pattern} />
             ))}
           </div>
         </div>

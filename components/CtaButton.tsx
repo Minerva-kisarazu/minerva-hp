@@ -54,14 +54,7 @@ export default function CtaButton({
 
 /** サイト共通：/contact への主要CTA（問い合わせ→面談の入口） */
 export function ContactCtaLabel() {
-  return (
-    <span className="inline-flex flex-col items-center gap-0.5">
-      <span className="text-sm sm:text-[0.95rem] font-semibold leading-snug opacity-95">
-        まずは面談で学習状況を相談
-      </span>
-      <span className="leading-snug">お問い合わせはこちら</span>
-    </span>
-  );
+  return <span className="leading-snug">無料で相談・面談を申し込む</span>;
 }
 
 /** @deprecated 体験即申込みに見えるため ContactCtaLabel を使用 */

@@ -128,9 +128,12 @@ export default function GradesPage() {
 
       <section className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-12 text-center leading-relaxed border-b border-slate-300 pb-5">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center leading-relaxed border-b border-slate-300 pb-5">
             学年に合わせた自立学習の設計
           </h2>
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-700 leading-relaxed mb-10 sm:mb-12 text-center sm:text-left">
+            苦手な教科には「なぜ点が取れないのか」を、得意な教科には「さらに点を伸ばす手順」を。点数が伸び悩んでいる子には失点に直結する理由があり、すでに取れる単元がある子には取りこぼしを減らし加点する進め方があります。学年ごとの重点は以下のとおりです。
+          </p>
           <div className="space-y-6">
             {gradePolicies.map(({ grade, headline, body, items }) => (
               <article
