@@ -19,17 +19,14 @@ export default function PrintIndexPage() {
         <ul>
           <li>
             <Link href="/print/pamphlet">
-              パンフレット（A4・4ページ）
-              <span>表紙／考え方／仕組み・学年／料金・次の一歩</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/print/flyer">
-              チラシ（A4両面）
-              <span>表面：興味づけ　／　裏面：料金・流れ・FAQ</span>
+              パンフレット（A4×4ページ）
+              <span>表紙／考え方／証拠／料金・FAQ（画面閲覧メイン・PDFはA4縦）</span>
             </Link>
           </li>
         </ul>
+        <p className="print-index-note">
+          チラシ（/print/flyer）は当面非公開です。内部確認用として URL 直打ちのみ可能です。
+        </p>
       </div>
     </div>
   );

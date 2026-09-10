@@ -173,6 +173,13 @@ body:has([data-print-document]) {
   font-size: 0.9rem;
 }
 
+.print-index-note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #5a6b68;
+  line-height: 1.5;
+}
+
 
 /* print layouts v2 — pamphlet + flyer */
 
@@ -4258,6 +4265,785 @@ body:has([data-print-document]) {
   justify-content: flex-end !important;
   margin: 2mm -5.5mm 0 !important;
   min-height: 0;
+}
+
+/* =========================================================
+   PAMPHLET v3 — 表1〜表4（余白を詰めた4面構成）
+   ========================================================= */
+
+.pf,
+.pf * {
+  box-sizing: border-box;
+}
+
+.pf {
+  height: 100%;
+  min-height: 297mm;
+  padding: 7mm 8mm 6mm;
+  color: #1a2a28;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4mm;
+}
+
+.pf h1,
+.pf h2,
+.pf h3,
+.pf p,
+.pf ul,
+.pf ol,
+.pf li,
+.pf dl,
+.pf dt,
+.pf dd {
+  margin: 0;
+  padding: 0;
+}
+
+.pf ul,
+.pf ol {
+  list-style: none;
+}
+
+.pf-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2mm 3mm;
+  align-items: end;
+  padding-bottom: 2mm;
+  border-bottom: 2px solid #006058;
+  flex: 0 0 auto;
+}
+
+.pf-kicker {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #00a8b8;
+  line-height: 1;
+  padding-bottom: 1.5mm;
+}
+
+.pf-head h1 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 15pt;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #0a3d5c;
+}
+
+.pf-head h1 em {
+  font-style: normal;
+  color: #006058;
+}
+
+.pf h2 {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #006058;
+  line-height: 1.3;
+}
+
+/* --- 表1 表紙 --- */
+.pf1 {
+  padding: 0;
+  gap: 0;
+  color: #fff;
+  background: #003d38;
+}
+
+.pf1-top {
+  padding: 8mm 8mm 4mm;
+  background: linear-gradient(180deg, #004840 0%, #003d38 100%);
+}
+
+.pf1-logo {
+  width: 46mm;
+  height: auto;
+  filter: brightness(0) invert(1);
+  margin-bottom: 2.5mm;
+}
+
+.pf1-area {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #9eebf2;
+  margin-bottom: 2.5mm !important;
+}
+
+.pf1-top h1 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 18pt;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.pf1-worry {
+  padding: 4mm 8mm 3.5mm;
+  background: #fff;
+  color: #1a2a28;
+}
+
+.pf1-worry h2 {
+  margin-bottom: 2mm !important;
+  font-size: 10pt;
+}
+
+.pf1-worry li {
+  position: relative;
+  padding: 2.2mm 0 2.2mm 5.5mm;
+  border-bottom: 1px dashed #b7c9c4;
+  font-size: 9.5pt;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.pf1-worry li:last-child {
+  border-bottom: 0;
+}
+
+.pf1-worry li::before {
+  content: '□';
+  position: absolute;
+  left: 0;
+  top: 2.2mm;
+  color: #00a8b8;
+  font-weight: 700;
+}
+
+.pf1-photo {
+  flex: 1 1 auto;
+  min-height: 72mm;
+  background-size: cover;
+  background-position: center 28%;
+  background-repeat: no-repeat;
+  background-color: #0a3d5c;
+}
+
+.pf1-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+  padding: 3.5mm 8mm 4mm;
+  background: #00302c;
+}
+
+.pf1-facts {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #9eebf2;
+}
+
+.pf1-tel {
+  font-size: 13pt;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+}
+
+.pf1-tel span {
+  display: block;
+  margin-top: 0.8mm;
+  font-size: 7.5pt;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0;
+}
+
+/* --- 表2 中面左 --- */
+.pf2 {
+  gap: 3.5mm;
+}
+
+.pf2-lead {
+  font-size: 10.5pt;
+  font-weight: 700;
+  line-height: 1.55;
+  color: #0a3d5c;
+  padding: 2.5mm 0 2.5mm 3.5mm;
+  border-left: 3px solid #00c1d2;
+  flex: 0 0 auto;
+}
+
+.pf2-core {
+  padding: 5.5mm 5mm;
+  background: #006058;
+  color: #fff;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.pf2-core .soft {
+  font-size: 13pt;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.pf2-core .soft em {
+  font-style: normal;
+  font-weight: 700;
+  color: #9eebf2;
+}
+
+.pf2-core .goal {
+  margin-top: 2.5mm !important;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 14.5pt;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.pf2-look {
+  flex: 0 0 auto;
+}
+
+.pf2-look h2 {
+  margin-bottom: 2mm !important;
+}
+
+.pf2-look ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5mm;
+}
+
+.pf2-look li {
+  padding: 2.5mm 3mm;
+  border-top: 2px solid #006058;
+  background: #fff;
+}
+
+.pf2-look strong {
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #0a3d5c;
+  margin-bottom: 1mm;
+}
+
+.pf2-look span {
+  display: block;
+  font-size: 8pt;
+  line-height: 1.45;
+  color: #334542;
+}
+
+.pf2-steps {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pf2-steps h2 {
+  margin-bottom: 2.5mm !important;
+  flex: 0 0 auto;
+}
+
+.pf2-steps ol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3mm;
+  align-items: stretch;
+}
+
+.pf2-steps li {
+  display: grid;
+  grid-template-columns: 8mm 1fr;
+  gap: 2mm;
+  align-content: start;
+  padding: 3.5mm 3mm;
+  background: #eef8f7;
+}
+
+.pf2-steps .n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8mm;
+  height: 8mm;
+  border-radius: 50%;
+  background: #006058;
+  color: #fff;
+  font-size: 11pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pf2-steps strong {
+  display: block;
+  font-size: 12pt;
+  font-weight: 700;
+  color: #0a3d5c;
+  line-height: 1.3;
+  margin-bottom: 1.5mm;
+}
+
+.pf2-steps span {
+  display: block;
+  font-size: 8.5pt;
+  line-height: 1.5;
+  color: #334542;
+}
+
+.pf2-founder {
+  display: grid;
+  grid-template-columns: 36mm 1fr;
+  gap: 4.5mm;
+  align-items: start;
+  padding: 4.5mm;
+  background: #f3faf9;
+  border-top: 2px solid #006058;
+  flex: 0 0 auto;
+  margin-left: -8mm;
+  margin-right: -8mm;
+  margin-bottom: -6mm;
+  padding-left: 8mm;
+  padding-right: 8mm;
+  padding-bottom: 6mm;
+}
+
+.pf2-founder img {
+  width: 36mm;
+  height: 46mm;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border: 1px solid #b7c9c4;
+}
+
+.pf2-founder h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 13pt;
+  color: #0a3d5c;
+  margin-bottom: 2.5mm !important;
+}
+
+.pf2-founder p {
+  font-size: 8.5pt;
+  line-height: 1.55;
+  color: #334542;
+  margin-bottom: 1.5mm !important;
+}
+
+.pf2-founder p:last-child {
+  margin-bottom: 0 !important;
+  margin-top: 2mm !important;
+  font-weight: 700;
+  color: #006058;
+}
+
+/* --- 表3 中面右 --- */
+.pf3 {
+  gap: 3.5mm;
+}
+
+.pf3-results {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 4.5mm 4mm;
+  background: #f3faf9;
+}
+
+.pf3-results-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 3mm;
+  margin-bottom: 3.5mm;
+  flex: 0 0 auto;
+}
+
+.pf3-results-head p {
+  font-size: 7.5pt;
+  color: #5a6b68;
+}
+
+.pf3-res-row {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3mm;
+  align-items: stretch;
+  min-height: 42mm;
+}
+
+.pf3-res-row > div {
+  text-align: center;
+  padding: 5mm 1.5mm;
+  background: #fff;
+  border-top: 3px solid #006058;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pf3-res-row .g {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #00a8b8;
+  margin-bottom: 2mm !important;
+}
+
+.pf3-res-row .s {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 22pt;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #0a3d5c;
+}
+
+.pf3-res-row .s span {
+  margin: 0 1.2mm;
+  font-size: 14pt;
+  color: #00a8b8;
+}
+
+.pf3-res-row .d {
+  margin-top: 2mm !important;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 16pt;
+  font-weight: 700;
+  color: #006058;
+}
+
+.pf3-res-row .note {
+  margin-top: 2.5mm !important;
+  padding-top: 2mm;
+  border-top: 1px dashed #c8d6d2;
+  font-size: 7.5pt;
+  line-height: 1.45;
+  color: #334542;
+  font-weight: 500;
+}
+
+.pf3-report {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+
+.pf3-report-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 3mm;
+  flex: 0 0 auto;
+}
+
+.pf3-report-head p {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #00a8b8;
+}
+
+.pf3-report article {
+  padding: 4mm;
+  border-left: 3px solid #00c1d2;
+  background: #eef8f7;
+}
+
+.pf3-report .meta {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #00a8b8;
+  margin-bottom: 2.5mm !important;
+}
+
+.pf3-report p {
+  font-size: 9pt;
+  line-height: 1.55;
+  color: #334542;
+  margin-bottom: 2.5mm !important;
+}
+
+.pf3-report p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.pf3-report b {
+  color: #006058;
+  margin-right: 1.5mm;
+}
+
+.pf3-grades {
+  flex: 0 0 auto;
+  margin-left: -8mm;
+  margin-right: -8mm;
+  margin-bottom: -6mm;
+  padding: 4mm 8mm 6mm;
+  background: #f7fbfa;
+  border-top: 1px solid #c8d6d2;
+}
+
+.pf3-grades h2 {
+  margin-bottom: 2mm !important;
+}
+
+.pf3-grades ul {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #c8d6d2;
+}
+
+.pf3-grades li {
+  display: grid;
+  grid-template-columns: 28mm 1fr;
+  gap: 3mm;
+  align-items: baseline;
+  padding: 3mm 0;
+  border-bottom: 1px solid #c8d6d2;
+}
+
+.pf3-grades strong {
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: #006058;
+}
+
+.pf3-grades span {
+  font-size: 9pt;
+  line-height: 1.45;
+  color: #334542;
+}
+
+/* --- 表4 裏表紙 --- */
+.pf4 {
+  gap: 2.8mm;
+  padding-bottom: 0;
+}
+
+.pf4-price-note {
+  font-size: 8pt;
+  line-height: 1.45;
+  color: #334542;
+  padding-left: 3mm;
+  border-left: 3px solid #006058;
+  flex: 0 0 auto;
+}
+
+.pf4-price-note strong {
+  color: #006058;
+}
+
+.pf4-price {
+  flex: 0 0 auto;
+}
+
+.pf4-price table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 7.5pt;
+}
+
+.pf4-price th,
+.pf4-price td {
+  padding: 1.4mm 1.2mm;
+  border-bottom: 1px solid #c8d6d2;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pf4-price thead th {
+  background: #006058;
+  color: #fff;
+  font-weight: 700;
+  font-size: 7pt;
+  border-bottom: 0;
+}
+
+.pf4-price tbody th {
+  text-align: left;
+  font-weight: 700;
+  color: #0a3d5c;
+  background: #f3faf9;
+  font-size: 7pt;
+}
+
+.pf4-price tbody td {
+  font-variant-numeric: tabular-nums;
+}
+
+.pf4-price tbody tr:last-child th,
+.pf4-price tbody tr:last-child td {
+  border-bottom: 2px solid #006058;
+}
+
+.pf4-other {
+  margin-top: 1.5mm !important;
+  font-size: 7pt;
+  line-height: 1.4;
+  color: #5a6b68;
+}
+
+.pf4-faq {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pf4-faq h2 {
+  margin-bottom: 1.5mm !important;
+  flex: 0 0 auto;
+}
+
+.pf4-faq dl {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+
+.pf4-faq dl > div {
+  padding-bottom: 1.5mm;
+  border-bottom: 1px solid #d8e2df;
+}
+
+.pf4-faq dt {
+  font-size: 8pt;
+  font-weight: 700;
+  color: #006058;
+  line-height: 1.35;
+  margin-bottom: 0.6mm;
+}
+
+.pf4-faq dd {
+  font-size: 7.5pt;
+  line-height: 1.45;
+  color: #334542;
+}
+
+.pf4-assurance {
+  flex: 0 0 auto;
+  padding: 3.5mm 4mm;
+  background: #0a3d5c;
+  color: #fff;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 10.5pt;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.pf4-flow {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pf4-flow h2 {
+  margin-bottom: 2mm !important;
+  flex: 0 0 auto;
+}
+
+.pf4-flow ol {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5mm;
+  align-items: stretch;
+  min-height: 28mm;
+}
+
+.pf4-flow li {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2mm;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3.5mm;
+  background: #eef8f7;
+  height: 100%;
+}
+
+.pf4-flow .n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7mm;
+  height: 7mm;
+  border-radius: 50%;
+  background: #006058;
+  color: #fff;
+  font-size: 9.5pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pf4-flow strong {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #0a3d5c;
+  line-height: 1.3;
+}
+
+.pf4-flow li > span:last-child {
+  font-size: 8pt;
+  line-height: 1.4;
+  color: #334542;
+}
+
+.pf4-contact {
+  margin-top: 2mm;
+  margin-left: -8mm;
+  margin-right: -8mm;
+  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: 1.4fr auto;
+  gap: 4mm;
+  align-items: center;
+  padding: 5mm 8mm 6mm;
+  background: #006058;
+  color: #fff;
+  flex: 0 0 auto;
+}
+
+.pf4-contact .brand {
+  font-size: 10pt;
+  font-weight: 700;
+  color: #9eebf2;
+  margin-bottom: 1mm !important;
+}
+
+.pf4-contact .info p {
+  font-size: 7.5pt;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pf4-contact .phone {
+  margin: 1.2mm 0 !important;
+  font-size: 14pt;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.pf4-contact .qrs {
+  display: flex;
+  gap: 3.5mm;
+}
+
+.pf4-contact .print-qr-label {
+  color: #9eebf2;
+}
+
+.pf4-contact .print-qr-hint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pf4-contact .print-qr img {
+  width: 22mm;
+  height: 22mm;
+  border-color: rgba(158, 235, 242, 0.45);
 }
 
 @media print {

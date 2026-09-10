@@ -18,7 +18,9 @@
  *      CHAT_URL       = （Jimdo用GASと同じ Google Chat Webhook URL）
  *    任意:
  *      SHEET_PROSPECT / SENDER_EMAIL / SENDER_NAME /
- *      PAMPH_URL / PRICE_URL / BOOKING_URL
+ *      SITE_URL / PAMPH_URL / PRICE_URL / BOOKING_URL
+ *      （未設定時 PAMPH/PRICE は SITE_URL 配下の /downloads・/price を使用）
+ *      ※チラシPDFは当面非公開のため自動返信には含めない
  * 6. デプロイ → 新しいデプロイ → 種類: ウェブアプリ
  *    - 実行ユーザー: 自分
  *    - アクセス: 全員
@@ -37,22 +39,25 @@ var DEFAULTS = {
   SHEET_PROSPECT: '見込み',
   SENDER_EMAIL: 'contact@minerva-education.co.jp',
   SENDER_NAME: '学習塾ミネルバ',
-  PAMPH_URL: 'https://x.gd/minerva_guide',
-  PRICE_URL: 'https://x.gd/minerva_fees',
+  // 本番ドメイン確定後はスクリプトプロパティ SITE_URL で上書き
+  // ※現状の公開URL（カスタムドメイン未接続時）
+  SITE_URL: 'https://minerva-hp.pages.dev',
   // 新サイトの面談予約カレンダー
   BOOKING_URL: 'https://calendar.app.google/WyRL3eqXMN7dAYLk7',
 };
 
 function getConfig_() {
   var props = PropertiesService.getScriptProperties();
+  var siteUrl = (props.getProperty('SITE_URL') || DEFAULTS.SITE_URL).replace(/\/$/, '');
   return {
     SPREADSHEET_ID: props.getProperty('SPREADSHEET_ID') || '',
     SHEET_PROSPECT: props.getProperty('SHEET_PROSPECT') || DEFAULTS.SHEET_PROSPECT,
     SENDER_EMAIL: props.getProperty('SENDER_EMAIL') || DEFAULTS.SENDER_EMAIL,
     SENDER_NAME: props.getProperty('SENDER_NAME') || DEFAULTS.SENDER_NAME,
     CHAT_URL: props.getProperty('CHAT_URL') || '',
-    PAMPH_URL: props.getProperty('PAMPH_URL') || DEFAULTS.PAMPH_URL,
-    PRICE_URL: props.getProperty('PRICE_URL') || DEFAULTS.PRICE_URL,
+    SITE_URL: siteUrl,
+    PAMPH_URL: props.getProperty('PAMPH_URL') || siteUrl + '/downloads/minerva-pamphlet.pdf',
+    PRICE_URL: props.getProperty('PRICE_URL') || siteUrl + '/price',
     BOOKING_URL: props.getProperty('BOOKING_URL') || DEFAULTS.BOOKING_URL,
   };
 }
@@ -233,11 +238,11 @@ function handleNewSiteInquiry_(data, config) {
       'この度は当塾へお問い合わせをいただき、誠にありがとうございます。\n\n' +
       '資料を以下にお送りいたします。まずはこちらをご一読ください。\n\n' +
       '--------------------------------------------------\n' +
-      '■ パンフレット\n' +
+      '■ パンフレット（PDF）\n' +
       ' ' +
       config.PAMPH_URL +
       '\n\n' +
-      '■ 料金表・通塾規定\n' +
+      '■ 料金・よくあるご質問（Web）\n' +
       ' ' +
       config.PRICE_URL +
       '\n' +

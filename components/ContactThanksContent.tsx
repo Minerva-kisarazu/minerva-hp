@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CtaButton from '@/components/CtaButton';
+import { DOWNLOAD_MATERIALS } from '@/data/downloadMaterials';
 import {
   CONTACT_INQUIRY_STORAGE_KEY,
   type ContactInquiryData,
@@ -30,6 +31,7 @@ export default function ContactThanksContent() {
 
   const wantsTrial = inquiry?.inquiryTypes?.includes(TRIAL_INQUIRY_OPTION) ?? false;
   const wantsMaterials = inquiry?.inquiryTypes?.includes(MATERIALS_INQUIRY_OPTION) ?? false;
+  const showMaterials = wantsMaterials || !inquiry;
 
   return (
     <div className="max-w-3xl mx-auto px-5 sm:px-8 space-y-10 sm:space-y-12">
@@ -56,6 +58,44 @@ export default function ContactThanksContent() {
           <p className="text-sm text-slate-500 leading-relaxed">受付番号：{inquiry.inquiryId}</p>
         )}
       </div>
+
+      {showMaterials && (
+        <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm">
+          <h2 className="font-serif text-xl sm:text-2xl font-bold mb-4 leading-relaxed border-b border-slate-200 pb-4">
+            資料をダウンロード
+          </h2>
+          <p className="text-base sm:text-lg text-slate-700 leading-relaxed mb-6">
+            パンフレットをご用意しています。PDFでご覧・保存いただけます。
+          </p>
+          <ul className="space-y-4 mb-6">
+            {DOWNLOAD_MATERIALS.map((material) => (
+              <li
+                key={material.id}
+                className="rounded-xl border border-slate-200 bg-slate-50 px-5 py-5 sm:px-6"
+              >
+                <p className="font-serif text-lg font-bold text-slate-900 mb-2">{material.title}</p>
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
+                  {material.description}
+                </p>
+                <a
+                  href={material.href}
+                  download={material.filename}
+                  className="inline-flex items-center justify-center rounded-xl font-bold min-h-[48px] px-5 py-3 bg-brand-900 hover:bg-[#004840] text-white shadow-md transition-colors"
+                >
+                  PDFをダウンロード
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="text-sm text-slate-500 leading-relaxed">
+            料金の詳細は
+            <Link href="/price" className="text-brand-900 underline underline-offset-2 mx-1 hover:text-accent-700">
+              受講料・よくあるご質問
+            </Link>
+            でもご確認いただけます。
+          </p>
+        </div>
+      )}
 
       {wantsTrial && (
         <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm">
@@ -86,20 +126,6 @@ export default function ContactThanksContent() {
         </p>
         <CtaButton href="/consultation">面談日時を予約する</CtaButton>
       </div>
-
-      {(wantsMaterials || !inquiry) && (
-        <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm">
-          <h2 className="font-serif text-xl sm:text-2xl font-bold mb-4 leading-relaxed border-b border-slate-200 pb-4">
-            資料・パンフレットをご希望の方
-          </h2>
-          <p className="text-base sm:text-lg text-slate-700 leading-relaxed mb-6">
-            料金の目安やよくあるご質問は、下記ページでもご確認いただけます。
-          </p>
-          <CtaButton href="/price" variant="secondary">
-            料金・パンフレットを見る
-          </CtaButton>
-        </div>
-      )}
 
       <div className="text-center space-y-4">
         <p className="text-base text-slate-600 leading-relaxed">

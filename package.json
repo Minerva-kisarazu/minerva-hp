@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview:cf": "npm run build && wrangler pages dev out"
+    "preview:cf": "npm run build && wrangler pages dev out",
+    "export:pdf": "node scripts/export-print-pdf.js"
   },
   "keywords": [
     "木更津市",

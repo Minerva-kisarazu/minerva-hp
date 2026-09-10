@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import PamphletDocument from '@/components/print/PamphletDocument';
+import './pamphlet.css';
 
 export const metadata: Metadata = {
-  title: 'パンフレット（印刷用）',
-  description: '学習塾ミネルバのA4パンフレット（4ページ・印刷／PDF保存用）',
+  title: 'パンフレット（A4×4ページ）',
+  description: '学習塾ミネルバのパンフレット（A4×4ページ・画面閲覧／PDF保存用）',
   robots: { index: false, follow: false },
 };
 

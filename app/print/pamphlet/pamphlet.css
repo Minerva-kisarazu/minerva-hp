@@ -1,0 +1,987 @@
+/* パンフレット（A4×4ページ）— 画面閲覧メイン／印刷・PDFもA4縦 */
+
+.pamphlet-root {
+  --pp-ink: #333333;
+  --pp-brand: #006058;
+  --pp-accent: #00c1d2;
+  --pp-muted: #5a6b68;
+  --pp-line: #c8d6d2;
+  --pp-pad: 10mm;
+  --pp-gap: 3mm;
+  --pp-body: 10pt;
+  --pp-small: 9pt;
+  --pp-h1: 16.5pt;
+  --pp-h2: 13.5pt;
+  color: var(--pp-ink);
+}
+
+.pamphlet-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 0.75rem 3rem;
+  background: #d8e2df;
+}
+
+.pamphlet-pages-label {
+  width: min(210mm, 100%);
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--pp-brand);
+}
+
+/* 画面：ビューポート幅に収まるA4枠。中身は210×297mmをスケール */
+.pamphlet-page {
+  container-type: inline-size;
+  width: min(210mm, 100%);
+  max-width: 210mm;
+  aspect-ratio: 210 / 297;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 40, 36, 0.15);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pamphlet-page > .pp {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 210mm;
+  height: 297mm;
+  transform: scale(calc(100cqw / 210mm));
+  transform-origin: top left;
+  padding: var(--pp-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pp-gap);
+  justify-content: flex-start;
+  font-family: var(--font-zen-kaku), 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  line-height: 1.45;
+  color: var(--pp-ink);
+  font-size: var(--pp-body);
+}
+
+.pp3 {
+  --pp-gap: 2.2mm;
+}
+
+.pp4 {
+  --pp-gap: 2mm;
+}
+
+/* 共通見出し：本文と明確に差をつける */
+.pp h1,
+.pp h2,
+.pp .pp-heading {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-weight: 700;
+  color: var(--pp-brand);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.pp h1 {
+  font-size: var(--pp-h1);
+}
+
+.pp h2 {
+  font-size: var(--pp-h2);
+}
+
+.pp *,
+.pp *::before,
+.pp *::after {
+  box-sizing: border-box;
+}
+
+.pp h1,
+.pp h2,
+.pp p,
+.pp ul,
+.pp ol,
+.pp li,
+.pp dl,
+.pp dt,
+.pp dd {
+  margin: 0;
+  padding: 0;
+}
+
+.pp ul,
+.pp ol {
+  list-style: none;
+}
+
+.pp img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ===== 表1 ===== */
+.pp1 {
+  --pp-gap: 3mm;
+}
+
+.pp1-brand {
+  display: flex;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.pp1-logo {
+  width: 64mm;
+  height: auto;
+}
+
+.pp1-hero {
+  width: calc(100% + 2 * var(--pp-pad));
+  margin-left: calc(-1 * var(--pp-pad));
+  margin-right: calc(-1 * var(--pp-pad));
+  height: 102mm;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center 28%;
+  background-repeat: no-repeat;
+  background-color: #0a3d5c;
+}
+
+.pp1-catch {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 19pt;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--pp-brand);
+  flex-shrink: 0;
+}
+
+.pp1-lead {
+  font-size: 11pt;
+  line-height: 1.55;
+  flex-shrink: 0;
+}
+
+.pp1-lead-line {
+  display: block;
+}
+
+.pp1-worry {
+  flex-shrink: 0;
+}
+
+.pp1-worry h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 1.5mm !important;
+  line-height: 1.3;
+  padding-bottom: 1.2mm;
+  border-bottom: 2px solid var(--pp-brand);
+}
+
+.pp1-worry ul {
+  display: block;
+}
+
+.pp1-worry li {
+  position: relative;
+  padding: 2.8mm 0 2.8mm 5.5mm;
+  border-bottom: 1px solid var(--pp-line);
+  font-size: 11pt;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pp1-worry li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.pp1-worry li::before {
+  content: '□';
+  position: absolute;
+  left: 0;
+  top: 2.8mm;
+  line-height: 1.35;
+  color: var(--pp-accent);
+}
+
+.pp1-diff {
+  padding: 3.5mm 4mm;
+  border: 2px solid var(--pp-brand);
+  background: #f3faf9;
+  font-size: 11pt;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--pp-brand);
+  flex-shrink: 0;
+}
+
+.pp1-diff-line {
+  display: block;
+}
+
+.pp1-foot {
+  margin-top: auto;
+  padding-top: 2.5mm;
+  border-top: 1.5px solid var(--pp-brand);
+  font-size: 9.5pt;
+  color: var(--pp-muted);
+  line-height: 1.45;
+  flex-shrink: 0;
+}
+
+.pp1-foot p + p {
+  margin-top: 1mm !important;
+  font-weight: 700;
+  color: var(--pp-brand);
+}
+
+/* ===== 表2 ===== */
+.pp2 {
+  --pp-gap: 2.6mm;
+}
+
+.pp2-lead {
+  font-size: 11pt;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #0a3d5c;
+  padding-left: 3mm;
+  border-left: 3px solid var(--pp-accent);
+  flex-shrink: 0;
+}
+
+.pp2-lead .block {
+  display: block;
+}
+
+.pp2-core {
+  padding: 4.5mm 3.5mm 4mm;
+  background: var(--pp-brand);
+  color: #fff;
+  text-align: center;
+  font-size: 12pt;
+  font-weight: 500;
+  line-height: 1.65;
+  flex-shrink: 0;
+}
+
+.pp2-core p {
+  margin: 0;
+  padding: 0.4mm 0;
+}
+
+.pp2-core em {
+  font-style: normal;
+  font-weight: 700;
+  color: #9eebf2;
+}
+
+.pp2-core .goal {
+  margin-top: 1mm !important;
+  padding-top: 0.8mm !important;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 13.5pt;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.pp2-step {
+  display: grid;
+  grid-template-columns: 36mm 1fr;
+  gap: 2.8mm;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pp2-step-photo {
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #d8e2df;
+}
+
+.pp2-step-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.pp2-step-copy .label {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 12.5pt;
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 1mm !important;
+  line-height: 1.25;
+}
+
+.pp2-step-copy .n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5mm;
+  height: 5.5mm;
+  border-radius: 50%;
+  background: var(--pp-brand);
+  color: #fff;
+  font-family: var(--font-zen-kaku), sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pp2-step-copy .body {
+  font-size: 9.5pt;
+  line-height: 1.4;
+}
+
+.pp2-analysis {
+  padding: 3mm 3.2mm;
+  background: #f3faf9;
+  border-top: 2.5px solid var(--pp-brand);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pp2-analysis h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 2mm !important;
+  line-height: 1.3;
+  padding-bottom: 1mm;
+  border-bottom: 1px solid var(--pp-line);
+}
+
+.pp2-analysis ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2mm;
+  flex: 1 1 auto;
+  justify-content: space-between;
+}
+
+.pp2-analysis li {
+  margin-bottom: 0;
+}
+
+.pp2-analysis strong {
+  display: block;
+  font-size: 10.5pt;
+  color: var(--pp-brand);
+  margin-bottom: 0.4mm;
+  line-height: 1.3;
+}
+
+.pp2-analysis span {
+  display: block;
+  font-size: 8.8pt;
+  line-height: 1.4;
+}
+
+.pp2-founder {
+  display: grid;
+  grid-template-columns: 28mm 1fr;
+  gap: 3mm;
+  align-items: start;
+  padding-top: 2mm;
+  border-top: 2.5px solid var(--pp-brand);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.pp2-founder-photo {
+  width: 28mm;
+  height: 36mm;
+  object-fit: cover;
+  object-position: 68% 12%;
+  border: 1px solid var(--pp-line);
+}
+
+.pp2-founder h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  color: #0a3d5c;
+  margin-bottom: 1mm !important;
+  line-height: 1.3;
+}
+
+.pp2-founder .meta {
+  font-size: 8pt;
+  color: var(--pp-muted);
+  margin-bottom: 1.2mm !important;
+  line-height: 1.35;
+}
+
+.pp2-founder p {
+  font-size: 9pt;
+  line-height: 1.4;
+  margin-bottom: 1mm !important;
+}
+
+.pp2-founder p:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ===== 表3 ===== */
+.pp3-title {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h1);
+  font-weight: 700;
+  color: var(--pp-brand);
+  padding-bottom: 1.5mm;
+  border-bottom: 2.5px solid var(--pp-brand);
+  line-height: 1.3;
+}
+
+.pp3-sub {
+  font-size: 8.5pt;
+  color: var(--pp-muted);
+  margin-top: -0.5mm !important;
+}
+
+.pp3-cases {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+
+.pp3-cases article {
+  padding: 1.8mm 2.4mm;
+  background: #f3faf9;
+  border-top: 2.5px solid var(--pp-brand);
+  border-bottom: 1px solid var(--pp-line);
+}
+
+.pp3-cases header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2mm;
+  margin-bottom: 0.8mm;
+}
+
+.pp3-cases .meta {
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: var(--pp-accent);
+}
+
+.pp3-cases .score {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 12.5pt;
+  font-weight: 700;
+  color: #0a3d5c;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.pp3-cases .score span {
+  margin-left: 1mm;
+  font-size: 10pt;
+  color: var(--pp-brand);
+}
+
+.pp3-cases p {
+  font-size: 9pt;
+  line-height: 1.4;
+  margin-bottom: 0.6mm !important;
+}
+
+.pp3-cases p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.pp3-cases b {
+  color: var(--pp-brand);
+  margin-right: 1mm;
+}
+
+.pp3-report-note {
+  font-size: 11pt;
+  font-weight: 700;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  color: var(--pp-brand);
+  margin-bottom: 1.5mm !important;
+  line-height: 1.3;
+}
+
+.pp3-report-card {
+  border: 1.5px solid var(--pp-brand);
+  overflow: hidden;
+}
+
+.pp3-report-card header {
+  background: var(--pp-brand);
+  color: #fff;
+  padding: 2.2mm 3mm;
+}
+
+.pp3-report-card .brand {
+  font-size: 8pt;
+  font-weight: 700;
+  color: #9eebf2;
+}
+
+.pp3-report-card .grade {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 12pt;
+  font-weight: 700;
+  margin-top: 0.6mm !important;
+}
+
+.pp3-report-card .body {
+  padding: 1.6mm 2.5mm;
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+}
+
+.pp3-report-card .body p {
+  font-size: 9pt;
+  line-height: 1.4;
+}
+
+.pp3-report-card .body b {
+  display: block;
+  color: var(--pp-brand);
+  font-size: 9pt;
+  font-weight: 700;
+  margin-bottom: 0.4mm;
+}
+
+.pp3-promises h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 2mm !important;
+  line-height: 1.3;
+  padding-bottom: 1.2mm;
+  border-bottom: 2px solid var(--pp-brand);
+}
+
+.pp3-promises li {
+  margin-bottom: 1.4mm;
+  padding-bottom: 1.2mm;
+  border-bottom: 1px solid var(--pp-line);
+}
+
+.pp3-promises li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.pp3-promises .title {
+  display: flex;
+  gap: 2mm;
+  align-items: baseline;
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #0a3d5c;
+  margin-bottom: 0.6mm !important;
+  line-height: 1.3;
+}
+
+.pp3-promises .n {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  color: var(--pp-brand);
+  flex-shrink: 0;
+  font-size: 11pt;
+}
+
+.pp3-promises .body {
+  font-size: 9pt;
+  line-height: 1.4;
+  padding-left: 7.5mm;
+}
+
+.pp3-grades h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 1.5mm !important;
+  line-height: 1.3;
+  padding-bottom: 1.2mm;
+  border-bottom: 2px solid var(--pp-brand);
+}
+
+.pp3-grades li {
+  display: grid;
+  grid-template-columns: 18mm 1fr;
+  gap: 2.5mm;
+  padding: 1.4mm 0;
+  border-bottom: 1px solid var(--pp-line);
+  align-items: baseline;
+}
+
+.pp3-grades li:last-child {
+  border-bottom: 0;
+}
+
+.pp3-grades strong {
+  font-size: 10.5pt;
+  color: var(--pp-brand);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.pp3-grades span {
+  font-size: 9.5pt;
+  line-height: 1.4;
+}
+
+.pp3-web {
+  margin-top: auto;
+  padding-top: 1.5mm;
+  border-top: 1.5px solid var(--pp-brand);
+  font-size: 8.5pt;
+  color: var(--pp-muted);
+  line-height: 1.35;
+  flex-shrink: 0;
+}
+
+.pp3-web span {
+  display: block;
+  font-weight: 700;
+  color: var(--pp-brand);
+  word-break: break-all;
+}
+
+/* ===== 表4 ===== */
+.pp4-title {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h1);
+  font-weight: 700;
+  color: var(--pp-brand);
+  line-height: 1.3;
+  padding-bottom: 1.5mm;
+  border-bottom: 2.5px solid var(--pp-brand);
+}
+
+.pp4-note {
+  font-size: 9pt;
+  line-height: 1.4;
+  color: var(--pp-muted);
+  margin-top: -0.5mm !important;
+}
+
+.pp4-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10pt;
+  border: 1.5px solid var(--pp-brand);
+}
+
+.pp4-table th,
+.pp4-table td {
+  padding: 1.2mm 1mm;
+  border-bottom: 1px solid var(--pp-line);
+  border-right: 1px solid var(--pp-line);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pp4-table th:last-child,
+.pp4-table td:last-child {
+  border-right: 0;
+}
+
+.pp4-table tbody tr:last-child th,
+.pp4-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.pp4-table thead th {
+  background: var(--pp-brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 9pt;
+  border-bottom: 0;
+  border-right-color: rgba(255, 255, 255, 0.25);
+}
+
+.pp4-table tbody th {
+  text-align: left;
+  font-weight: 700;
+  color: #0a3d5c;
+  background: #f3faf9;
+  font-size: 9pt;
+}
+
+.pp4-table tbody td {
+  font-variant-numeric: tabular-nums;
+}
+
+.pp4-extras li {
+  font-size: 9pt;
+  line-height: 1.4;
+  padding: 0.5mm 0;
+}
+
+.pp4-week h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 1.5mm !important;
+  line-height: 1.3;
+  padding-bottom: 1.2mm;
+  border-bottom: 2px solid var(--pp-brand);
+}
+
+.pp4-week table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  border: 1.5px solid var(--pp-brand);
+}
+
+.pp4-week th,
+.pp4-week td {
+  padding: 1mm 1.3mm;
+  border: 1px solid var(--pp-line);
+  vertical-align: middle;
+  text-align: left;
+  line-height: 1.3;
+}
+
+.pp4-week thead th {
+  background: var(--pp-brand);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  border-color: var(--pp-brand);
+}
+
+.pp4-week tbody th {
+  background: #f3faf9;
+  color: #0a3d5c;
+  font-weight: 700;
+  white-space: nowrap;
+  width: 18mm;
+  vertical-align: middle;
+}
+
+.pp4-week tbody td:first-of-type {
+  white-space: nowrap;
+  width: 28mm;
+  font-variant-numeric: tabular-nums;
+}
+
+.pp4-faq h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 1.5mm !important;
+  line-height: 1.3;
+  padding-bottom: 1.2mm;
+  border-bottom: 2px solid var(--pp-brand);
+}
+
+.pp4-faq dl {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pp4-faq dl > div {
+  padding: 1.2mm 0;
+  border-bottom: 1px solid var(--pp-line);
+}
+
+.pp4-faq dl > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.pp4-faq dt {
+  font-size: 10pt;
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 0.5mm;
+  line-height: 1.3;
+}
+
+.pp4-faq dd {
+  font-size: 9pt;
+  line-height: 1.4;
+}
+
+.pp4-assurance {
+  padding: 2.2mm 3mm;
+  background: #006058;
+  color: #fff;
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: 10.5pt;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.pp4-flow h2 {
+  font-family: var(--font-zen-old-mincho), 'Zen Old Mincho', serif;
+  font-size: var(--pp-h2);
+  font-weight: 700;
+  color: var(--pp-brand);
+  margin-bottom: 1.5mm !important;
+  line-height: 1.3;
+  padding-bottom: 1.2mm;
+  border-bottom: 2px solid var(--pp-brand);
+}
+
+.pp4-flow ol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5mm;
+  width: 100%;
+}
+
+.pp4-flow li {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2mm;
+  align-items: flex-start;
+  padding: 2mm;
+  background: #eef8f7;
+  border-top: 2.5px solid var(--pp-brand);
+  min-width: 0;
+}
+
+.pp4-flow .n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6mm;
+  height: 6mm;
+  border-radius: 50%;
+  background: var(--pp-brand);
+  color: #fff;
+  font-size: 9pt;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pp4-flow strong {
+  font-size: 9.5pt;
+  line-height: 1.35;
+  color: #0a3d5c;
+}
+
+.pp4-contact {
+  margin: auto calc(-1 * var(--pp-pad)) calc(-1 * var(--pp-pad));
+  padding: 3mm var(--pp-pad) 3.5mm;
+  background: var(--pp-brand);
+  color: #fff;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3.5mm;
+  align-items: center;
+  width: calc(100% + 2 * var(--pp-pad));
+  flex-shrink: 0;
+}
+
+.pp4-contact .qrs {
+  display: flex;
+  gap: 3mm;
+}
+
+.pp4-contact .print-qr-label {
+  color: #9eebf2;
+}
+
+.pp4-contact .print-qr-hint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pp4-contact .print-qr img {
+  width: 18mm;
+  height: 18mm;
+  border-color: rgba(158, 235, 242, 0.45);
+}
+
+.pp4-contact .brand {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #9eebf2;
+  margin-bottom: 1mm !important;
+}
+
+.pp4-contact .info p {
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.pp4-contact .phone {
+  margin: 1mm 0 !important;
+  font-size: 11pt;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  .print-no-print {
+    display: none !important;
+  }
+
+  .pamphlet-pages {
+    display: block;
+    padding: 0;
+    gap: 0;
+    background: #fff;
+  }
+
+  .pamphlet-page {
+    width: 210mm;
+    height: 297mm;
+    max-width: none;
+    aspect-ratio: auto;
+    box-shadow: none;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .pamphlet-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .pamphlet-page > .pp {
+    position: relative;
+    transform: none;
+    width: 210mm;
+    height: 297mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
