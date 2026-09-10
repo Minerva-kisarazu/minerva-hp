@@ -51,7 +51,7 @@ const steps = [
 
 const weekModel = [
   { day: '月', body: '英語授業 ＋ 直後の自習' },
-  { day: '火', body: '自習室で学校ワーク・理社' },
+  { day: '火', body: '自習室で学校ワーク・宿題' },
   { day: '水', body: '数学授業 ＋ 直後の自習' },
   { day: '木', body: '自習室で個別課題' },
 ];

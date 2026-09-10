@@ -93,7 +93,7 @@ const weeklySchedule: ScheduleDay[] = [
     rows: [
       {
         time: '17:20〜19:30',
-        activity: '自習室利用（授業がない日の来塾） ➡ 学校ワークの処理と理科・社会の教科書演習',
+        activity: '自習室利用（授業がない日の来塾） ➡ 学校ワークや宿題の演習',
         isLesson: false,
       },
     ],
